@@ -13,6 +13,7 @@
 * cd(and cd options)
 * pwd(current path)
 * env()
+
 4- implement shortcuts:
 * ctr + c
 * ctr + d
