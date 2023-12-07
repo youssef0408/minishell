@@ -6,7 +6,7 @@
 #    By: yothmani <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/01 15:11:03 by yothmani          #+#    #+#              #
-#    Updated: 2023/12/01 15:25:01 by yothmani         ###   ########.fr        #
+#    Updated: 2023/12/06 19:42:09 by yothmani         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,8 @@ NAME 				= minishell
 NAME_BONUS 			= minishell_bonus
 
 CC 					= gcc
-CFLAGS 				= -Wall -Wextra -Werror
+CFLAGS 				= -g
+# -Wall -Wextra -Werror
 
 RM					= rm -rf
 
@@ -22,16 +23,16 @@ LIBFT 				= $(LIBFT_DIR)/libft.a
 
 SRC_DIR 			= src
 BONUS_DIR 			= bonus/src_bonus
-INC_DIR 			= includes
+INC_DIR 			= includes 
 INCS_DIR_BONUS		= bonus/bonus_includes
 LIBFT_DIR 			= lib/libft
 
-INC 				= -I$(INC_DIR) -I$(LIBFT_DIR)
+INC 				= -I$(INC_DIR) -I$(LIBFT_DIR) -lreadline
 INC_BONUS 			= -I$(INCS_DIR_BONUS) -I$(LIBFT_DIR)
 
 
 
-SRC = $(SRC_DIR)/main.c
+SRC = $(SRC_DIR)/main.c $(SRC_DIR)/prompt.c $(SRC_DIR)/builtin/pwd.c\
 
 BONUS_SRC = $(BONUS_DIR)/
 
