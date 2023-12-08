@@ -6,7 +6,7 @@
 #    By: yothmani <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/01 15:11:03 by yothmani          #+#    #+#              #
-#    Updated: 2023/12/06 19:42:09 by yothmani         ###   ########.fr        #
+#    Updated: 2023/12/07 18:57:11 by yothmani         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ NAME 				= minishell
 NAME_BONUS 			= minishell_bonus
 
 CC 					= gcc
-CFLAGS 				= -g
-# -Wall -Wextra -Werror
+CFLAGS 				= -g 
+# -Wall -Wextra -Werror 
 
 RM					= rm -rf
 
@@ -33,6 +33,7 @@ INC_BONUS 			= -I$(INCS_DIR_BONUS) -I$(LIBFT_DIR)
 
 
 SRC = $(SRC_DIR)/main.c $(SRC_DIR)/prompt.c $(SRC_DIR)/builtin/pwd.c\
+$(SRC_DIR)/utils.c $(SRC_DIR)/builtin/cd.c\
 
 BONUS_SRC = $(BONUS_DIR)/
 
@@ -71,7 +72,7 @@ norm :
 
 
 leaks:
-	leaks --atExit -- ./minishell
+	leaks --atExit -- ./minishell | cat -e
 
 leaks_bonus:
 	leaks --atExit -- ./minishell_bonus
