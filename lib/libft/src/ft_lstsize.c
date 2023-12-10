@@ -1,29 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_lstsize.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yothmani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/06 18:56:45 by yothmani          #+#    #+#             */
-/*   Updated: 2023/12/09 23:36:47 by yothmani         ###   ########.fr       */
+/*   Created: 2023/12/09 01:35:34 by yothmani          #+#    #+#             */
+/*   Updated: 2023/12/09 01:48:17 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/libft.h"
 
-char *get_pwd()
+int	ft_lstsize(t_list *lst)
 {
-    char *path;
+	size_t	i;
 
-    path = getcwd(NULL, 0);
-    return(path);
-}
-
-void exec_pwd(char *cmd)
-{
-    if(!strcmp(cmd, ""))
-		    printf("%s\n", get_pwd());
-        else
-            print_in_color(RED, "🚨pwd: too many arguments\n");
+	i = 0;
+	while (lst)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
 }

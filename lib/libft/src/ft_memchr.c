@@ -1,29 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yothmani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/06 18:56:45 by yothmani          #+#    #+#             */
-/*   Updated: 2023/12/09 23:36:47 by yothmani         ###   ########.fr       */
+/*   Created: 2023/02/16 13:20:58 by yothmani          #+#    #+#             */
+/*   Updated: 2023/12/09 01:48:25 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/libft.h"
 
-char *get_pwd()
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-    char *path;
+	const char	*str;
+	size_t		i;
 
-    path = getcwd(NULL, 0);
-    return(path);
-}
-
-void exec_pwd(char *cmd)
-{
-    if(!strcmp(cmd, ""))
-		    printf("%s\n", get_pwd());
-        else
-            print_in_color(RED, "🚨pwd: too many arguments\n");
+	if (!s)
+		return (NULL);
+	str = s;
+	i = 0;
+	while (n > i)
+	{
+		if (str[i] == (char)c)
+			return (&((char *)s)[i]);
+		i++;
+	}
+	return (0);
 }

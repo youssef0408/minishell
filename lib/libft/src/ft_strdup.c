@@ -1,29 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yothmani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/06 18:56:45 by yothmani          #+#    #+#             */
-/*   Updated: 2023/12/09 23:36:47 by yothmani         ###   ########.fr       */
+/*   Created: 2023/02/18 12:45:45 by yothmani          #+#    #+#             */
+/*   Updated: 2023/12/09 01:58:53 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/libft.h"
 
-char *get_pwd()
+char	*ft_strdup(const char *s1)
 {
-    char *path;
+	int		i;
+	char	*dest;
 
-    path = getcwd(NULL, 0);
-    return(path);
-}
-
-void exec_pwd(char *cmd)
-{
-    if(!strcmp(cmd, ""))
-		    printf("%s\n", get_pwd());
-        else
-            print_in_color(RED, "🚨pwd: too many arguments\n");
+	i = 0;
+	if (!s1)
+		return (NULL);
+	while (s1[i])
+		i++;
+	dest = malloc(sizeof(char) * (i + 1));
+	i = 0;
+	if (dest == NULL)
+		return (0);
+	while (s1[i])
+	{
+		dest[i] = s1[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }

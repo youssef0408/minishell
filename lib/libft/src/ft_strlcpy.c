@@ -1,29 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yothmani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/06 18:56:45 by yothmani          #+#    #+#             */
-/*   Updated: 2023/12/09 23:36:47 by yothmani         ###   ########.fr       */
+/*   Created: 2023/02/15 13:33:17 by yothmani          #+#    #+#             */
+/*   Updated: 2023/12/09 01:59:25 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/libft.h"
 
-char *get_pwd()
+size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 {
-    char *path;
+	size_t	src_size;
 
-    path = getcwd(NULL, 0);
-    return(path);
-}
-
-void exec_pwd(char *cmd)
-{
-    if(!strcmp(cmd, ""))
-		    printf("%s\n", get_pwd());
-        else
-            print_in_color(RED, "🚨pwd: too many arguments\n");
+	if (!dst || !src)
+		return (0);
+	src_size = ft_strlen(src);
+	if (size != 0)
+	{
+		while (*src && (size - 1))
+		{
+			*dst = *src;
+			dst++;
+			src++;
+			size--;
+		}
+		*dst = '\0';
+	}
+	return (src_size);
 }

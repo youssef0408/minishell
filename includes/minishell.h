@@ -6,14 +6,14 @@
 /*   By: yothmani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:18:40 by yothmani          #+#    #+#             */
-/*   Updated: 2023/12/08 02:44:35 by yothmani         ###   ########.fr       */
+/*   Updated: 2023/12/09 23:39:02 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "libft.h"
+# include "../lib/libft/includes/libft.h"
 # include <ctype.h>
 # include <errno.h>
 # include <limits.h>
@@ -25,10 +25,6 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-
-//to print in colors//
-# define printColor(color, format, ...) printf("\033[%sm" format "\033[0m", color, __VA_ARGS__)
-// # define printColor(color, msg) str= "\033[  " + color + msg "\033[0m"
 
 # define RED "1;31"
 # define GREEN "1;32"
@@ -45,22 +41,23 @@
 # define BOLD_CYAN "1;96"
 # define BOLD_WHITE "1;97"
 
-
-
 typedef struct s_command
 {
 	char	*name;
 	char	*option;
+	char	*option2;
 }			t_command;
 
-void		exec_cmd(t_command cmd);
+void		print_in_color(char *color, char *msg);
+void		exec_cmd(t_command cmd, char **envp);
 char		*display_prompt(void);
 char		*get_pwd(void);
 void		parse_cmd(char *str_cmd, t_command *cmd);
 bool		is_white_space(char c);
 char		*trim_str(char *str);
-void change_dir(char *str);
-char *parse_env(char *str);
-void exec_pwd(char *cmd);
-void	clean_table(char **tab);
+void		change_dir(char *str);
+char		*parse_env(char *str);
+void		exec_pwd(char *cmd);
+void		clean_table(char **tab);
+char		**split_with_delimiter(char *s, char c);
 #endif

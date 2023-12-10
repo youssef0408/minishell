@@ -1,29 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yothmani <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/06 18:56:45 by yothmani          #+#    #+#             */
-/*   Updated: 2023/12/09 23:36:47 by yothmani         ###   ########.fr       */
+/*   Created: 2023/02/15 12:02:09 by yothmani          #+#    #+#             */
+/*   Updated: 2023/12/09 01:49:10 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "../includes/libft.h"
 
-char *get_pwd()
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-    char *path;
+	unsigned char	*d;
+	unsigned char	*s;
+	size_t			i;
 
-    path = getcwd(NULL, 0);
-    return(path);
-}
-
-void exec_pwd(char *cmd)
-{
-    if(!strcmp(cmd, ""))
-		    printf("%s\n", get_pwd());
-        else
-            print_in_color(RED, "🚨pwd: too many arguments\n");
+	i = 0;
+	d = (unsigned char *)dst;
+	s = (unsigned char *)src;
+	if (!n || dst == src)
+		return (dst);
+	if (!dst || !src)
+		return (0);
+	while (n > 0)
+	{
+		d[i] = s[i];
+		n--;
+		i++;
+	}
+	return (dst);
 }
