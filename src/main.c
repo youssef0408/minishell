@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: joe_jam <joe_jam@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:22:46 by yothmani          #+#    #+#             */
-/*   Updated: 2023/12/09 20:32:56 by yothmani         ###   ########.fr       */
+/*   Updated: 2023/12/12 19:47:45 by joe_jam          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,6 @@ int	main(int argc, char **argv, char **envp)
 		if (strcmp(cmd_str, ""))
 		{
 			parse_cmd(cmd_str, &cmd);
-			// printf("name: %s\n", cmd.name);
-			// printf("opt: %s\n", cmd.option);
-			// printf("opt2: %s\n", cmd.option2);
 			exec_cmd(cmd, envp);
 		}
 	}

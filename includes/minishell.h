@@ -6,7 +6,7 @@
 /*   By: joe_jam <joe_jam@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:18:40 by yothmani          #+#    #+#             */
-/*   Updated: 2023/12/12 18:11:42 by joe_jam          ###   ########.fr       */
+/*   Updated: 2023/12/12 19:49:16 by joe_jam          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ typedef struct s_command
 	char	*option;
 	char	*option2;
 	char	*cmd_str;
+	char	**history;
 
 }			t_command;
 
