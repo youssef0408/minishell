@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: joe_jam <joe_jam@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:18:40 by yothmani          #+#    #+#             */
-/*   Updated: 2023/12/12 19:49:16 by joe_jam          ###   ########.fr       */
+/*   Updated: 2024/02/06 11:26:18 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,34 @@
 # define MINISHELL_H
 
 # include "../lib/libft/includes/libft.h"
+# include "builtin.h"
+# include "execution.h"
+# include "minishell.h"
+# include "parse.h"
 # include <ctype.h>
 # include <errno.h>
+# include <fcntl.h>
 # include <limits.h>
 # include <math.h>
+# include <readline/history.h>
 # include <readline/readline.h>
+# include <stdarg.h>
 # include <stdbool.h>
 # include <stdint.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+# include <sys/wait.h>
 # include <unistd.h>
 
+/*#############################|| Characters ||#####################*/
+// # define PIPE 124        // |
+// # define REDIR_I 60      // <
+// # define REDIR_O 62      // >
+// # define SINGLE_QUOTE 39 // '
+// # define DOUBLE_QUOTE 34 // "
+
+/*#############################|| Colors ||#####################*/
 # define RED "1;31"
 # define GREEN "1;32"
 # define YELLOW "1;33"
@@ -41,26 +57,69 @@
 # define BOLD_CYAN "1;96"
 # define BOLD_WHITE "1;97"
 
-typedef struct s_command
-{
-	char	*name;
-	char	*option;
-	char	*option2;
-	char	*cmd_str;
-	char	**history;
+/*#############|| Structures and tokens ||################*/
+// typedef enum e_tokentype
+// {
+// 	ALPHA_T = 97,
+// 	REDIR_IN_T = 60,
+// 	REDIR_OUT_T = 62,
+// 	REDIR_AP_T = 43,
+// 	PIPE_T = 124,
+// 	HERE_DOC_T = 45,
+// }				t_tokentype;
 
-}			t_command;
+// typedef struct s_token
+// {
+// 	t_tokentype	type;
+// 	char		*value;
+// 	char		*to_print;
+// 	char		*to_exec;
+// 	char		*end_;
+// 	char		*new_;
+// 	int			i;
+// 	int			init;
+// 	int			len;
+// 	int			pos;
+// 	bool		append;
+// }				t_token;
 
-void		print_in_color(char *color, char *msg);
-void		exec_cmd(t_command cmd, char **envp);
-char		*display_prompt(void);
-char		*get_pwd(void);
-void		parse_cmd(char *str_cmd, t_command *cmd);
-bool		is_white_space(char c);
-char		*trim_str(char *str);
-void		change_dir(char *str);
-char		*parse_env(char *str);
-void		exec_pwd(char *cmd);
-void		clean_table(char **tab);
-char		**split_with_delimiter(char *s, char c);
+/*#############################|| lexer.c ||##############################*/
+t_list			*tokenizer(const char *str, t_list *token_list);
+void			temp_error(int i, t_list *token_list, t_token *token);
+/*#############################|| quote_handler.c ||######################*/
+int				quotes_parser(const char *str, int i, t_token *token,
+					int delimiter);
+
+/*#############################|| utils.c ||##############################*/
+char			*trim_str(char *str);
+void			*safe_calloc(size_t nmemb, size_t size);
+void			print_in_color(char *color, char *msg);
+bool			is_white_space(char c);
+int				ft_strcmp(char *s1, char *s2);
+void			close_pipes(int lst_size, int **pipes);
+/*#############################|| debug.c ||##############################*/
+void			log_printf(const char *format, ...);
+void			print_cmd(void *content);
+void			print_token(void *content);
+
+/*#############################|| Prompt.c ||############################*/
+char			*display_prompt(void);
+static char		*print_colored_message(const char *user, const char *path);
+
+/*#############################|| free_and_exit.c ||#####################*/
+
+void			exit_prg_at_error(char *str);
+void			free_token(void *token_ptr);
+void			free_cmd(void *cmd);
+void			clean_table(char **table);
+void			free_array(void **content);
+
+int	**pipes_creation(int lst_size);
+void	main_exec(t_list *cmd_list, char **envp);
+void clean_process(t_list *token_list, t_list *cmd_list, char *cmd_str);
+
+/*#############################|| signals.c ||#####################*/
+
+void    init_signal_handlers(void);
+
 #endif

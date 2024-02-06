@@ -1,0 +1,18 @@
+
+STR = ls
+(ls) Command Table:
+  ls
+Input File: N/A
+Output File: N/A
+Executing: /bin/ls
+
+STR = ake
+(ake) Command Table:
+  ake
+Input File: N/A
+Output File: N/A
+Executing: ake
+
+STR = (null)
+
+STR = 

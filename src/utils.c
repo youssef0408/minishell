@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 13:59:55 by yothmani          #+#    #+#             */
-/*   Updated: 2023/12/09 21:36:22 by yothmani         ###   ########.fr       */
+/*   Updated: 2023/12/22 21:06:50 by ldufour          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,78 +49,29 @@ char	*trim_str(char *str)
 	return (trimmed_str);
 }
 
-void	clean_table(char **tab)
+void	print_in_color(char *color, char *msg)
 {
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
+	printf("\033[%sm%s\033[0m", color, msg);
 }
 
-static int	ft_count_words(char const *s, char c)
+void	*safe_calloc(size_t nmemb, size_t size)
 {
-	int	count;
+	void	*ret;
 
-	count = 0;
-	while (*s)
-	{
-		if (*s != c)
-		{
-			count++;
-			while (*s != c && *s)
-				s++;
-		}
-		else
-			s++;
-	}
-	return (count);
+	ret = ft_calloc(nmemb, size);
+	if (!ret)
+		exit_prg_at_error("Malloc failure");
+	return (ret);
 }
 
-char	**split_with_delimiter(char *s, char c)
+int	ft_strcmp(char *s1, char *s2)
 {
-	char	**result;
-	int		i;
-	int		j;
-	int		k;
-
-	i = 0;
-	j = 0;
-	k = 0;
-    
-	result = calloc(ft_count_words(s, c) + 3 ,(sizeof(char *) ));
-	if (!result)
-		return (NULL);
-	while (s[j])
+	while (*s1 != '\0' && *s2 != '\0')
 	{
-		if (s[j] != c)
-			j++;
-		else
-		{
-			if (i != j)
-			{
-				result[k] = ft_substr(s, i, j - i);
-				k++;
-			}
-			i = j;
-			j++;
-		}
+		if (*s1 != *s2)
+			return (*s1 - *s2);
+		s1++;
+		s2++;
 	}
-	result[k] = ft_substr(s, i, j - i);
-   
-	return (result);
-}
-
-
-
-
-
-
-void print_in_color(char *color, char *msg) 
-{
-    printf("\033[%sm%s\033[0m", color, msg );
+	return (*s1 - *s2);
 }

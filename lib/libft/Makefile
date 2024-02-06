@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yothmani <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/09 01:24:00 by yothmani          #+#    #+#              #
-#    Updated: 2023/12/09 02:45:02 by yothmani         ###   ########.fr        #
+#    Updated: 2024/02/06 11:35:51 by yothmani         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,15 +27,15 @@ SRC = $(SRC_DIR)/ft_strlen.c $(SRC_DIR)/ft_memset.c $(SRC_DIR)/ft_bzero.c $(SRC_
 $(SRC_DIR)/ft_isalpha.c $(SRC_DIR)/ft_isdigit.c $(SRC_DIR)/ft_isprint.c $(SRC_DIR)/ft_memcpy.c\
 $(SRC_DIR)/ft_toupper.c $(SRC_DIR)/ft_tolower.c $(SRC_DIR)/ft_memmove.c $(SRC_DIR)/ft_memchr.c\
 $(SRC_DIR)/ft_memcmp.c $(SRC_DIR)/ft_strncmp.c $(SRC_DIR)/ft_strrchr.c $(SRC_DIR)/ft_strlcpy.c\
-$(SRC_DIR)/ft_strlcat.c $(SRC_DIR)/ft_atoi.c $(SRC_DIR)/ft_strnstr.c $(SRC_DIR)/ft_calloc.c\
-$(SRC_DIR)/ft_strdup.c $(SRC_DIR)/ft_substr.c $(SRC_DIR)/ft_strjoin.c $(SRC_DIR)/ft_strtrim.c\
-$(SRC_DIR)/ft_split.c $(SRC_DIR)/ft_putnbr_fd.c $(SRC_DIR)/ft_strmapi.c $(SRC_DIR)/ft_itoa.c\
-$(SRC_DIR)/ft_putchar_fd.c $(SRC_DIR)/ft_putstr_fd.c $(SRC_DIR)/ft_putendl_fd.c $(SRC_DIR)/ft_putnbr_fd.c\
-$(SRC_DIR)/ft_putnbr_fd.c $(SRC_DIR)/ft_strmapi.c $(SRC_DIR)/ft_strchr.c $(SRC_DIR)/ft_isascii.c\
-$(SRC_DIR)/ft_striteri.c $(SRC_DIR)/ft_lstmap.c $(SRC_DIR)/ft_lstiter.c\
-$(SRC_DIR)/ft_lstclear.c $(SRC_DIR)/ft_lstdelone.c $(SRC_DIR)/ft_lstadd_back.c\
+$(SRC_DIR)/ft_strlcat.c $(SRC_DIR)/ft_strcpy.c  $(SRC_DIR)/ft_atoi.c $(SRC_DIR)/ft_strcat.c\
+$(SRC_DIR)/ft_strnstr.c $(SRC_DIR)/ft_calloc.c $(SRC_DIR)/ft_strdup.c $(SRC_DIR)/ft_substr.c\
+$(SRC_DIR)/ft_strjoin.c $(SRC_DIR)/ft_strtrim.c $(SRC_DIR)/ft_split.c $(SRC_DIR)/ft_putnbr_fd.c\
+$(SRC_DIR)/ft_strmapi.c $(SRC_DIR)/ft_itoa.c $(SRC_DIR)/ft_putchar_fd.c $(SRC_DIR)/ft_putstr_fd.c\
+$(SRC_DIR)/ft_putendl_fd.c $(SRC_DIR)/ft_putnbr_fd.c $(SRC_DIR)/ft_putnbr_fd.c $(SRC_DIR)/ft_strmapi.c\
+$(SRC_DIR)/ft_strchr.c $(SRC_DIR)/ft_isascii.c $(SRC_DIR)/ft_striteri.c $(SRC_DIR)/ft_lstmap.c\
+$(SRC_DIR)/ft_lstiter.c $(SRC_DIR)/ft_lstclear.c $(SRC_DIR)/ft_lstdelone.c $(SRC_DIR)/ft_lstdeletenode.c\
 $(SRC_DIR)/ft_lstsize.c $(SRC_DIR)/ft_lstlast.c $(SRC_DIR)/ft_lstadd_front.c\
-$(SRC_DIR)/ft_lstnew.c $(SRC_DIR)/ft_putstr.c $(SRC_DIR)/ft_putchar.c\
+$(SRC_DIR)/ft_lstnew.c $(SRC_DIR)/ft_putstr.c $(SRC_DIR)/ft_putchar.c $(SRC_DIR)/ft_lstadd_back.c\
 
 OBJ 				= $(SRC:.c=.o)
 
@@ -59,12 +59,12 @@ norm :
 clean :
 	@printf $(CUT)$(CUT)
 	@$(RM) $(OBJ) libft.dSYM
-	@echo $(BOLD)$(GREEN)"Cleaned objects and executables!" ... 🧹🗑️$(RESET)
+	
 
 fclean : clean
 	@$(RM) $(NAME)
 	@printf $(CUT)$(CUT)
-	@echo $(BOLD)$(GREEN) ✨libft✨ $(PINK)All cleaned up! ....🧹🗑️$(RESET)
+	
 
 re: fclean all
 
