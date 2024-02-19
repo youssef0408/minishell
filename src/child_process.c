@@ -6,11 +6,13 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:40:06 by yothmani          #+#    #+#             */
-/*   Updated: 2024/02/19 14:56:45 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/02/19 15:02:46 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+// TODO: check all of the pipe handlers
 
 char	*get_path(char *str, t_command *cmd)
 {
