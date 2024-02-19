@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 18:45:53 by yothmani          #+#    #+#             */
-/*   Updated: 2024/02/05 16:08:01 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:58:45 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,8 @@ char	*display_prompt(void)
 	char	*read_cmd;
 	char	*msg;
 
-	// path = get_pwd();
-	// msg = print_colored_message(getenv("USER"), path);
-	msg = "Minishell$> ";
+	path = get_pwd();
+	msg = print_colored_message(getenv("USER"), path);
 	read_cmd = readline(msg);
 	return (read_cmd);
 }

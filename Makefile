@@ -6,7 +6,7 @@
 #    By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/30 08:17:58 by ldufour           #+#    #+#              #
-#    Updated: 2024/02/05 14:09:28 by yothmani         ###   ########.fr        #
+#    Updated: 2024/02/19 14:57:27 by yothmani         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,10 +26,12 @@ READLINE_URL    = ftp://ftp.gnu.org/gnu/readline/readline-8.1.tar.gz
 INC             = -I$(INC_DIR) -I$(LIBFT_DIR) $(READLINE_INC)
 LIBS            = -lncurses -L$(READLINE_DIR) -lreadline -lhistory
 
-SRC = $(SRC_DIR)/main.c $(SRC_DIR)/debug.c $(SRC_DIR)/lexer.c $(SRC_DIR)/parser.c $(SRC_DIR)/prompt.c $(SRC_DIR)/builtin/pwd.c $(SRC_DIR)/free_and_exit.c\
-      $(SRC_DIR)/utils.c $(SRC_DIR)/builtin/cd.c  $(SRC_DIR)/env_utils.c $(SRC_DIR)/command_execution.c $(SRC_DIR)/l_error.c\
-      $(SRC_DIR)/builtin/echo.c  $(SRC_DIR)/builtin/env.c  \
-      $(SRC_DIR)/builtin/built_exit.c $(SRC_DIR)/exec_utils.c $(SRC_DIR)/exec_list.c $(SRC_DIR)/lexer_utils.c $(SRC_DIR)/signals.c\
+SRC = $(SRC_DIR)/main.c  $(SRC_DIR)/prompt.c $(SRC_DIR)/builtin/pwd.c\
+      $(SRC_DIR)/utils.c $(SRC_DIR)/builtin/cd.c  $(SRC_DIR)/env_utils.c\
+      $(SRC_DIR)/builtin/echo.c  $(SRC_DIR)/builtin/env.c\
+	  $(SRC_DIR)/tokenizer/redirections.c $(SRC_DIR)/tokenizer/syntax.c $(SRC_DIR)/tokenizer/syntax_error.c\
+	  $(SRC_DIR)/tokenizer/quotes_handler.c $(SRC_DIR)/child_process.c\
+      $(SRC_DIR)/builtin/built_exit.c $(SRC_DIR)/signals.c\
 	  $(SRC_DIR)/builtin/export.c $(SRC_DIR)/builtin/unset.c $(SRC_DIR)/builtin/builtin_execution.c\
 
 OBJ = $(SRC:.c=.o)

@@ -6,61 +6,11 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/05 15:11:42 by yothmani          #+#    #+#             */
-/*   Updated: 2024/02/06 11:40:47 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:15:40 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int	check_syntax_error(t_list **tokens, t_command *cmd)
-{
-	t_list	*ptr;
-
-	ptr = *tokens;
-	while (ptr)
-	{
-		if (!ft_strcmp(ptr->content, "<<"))
-		{
-			if (!ptr->next || !ft_strcmp(ptr->next->content, "<")
-				|| !ft_strcmp(ptr->next->content, ">"))
-				return (exit_tokenizer(cmd, tokens));
-		}
-		if (!ft_strcmp(ptr->content, ">>"))
-		{
-			if (!ptr->next || !ft_strcmp(ptr->next->content, "<")
-				|| ft_strcmp(ptr->next->content, ">"))
-				return (exit_tokenizer(cmd, tokens));
-		}
-		ptr = ptr->next;
-	}
-	return (0)
-}
-
-char	**replace_redirection_operators(char **table)
-{
-	int	i;
-
-	i = 0;
-	while (table[i])
-	{
-		if (!ft_strcmp(table[i], "<"))
-			table[i][0] = '<';
-		else if (!ft_strcmp(table[i], ">"))
-			table[i][0] = '>';
-		else if (!ft_strcmp(table[i], "<<"))
-		{
-			table[i][0] = '<';
-			table[i][1] = '<';
-		}
-		else if (!ft_strcmp(table[i], ">>"))
-		{
-			table[i][0] = '>';
-			table[i][1] = '>';
-		}
-		i++;
-	}
-	return (table);
-}
 
 char **command_table_creation(t_list **tokens, t_command *cmd)
 {
@@ -87,31 +37,6 @@ char **command_table_creation(t_list **tokens, t_command *cmd)
     ft_lstclear(tokens, &void_del);
     return(replace_redirection_operators(table));
 }
-bool quotes_are_not_closed(char *str, t_command *cmd)
-{
-	int		i;
-	char	quote;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\'' || str[i] == '\"')
-		{
-			quote = str[i];
-			i++;
-			while (str[i] != '\0' && str[i] != quote)
-				i++;
-			if (str[i] == '\0')
-			{
-				cmd->exit_status = 1;
-				printf("Quotes are not closed!\n");
-				return (true);
-			}
-		}
-		i++;
-	}
-	return (false);
-}
 
 char **ft_tokenizer(char *str, t_command *cmd)
 {
@@ -120,37 +45,70 @@ char **ft_tokenizer(char *str, t_command *cmd)
     if(quotes_are_not_closed(str, cmd))
         return(NULL);
     tokens = NULL;
-    tokenize(str, cmd, &tokens); //TODO:implement this function
-    if(clean_tokens(&tokens, cmd)) //TODO:implement this function
+    tokenize(str, cmd, &tokens);
+    if(clean_tokens(&tokens, cmd))
         return(NULL);
     if(check_syntax_error(&tokens, cmd))
         return(NULL);
     return(command_table_creation(&tokens, cmd));
 }
 
-int handle_output_redirection(t_list **tokens, t_command *cmd, t_list **ptr)
+int	create_token(t_list **tokenlist,
+				int *i, int *pos, char *str)
 {
-	if(!(*ptr)->next || !ft_strcmp((*ptr)->next->content, "<"))
-		return(exit_tokenizer(cmd, tokens));
-	if(!ft_strcmp((*ptr)->next->content, ">"))
-	{
-		if(ft_strjoin(((char **)&(*ptr)->content), ">"))
-			return(1);
-		ft_lstdeletenode(tokens, (*ptr)->next, &void_del); 
-	}
-	*ptr = (*ptr)->next;
-	return(0);
+	char	*tmp;
+	t_list	*node;
+
+	tmp = ft_substr(str, *pos, *i - *pos);
+	if (tmp == NULL)
+		return (1);
+	node = ft_lstnew(tmp);
+	if (node == NULL)
+		return (1);
+	ft_lstadd_back(tokenlist, node);
+	return (0);
 }
-int handle_input_redirection(t_list **tokens, t_command *cmd, t_list **ptr)
+
+int	split_tokens(t_list **tokenlist, int *i, int *pos, char *str)
 {
-	if(!(*ptr)->next || !ft_strcmp((*ptr)->next->content, ">"))
-		return(exit_tokenizer(cmd, tokens));
-	if(!ft_strcmp((*ptr)->next->content, "<"))
+	if (*i > *pos)
 	{
-		if(ft_strjoin(((char **)&(*ptr)->content), "<"))
-			return(1);
-		ft_lstdeletenode(tokens, (*ptr)->next, &void_del); 
+		if (create_token(tokenlist, i, pos, str))
+			return (1);
+		*pos = *i;
 	}
-	*ptr = (*ptr)->next;
-	return(0);
+	*i = *i + 1;
+	if (create_token(tokenlist, i, pos, str))
+		return (1);
+	*pos = *i;
+	return (0);
+}
+
+void	tokenize(char *str, t_command *cmd, t_list **tokens)
+{
+	int		i;
+	int		pos;
+
+	i = 0;
+	pos = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == '\'' || str[i] == '\"')
+			i += step_through_quote(str + i, str[i]);
+		else if (str[i] == ' ' || str[i] == '\t' || str[i] == '|'
+			|| str[i] == '<' || str[i] == '>')
+		{
+			if (split_tokens(tokens, &i, &pos, str))
+				printf("need to free and exit here\n");
+				// free_and_exit();//TODO:create free_and exit function
+		}
+		else
+			i++;
+	}
+	if (i > pos)
+	{
+		if (create_token(tokens, &i, &pos, str))
+			printf("need to free and exit here\n");
+			// free_and_exit(); //TODO:create free_and exit function
+	}
 }

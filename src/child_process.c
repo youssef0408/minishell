@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 10:40:06 by yothmani          #+#    #+#             */
-/*   Updated: 2024/02/06 11:24:21 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/02/19 14:56:45 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,48 +14,78 @@
 
 char	*get_path(char *str, t_command *cmd)
 {
-	char	**paths_tab;
+	char	**paths;
 	char	*path;
-	char	*tmp;
 	int		i;
-
-	path = cmd->env[find_in_env("PATH=", cmd->env)];
-	if (!path)
-		return (NULL);
-	paths_tab = ft_split(path + 5, ':');
-	i = 0;
-	path = NULL;
-	while (paths_tab[i])
-	{
-		paths_tab[i] = ft_strjoin(paths[i], "/");
-	}
-}
-
-char	*get_path(char *str, t_command *cmd)
-{
-	char **paths;
-	char *path;
-	int i;
-	char *part_path;
+	char	*part_path;
 
 	i = 0;
 	path = cmd->env[find_in_env("PATH=", cmd->env)];
 	if (!path)
 		return (NULL);
 	paths = ft_split(path + 5, ':');
-    path = NULL;
 	i = 0;
 	while (paths[i])
 	{
 		part_path = ft_strjoin(paths[i], "/");
-		path = ft_strjoin(part_path, cmd);
+		path = ft_strjoin(part_path, str);
 		free(part_path);
 		if (access(path, F_OK) == 0)
-			return (path);
-        else
-    		free(path);
+			break ;
+		else
+		{
+			free(path);
+			path = NULL;
+		}
 		i++;
 	}
 	clean_table(paths);
-	return (NULL);
+	return (path);
+}
+
+void	child_exec(t_command *cmd)
+{
+	char	**args;
+	char	*path;
+
+	args = cmd->cmd_table;
+	path = args[0];
+	if (strchr(path, '/') == NULL)
+	{
+		get_path(path, cmd);
+		if (cmd->cmd_table == NULL || cmd->cmd_table[0] == NULL)
+		{
+			printf("%s: %s\n", "command not found:", args[0]);
+			// free_struct(cmd); // TODO: implementer la fonction
+			exit(127);
+		}
+	}
+	if (execve(path, args, cmd->env) == -1)
+	{
+		printf("%s: %s\n", "command not found:", args[0]);
+		// free_struct(cmd); // TODO: implementer la fonction
+		_exit(127);
+	}
+}
+
+int	child_pipe(t_list *cmdlist, t_command *cmd)
+{
+	if ((dup2(((t_command *)cmdlist->content)->fd_input, STDIN_FILENO)) == -1)
+	{
+		printf("%s\n", strerror(errno));
+		// free_struct(cmd); // TODO: implementer la fonction
+		exit(1);
+	}
+	close(((t_command *)cmdlist->content)->fd_input);
+	if ((dup2(((t_command *)cmdlist->content)->fd_output, STDOUT_FILENO)) == -1)
+	{
+		if (errno != EBADF)
+		{
+			printf("%s\n", strerror(errno));
+			// free_struct(cmd); // TODO: implementer la fonction
+			exit(1);
+		}
+	}
+	close(((t_command *)cmdlist->content)->fd_output);
+	return (0);
 }

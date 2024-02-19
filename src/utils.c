@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 13:59:55 by yothmani          #+#    #+#             */
-/*   Updated: 2023/12/22 21:06:50 by ldufour          ###   ########.fr       */
+/*   Updated: 2024/02/19 13:52:05 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,25 @@ int	ft_strcmp(char *s1, char *s2)
 		s2++;
 	}
 	return (*s1 - *s2);
+}
+
+void	clean_table(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
+}
+
+void	exit_prg_at_error(char *str)
+{
+	printf("Error\n");
+	if (str)
+		printf("%s\n", str);
+	exit(EXIT_FAILURE);
 }
