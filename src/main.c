@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 08:37:27 by ldufour           #+#    #+#             */
-/*   Updated: 2024/02/19 15:01:14 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/02/20 16:09:10 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_strcmp(cmd_str, ""))
 		{
 			parse_cmd(cmd_str, &cmd);
-			exec_builtin(cmd, cmd.env);
+			exec_cmd(cmd, cmd.env);
 		}
 		if (cmd_str && cmd_str[0])
 			add_history(cmd_str);

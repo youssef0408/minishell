@@ -6,7 +6,7 @@
 #    By: bplante <bplante@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/30 08:17:58 by ldufour           #+#    #+#              #
-#    Updated: 2024/02/20 15:33:30 by bplante          ###   ########.fr        #
+#    Updated: 2024/02/20 16:11:59 by bplante          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,22 +33,12 @@ SRC_FILES = 	main.c  prompt.c builtin/pwd.c\
 	  			tokenizer/redirections.c tokenizer/syntax.c tokenizer/syntax_error.c\
 	  			tokenizer/quotes_handler.c child_process.c\
       			builtin/built_exit.c signals.c\
-	  			builtin/export.c builtin/unset.c builtin/builtin_execution.c
+	  			builtin/export.c builtin/unset.c builtin/builtin_execution.c \
+				command_execution.c
 
 SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
-
-LOGO_1 =             ▄▄▄▄███▄▄▄▄    ▄█  ███▄▄▄▄    ▄█     ▄████████    ▄█    █▄       ▄████████  ▄█        ▄█               \n
-LOGO_2 =           ▄██▀▀▀███▀▀▀██▄ ███  ███▀▀▀██▄ ███    ███    ███   ███    ███     ███    ███ ███       ███               \n
-LOGO_3 =           ███   ███   ███ ███▌ ███   ███ ███▌   ███    █▀    ███    ███     ███    █▀  ███       ███               \n
-LOGO_4 =           ███   ███   ███ ███▌ ███   ███ ███▌   ███         ▄███▄▄▄▄███▄▄  ▄███▄▄▄     ███       ███               \n
-LOGO_5 =           ███   ███   ███ ███▌ ███   ███ ███▌ ▀███████████ ▀▀███▀▀▀▀███▀  ▀▀███▀▀▀     ███       ███               \n
-LOGO_6 =           ███   ███   ███ ███  ███   ███ ███           ███   ███    ███     ███    █▄  ███       ███               \n
-LOGO_7 =		   ███   ███   ███ ███  ███   ███ ███     ▄█    ███   ███    ███     ███    ███ ███▌    ▄ ███▌    ▄         \n
-LOGO_8 =            ▀█   ███   █▀  █▀    ▀█   █▀  █▀    ▄████████▀    ███    █▀      ██████████ █████▄▄██ █████▄▄██         \n
-
-DISPLAY_LOGOS = printf "\n $(BLUE) %0s $(ART_NAME_1) $(ART_NAME_2) $(ART_NAME_3) $(ART_NAME_4) $(ART_NAME_5) $(ART_NAME_6) $(ART_NAME_7) %0s $(ART_NAME_8) $(END)\n"
 
 all: install $(NAME)
 

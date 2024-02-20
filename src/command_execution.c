@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:20:32 by yothmani          #+#    #+#             */
-/*   Updated: 2024/02/06 11:03:04 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/02/20 16:08:59 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char	*get_cmd_path(char *cmd, char **envp)
 	char	*part_path;
 
 	i = 0;
-	while (ft_strnstr(env[i], "PATH", 4) == 0)
+	while (ft_strnstr(envp[i], "PATH", 4) == 0)
 		i++;
 	paths = ft_split(envp[i] + 5, ':');
 	i = 0;
@@ -41,37 +41,35 @@ static char	*get_cmd_path(char *cmd, char **envp)
 	return (NULL);
 }
 
-// void	exec_cmd(t_command cmd, char **envp)
-// {
-// 	int		i;
-// 	char	*old;
-// 	char	**tmp;
-// 	char	*cmd_path;
-// 	pid_t	pid;
+void	exec_cmd(t_command cmd, char **envp)
+{
+	int		i;
+	char	*old;
+	char	**tmp;
+	char	*cmd_path;
+	pid_t	pid;
 
-// 	i = 0;
-// 	pid = fork();
-// 	if (pid == -1)
-// 		printf(" fork failed\n");
-// 	if (pid ==  0)
-// 	{
-
-// 		cmd.pid = pid;
-		// if (exec_builtin(cmd, cmd.env))
-// 		{
-// 			tmp = ft_split(cmd.cmd_str, ' ');
-// 			cmd_path = get_cmd_path(tmp[0], envp);
-// 			if (!cmd_path || execve(cmd_path, tmp, cmd.env) == -1)
-// 			{
-// 				clean_table(tmp);
-// 				print_in_color(RED, "🚨command not found:  ");
-// 				print_in_color(RED, cmd.name);
-// 				printf("\n");
-// 			}
-// 		}
-// 	}
-// 	waitpid(pid, NULL, 0);
+	i = 0;
+	pid = fork();
+	if (pid == -1)
+		printf(" fork failed\n");
+	if (pid ==  0)
+	{
+		if (exec_builtin(cmd, cmd.env))
+		{
+			tmp = ft_split(cmd.cmd_str, ' ');
+			cmd_path = get_cmd_path(tmp[0], envp);
+			if (!cmd_path || execve(cmd_path, tmp, cmd.env) == -1)
+			{
+				clean_table(tmp);
+				print_in_color(RED, "🚨command not found:  ");
+				print_in_color(RED, cmd.name);
+				printf("\n");
+			}
+		}
+	}
+	waitpid(pid, NULL, 0);
 	
 
-// 	// return (0);
-// }
+	// return (0);
+}
