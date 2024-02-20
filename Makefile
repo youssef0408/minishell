@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+         #
+#    By: bplante <bplante@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/30 08:17:58 by ldufour           #+#    #+#              #
-#    Updated: 2024/02/19 14:57:27 by yothmani         ###   ########.fr        #
+#    Updated: 2024/02/20 14:37:19 by bplante          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -98,4 +98,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re install

@@ -1,4 +1,8 @@
 .vscode
 *.o
 .DS_Store
-unused files
+*.a
+minishell
+lib/readline-8.1/
+
+
