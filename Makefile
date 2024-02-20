@@ -6,7 +6,7 @@
 #    By: bplante <bplante@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/30 08:17:58 by ldufour           #+#    #+#              #
-#    Updated: 2024/02/20 14:37:19 by bplante          ###   ########.fr        #
+#    Updated: 2024/02/20 15:33:30 by bplante          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ CFLAGS          = -g #-Wall -Wextra -Werror
 RM              = rm -rf
 LIBFT           = $(LIBFT_DIR)/libft.a
 SRC_DIR         = src
+OBJ_DIR			= obj
 INC_DIR         = includes
 LIBFT_DIR       = lib/libft
 READLINE_DIR    = lib/readline-8.1
@@ -24,17 +25,19 @@ READLINE_INC    = -I$(READLINE_DIR)/include
 READLINE_URL    = ftp://ftp.gnu.org/gnu/readline/readline-8.1.tar.gz
 
 INC             = -I$(INC_DIR) -I$(LIBFT_DIR) $(READLINE_INC)
-LIBS            = -lncurses -L$(READLINE_DIR) -lreadline -lhistory
+LIBS            = -lncurses -L$(READLINE_DIR) -lreadline -lhistory -Llib/libft -lft
 
-SRC = $(SRC_DIR)/main.c  $(SRC_DIR)/prompt.c $(SRC_DIR)/builtin/pwd.c\
-      $(SRC_DIR)/utils.c $(SRC_DIR)/builtin/cd.c  $(SRC_DIR)/env_utils.c\
-      $(SRC_DIR)/builtin/echo.c  $(SRC_DIR)/builtin/env.c\
-	  $(SRC_DIR)/tokenizer/redirections.c $(SRC_DIR)/tokenizer/syntax.c $(SRC_DIR)/tokenizer/syntax_error.c\
-	  $(SRC_DIR)/tokenizer/quotes_handler.c $(SRC_DIR)/child_process.c\
-      $(SRC_DIR)/builtin/built_exit.c $(SRC_DIR)/signals.c\
-	  $(SRC_DIR)/builtin/export.c $(SRC_DIR)/builtin/unset.c $(SRC_DIR)/builtin/builtin_execution.c\
+SRC_FILES = 	main.c  prompt.c builtin/pwd.c\
+     			utils.c builtin/cd.c  env_utils.c\
+      			builtin/echo.c  builtin/env.c\
+	  			tokenizer/redirections.c tokenizer/syntax.c tokenizer/syntax_error.c\
+	  			tokenizer/quotes_handler.c child_process.c\
+      			builtin/built_exit.c signals.c\
+	  			builtin/export.c builtin/unset.c builtin/builtin_execution.c
 
-OBJ = $(SRC:.c=.o)
+SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
+
+OBJ = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
 LOGO_1 =             ▄▄▄▄███▄▄▄▄    ▄█  ███▄▄▄▄    ▄█     ▄████████    ▄█    █▄       ▄████████  ▄█        ▄█               \n
 LOGO_2 =           ▄██▀▀▀███▀▀▀██▄ ███  ███▀▀▀██▄ ███    ███    ███   ███    ███     ███    ███ ███       ███               \n
@@ -49,9 +52,9 @@ DISPLAY_LOGOS = printf "\n $(BLUE) %0s $(ART_NAME_1) $(ART_NAME_2) $(ART_NAME_3)
 
 all: install $(NAME)
 
-$(NAME):	$(OBJ) $(LIBFT) $(READLINE_LIB)
+$(NAME):	$(OBJ_DIR) $(OBJ) $(LIBFT) $(READLINE_LIB)
 	@$(DISPLAY_LOGOS)
-	@$(CC) $(CFLAGS) -o $@ $^ $(LIBS) $(INC)
+	@$(CC) $(CFLAGS) -o $@ $(OBJ) $(LIBS)
 	@echo $(CUT) $(CUT) 
 	@echo $(BOLD)$(L_PURPLE) Notre minishell est plus mignon qu’un vrai shell  💪💥 $(RESET)	
 
@@ -72,10 +75,12 @@ $(READLINE_DIR):
 $(LIBFT):
 	make -C $(LIBFT_DIR)
 
-%.o: %.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@$(CC) $(CFLAGS) -o $@ -c $< $(INC)
 	@echo "Compiled $<"
 
+$(OBJ_DIR):
+	mkdir -p obj/builtin obj/tokenizer
 readline-8.1_EXISTS := $(wildcard lib/readline-8.1)
 
 install: $(READLINE_LIB)
@@ -88,7 +93,7 @@ norm:
 
 clean:
 	@make -C $(LIBFT_DIR) clean
-	@$(RM) $(OBJ)
+	@$(RM) $(OBJ_DIR)
 	@echo $(BOLD)$(GREEN) Cleaned objects and executables! ... 🧹🗑️$(RESET)
 
 fclean: clean
@@ -97,5 +102,8 @@ fclean: clean
 	@echo $(BOLD)$(L_PURPLE) ✨minishell✨ $(PINK)All cleaned up! ....🧹🗑️$(RESET)
 
 re: fclean all
+
+test:
+	@echo $(OBJ)
 
 .PHONY: all clean fclean re install
