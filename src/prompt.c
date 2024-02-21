@@ -6,7 +6,7 @@
 /*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 18:45:53 by yothmani          #+#    #+#             */
-/*   Updated: 2024/02/21 13:55:45 by bplante/Wal      ###   ########.fr       */
+/*   Updated: 2024/02/21 17:29:49 by bplante/Wal      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ char	*display_prompt(void)
 {
 	char	*path;
 	char	*read_cmd;
-	char	*msg;
+	// char	*msg = "minishell$ ";
 
 	path = get_pwd();
-	msg = print_colored_message(getenv("USER"), path);
+	char *msg = print_colored_message(getenv("USER"), path);
 	read_cmd = readline(msg);
 	return (read_cmd);
 }

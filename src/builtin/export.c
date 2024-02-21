@@ -6,7 +6,7 @@
 /*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:57:48 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/02/21 13:56:36 by bplante/Wal      ###   ########.fr       */
+/*   Updated: 2024/02/21 17:30:01 by bplante/Wal      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ void	export_exec(t_command *cmd)
 		else
 		{
 			tmp = ft_split(cmd->option, '=');
-			handle_export(*cmd, tmp[1], tmp[0]);
+			// handle_export(*cmd, tmp[1], tmp[0]);
+			handle_export(*cmd, parse_env2(*cmd,tmp[1]), parse_env2(*cmd, tmp[0]));
 			return ;
 		}
 	}
