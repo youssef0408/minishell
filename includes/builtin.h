@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:43:37 by yothmani          #+#    #+#             */
-/*   Updated: 2024/02/06 11:25:34 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/02/21 13:58:24 by bplante/Wal      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTIN_H
 # define BUILTIN_H
-# include "../lib/libft/includes/libft.h"
-# include "minishell.h"
-# include <signal.h>
+# include "libft/includes/libft.h"
+# include "includes/minishell.h"
 
 typedef struct s_command
 {

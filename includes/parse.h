@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 16:00:23 by yothmani          #+#    #+#             */
-/*   Updated: 2024/02/19 13:10:11 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/02/21 13:57:54 by bplante/Wal      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
 # define PARSE_H
 # include "builtin.h"
-# include "minishell.h"
+# include "includes/minishell.h"
 # include <stdbool.h>
 
 char	*parse_env(char *str);
