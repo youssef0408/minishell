@@ -6,7 +6,7 @@
 #    By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/30 08:17:58 by ldufour           #+#    #+#              #
-#    Updated: 2024/02/21 14:00:13 by bplante/Wal      ###   ########.fr        #
+#    Updated: 2024/02/21 14:09:42 by bplante/Wal      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ READLINE_INC    = -I$(READLINE_DIR)
 READLINE_URL    = ftp://ftp.gnu.org/gnu/readline/readline-8.1.tar.gz
 
 INC             = -Ilib $(READLINE_INC) -I.
-LIBS            = -lncurses -L$(READLINE_DIR) -lreadline -lhistory -Llib/libft -lft
+LIBS            = -L$(READLINE_DIR) -lreadline -lhistory -Llib/libft -lft -lncurses
 
 SRC_FILES = 	main.c  prompt.c builtin/pwd.c\
      			utils.c builtin/cd.c  env_utils.c\
@@ -42,7 +42,7 @@ OBJ = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
 all: $(NAME)
 
-$(NAME):	$(OBJ_DIR) $(OBJ) $(LIBFT) 
+$(NAME): $(OBJ_DIR) $(OBJ) $(LIBFT) $(READLINE_LIB)
 	@$(DISPLAY_LOGOS)
 	@$(CC) $(CFLAGS) -o $@ $(OBJ) $(LIBS)
 	@echo $(CUT) $(CUT) 

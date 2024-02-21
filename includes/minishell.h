@@ -6,24 +6,24 @@
 /*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:18:40 by yothmani          #+#    #+#             */
-/*   Updated: 2024/02/21 13:59:08 by bplante/Wal      ###   ########.fr       */
+/*   Updated: 2024/02/21 14:11:15 by bplante/Wal      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "libft/includes/libft.h"
 # include "builtin.h"
 # include "execution.h"
+# include "libft/includes/libft.h"
 # include "parse.h"
 # include <ctype.h>
 # include <errno.h>
 # include <fcntl.h>
+# include <lib/readline-8.1/history.h>
+# include <lib/readline-8.1/readline.h>
 # include <limits.h>
 # include <math.h>
-# include <readline/history.h>
-# include <readline/readline.h>
 # include <signal.h>
 # include <stdarg.h>
 # include <stdbool.h>
