@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 16:00:23 by yothmani          #+#    #+#             */
-/*   Updated: 2024/02/21 13:57:54 by bplante/Wal      ###   ########.fr       */
+/*   Updated: 2024/02/27 18:58:56 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,7 @@ int		step_through_quote(char *str, char quote);
 int		create_token(t_list **tokenlist, int *i, int *pos, char *str);
 int		split_tokens(t_list **tokenlist, int *i, int *pos, char *str);
 void	tokenize(char *str, t_command *cmd, t_list **tokens);
+
+char	*ft_strndup(char *src, int n);
 
 #endif
