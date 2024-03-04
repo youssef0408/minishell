@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/21 13:30:34 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/04 14:22:12 by bplante          ###   ########.fr       */
+/*   Created: 2024/03/02 15:57:45 by bplante           #+#    #+#             */
+/*   Updated: 2024/03/02 15:57:57 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/libft.h"
+#include "includes/minishell.h"
 
-char	*ft_strcpy(char *dest, const char *src)
+int	ft_strcmp(char *s1, char *s2)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (src[i])
+	if (!s1)
+		return (1);
+	while (s1[i] || s2[i])
 	{
-		dest[i] = src[i];
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
 		i++;
 	}
-	dest[i] = src[i];
-	return (dest);
+	return (0);
 }

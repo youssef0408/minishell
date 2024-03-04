@@ -17,7 +17,16 @@
 #define R_IN_FILE 2
 #define R_OUT_APPEND 3
 #define R_OUT_TRUNC 4
-#define R_ERROR 5
+#define R_AMBIGUOUS 5
+
+typedef struct s_expansion
+{
+	const char		*value;
+	bool			is_quoted;
+	int				start;
+	int				len;
+	int				key_len;
+}					t_expansions;
 
 typedef struct s_redirection
 {
@@ -31,22 +40,48 @@ typedef struct s_cmd_parse
 	t_redirection	**redirections;
 }					t_cmd_parse;
 
-struct				s_litteral_tracker
+typedef struct s_litteral_tracker
 {
 	int				is_lit;
 	char			quote;
-};
+}					t_lt;
 
 #define META_C 0
 #define DATA 1
 
-struct				s_token
+typedef struct s_token
 {
 	int				data_type;
 	uint64_t		data;
-};
+	t_list			*expansions;
+	char			*original;
+}					t_tkn;
 
-bool	is_litteral(char c, struct s_litteral_tracker *lt)
+const char	*get_env(char **env, char *key)
+{
+	int		i;
+	int		j;
+	char	*sub_str;
+
+	i = 0;
+	while (env[i])
+	{
+		j = 0;
+		while (env[i][j] && env[i][j] != '=')
+			j++;
+		sub_str = ft_substr(env[i], 0, j);
+		if (ft_strcmp(sub_str, key) == 0)
+		{
+			free(sub_str);
+			return (&env[i][j] + 1);
+		}
+		free(sub_str);
+		i++;
+	}
+	return (NULL);
+}
+
+bool	lit_track(char c, struct s_litteral_tracker *lt)
 {
 	if (c == '\\' && ((lt->quote == 0 && lt->is_lit == 0) || (lt->quote == '\"'
 				&& lt->is_lit == 1)))
@@ -84,7 +119,7 @@ char	is_string_over(char *input)
 	i = 0;
 	while (input[i])
 	{
-		is_litteral(input[i], &lt);
+		lit_track(input[i], &lt);
 		i++;
 	}
 	if (lt.is_lit >= 1)
@@ -97,7 +132,7 @@ char	is_string_over(char *input)
 	return (0);
 }
 
-int	count_spaces(char *str)
+int	count_spaces(const char *str)
 {
 	int	i;
 
@@ -111,7 +146,7 @@ int	count_spaces(char *str)
 	return (i);
 }
 
-int	find_meta_type(char *str, struct s_token *token)
+int	find_meta_type(char *str, t_tkn *token)
 {
 	if (str[0] == '|')
 	{
@@ -142,11 +177,11 @@ int	find_meta_type(char *str, struct s_token *token)
 
 int	store_meta(char *str, t_list **tokens)
 {
-	t_list			*new;
-	int				i;
-	struct s_token	*token;
+	t_list	*new;
+	int		i;
+	t_tkn	*token;
 
-	token = ft_calloc(1, sizeof(struct s_token));
+	token = ft_calloc(1, sizeof(t_tkn));
 	if (!token)
 		return (-1);
 	new = ft_lstnew((void *)token);
@@ -172,7 +207,7 @@ int	count_data_len(char *str)
 	while (((!lt.is_lit && !(str[i] == ' ' || str[i] == '|' || str[i] == '<'
 					|| str[i] == '>')) || lt.is_lit > 0) && str[i])
 	{
-		is_litteral(str[i], &lt);
+		lit_track(str[i], &lt);
 		i++;
 	}
 	return (i);
@@ -180,11 +215,11 @@ int	count_data_len(char *str)
 
 int	store_data(char *str, t_list **tokens)
 {
-	struct s_token	*token;
-	t_list			*new;
-	int				len;
+	t_tkn	*token;
+	t_list	*new;
+	int		len;
 
-	token = ft_calloc(1, sizeof(struct s_token));
+	token = ft_calloc(1, sizeof(t_tkn));
 	if (!token)
 		return (-1);
 	new = ft_lstnew((void *)token);
@@ -235,11 +270,11 @@ int	tokenise(char *input, t_list **tokens)
 
 void	free_token(void *tk)
 {
-	struct s_token	*token;
+	t_tkn	*token;
 
 	if (!tk)
 		return ;
-	token = (struct s_token *)tk;
+	token = (t_tkn *)tk;
 	if (token->data_type == DATA)
 	{
 		if (token->data)
@@ -248,30 +283,30 @@ void	free_token(void *tk)
 	free(token);
 }
 
-int	count_cmd_blocks(t_list *parsed_in)
+int	count_cmd_blocks(t_list *tokens)
 {
-	struct s_token	*tk;
-	int				block_count;
+	t_tkn	*tk;
+	int		block_count;
 
-	if (!parsed_in)
+	if (!tokens)
 		return (0);
 	block_count = 1;
-	while (parsed_in->next)
+	while (tokens->next)
 	{
-		tk = (struct s_token *)parsed_in->content;
+		tk = (t_tkn *)tokens->content;
 		if (tk->data_type == META_C && tk->data == PIPE)
 			block_count++;
-		parsed_in = parsed_in->next;
+		tokens = tokens->next;
 	}
 	return (block_count);
 }
 
-int	create_cmd_parse_array(t_list *parsed_in, t_cmd_parse ***cmd_p)
+int	create_cmd_parse_array(t_list *tokens, t_cmd_parse ***cmd_p)
 {
 	int	cmd_count;
 	int	i;
 
-	cmd_count = count_cmd_blocks(parsed_in);
+	cmd_count = count_cmd_blocks(tokens);
 	if (cmd_count == 0)
 	{
 		**cmd_p = NULL;
@@ -292,9 +327,9 @@ int	create_cmd_parse_array(t_list *parsed_in, t_cmd_parse ***cmd_p)
 
 bool	is_redirection(void *token)
 {
-	struct s_token	*tk;
+	t_tkn	*tk;
 
-	tk = (struct s_token *)token;
+	tk = (t_tkn *)token;
 	if (tk->data_type == META_C && tk->data != PIPE)
 		return (true);
 	return (false);
@@ -302,79 +337,138 @@ bool	is_redirection(void *token)
 
 bool	is_pipe(void *token)
 {
-	struct s_token	*tk;
+	t_tkn	*tk;
 
-	tk = (struct s_token *)token;
+	tk = (t_tkn *)token;
 	if (tk->data_type == META_C && tk->data == PIPE)
 		return (true);
 	return (false);
 }
 
-int	count_redirect(t_list *parsed_in)
+bool	is_cmd_block_end(t_list *parsedin)
 {
-	struct s_token	*tk;
-	int				count;
+	if (!parsedin)
+		return (true);
+	if (((t_tkn *)parsedin->content)->data_type == META_C
+		&& ((t_tkn *)parsedin->content)->data == PIPE)
+		return (true);
+	return (false);
+}
+
+int	count_redirect(t_list *tokens)
+{
+	t_tkn	*tk;
+	int		count;
 
 	count = 0;
-	while (parsed_in)
+	while (!is_cmd_block_end(tokens))
 	{
-		tk = (struct s_token *)parsed_in->content;
+		tk = (t_tkn *)tokens->content;
 		if (tk->data_type == META_C && tk->data == PIPE)
 			break ;
 		if (tk->data_type == META_C && tk->data != PIPE)
 			count++;
-		parsed_in = parsed_in->next;
+		tokens = tokens->next;
 	}
 	return (count);
 }
 
-int	store_redirection_info(t_list *parsed_in, t_cmd_parse *cmd_p, int type,
-		int i)
+int	count_split_var(t_list *expansions, char *data)
 {
-	struct s_token	*tk;
+	int				i;
+	bool			has_char;
+	t_expansions	*exp;
+	bool			is_in_var;
+	int				count;
 
-	tk = (struct s_token *)parsed_in->content;
+	count = 0;
+	has_char = false;
+	is_in_var = false;
+	if (!expansions)
+		return (1);
+	i = 0;
+	exp = (t_expansions *)expansions->content;
+	while (data[i] && expansions)
+	{
+		if (is_in_var && !(i >= exp->start && i < exp->start + exp->len))
+		{
+			is_in_var = false;
+			expansions = expansions->next;
+			if (expansions)
+				exp = (t_expansions *)expansions->content;
+			else
+				break ;
+		}
+		if (i >= exp->start && i < exp->start + exp->len)
+			is_in_var = true;
+		if (has_char && is_in_var && !exp->is_quoted && data[i] == ' ')
+		{
+			count++;
+			has_char = false;
+		}
+		else if (!has_char && ((is_in_var && !exp->is_quoted && data[i] != ' ')
+				|| exp->is_quoted))
+		{
+			has_char = true;
+		}
+		i++;
+	}
+	if (has_char)
+		count++;
+	else if (!has_char && data[i + 1] != 0)
+		count++;
+	return (count);
+}
+
+int	store_redirection_info(t_tkn *tk, t_cmd_parse *cmd_p, int type, int i)
+{
+	int	count;
+
+	count = 1;
+	if (tk->data != R_HERE_DOC)
+		count = count_split_var(tk->expansions, (char *)tk->data);
 	cmd_p->redirections[i]->redirect_type = type;
+	if (count != 1)
+	{
+		cmd_p->redirections[i]->redirect_type = R_AMBIGUOUS;
+		cmd_p->redirections[i]->str = ft_strdup(tk->original);
+	}
 	cmd_p->redirections[i]->str = ft_strdup((char *)tk->data);
 	// TODO check alloc return value
 	return (0);
 }
 
-int	fill_redirection(t_list *parsed_in, t_cmd_parse *cmd_p)
+int	fill_redirection(t_list *tokens, t_cmd_parse *cmd_p)
 {
-	struct s_token	*tk;
-	int				red_type;
-	int				count;
+	t_tkn	*tk;
+	int		red_type;
+	int		count;
 
 	count = 0;
 	red_type = 0;
-	while (parsed_in)
+	while (!is_cmd_block_end(tokens))
 	{
-		tk = (struct s_token *)parsed_in->content;
+		tk = (t_tkn *)tokens->content;
 		if (tk->data_type == META_C)
-		{
-			if (tk->data == PIPE)
-				break ;
-			else
-				red_type = ((struct s_token *)parsed_in->content)->data;
-		}
+			red_type = ((t_tkn *)tokens->content)->data;
 		else if (red_type)
 		{
-			store_redirection_info(parsed_in, cmd_p, red_type, count);
+			store_redirection_info((t_tkn *)tokens->content, cmd_p, red_type,
+				count);
 			red_type = 0;
 			count++;
 		}
-		parsed_in = parsed_in->next;
+		tokens = tokens->next;
 	}
 	return (0);
 }
 
-int	alloc_redirection_array(t_list *parsed_in, t_cmd_parse *cmd_p)
+int	alloc_redirection_array(t_list *tokens, t_cmd_parse *cmd_p)
 {
 	int	count;
 	int	i;
 
-	count = count_redirect(parsed_in);
+	count = count_redirect(tokens);
 	if (count)
 	{
 		i = 0;
@@ -389,43 +483,198 @@ int	alloc_redirection_array(t_list *parsed_in, t_cmd_parse *cmd_p)
 	return (count);
 }
 
-int	get_redirections(t_list *parsed_in, t_cmd_parse *cmd_p)
+int	get_redirections(t_list *tokens, t_cmd_parse *cmd_p)
 {
 	int	temp;
 
-	temp = alloc_redirection_array(parsed_in, cmd_p);
+	temp = alloc_redirection_array(tokens, cmd_p);
 	if (temp > 0)
-		fill_redirection(parsed_in, cmd_p);
+		fill_redirection(tokens, cmd_p);
 	else if (temp == -1)
 		return (-1);
 	return (0);
 }
 
-int	fill_cmd_struct(t_list *parsed_in, t_cmd_parse *cmd_p, char **envp)
+int	fill_cmd_struct(t_list *tokens, t_cmd_parse *cmd_p, char **envp)
 {
-	
-	get_redirections(parsed_in, cmd_p);
-	
+	get_redirections(tokens, cmd_p);
 }
 
-int	token_to_cmd(t_list *parsed_in, t_cmd_parse ***cmd_p, char **envp)
+int	token_to_cmd(t_list *tokens, t_cmd_parse ***cmd_p, char **envp)
 {
 	int		i;
 	t_list	*list_start;
 
-	list_start = parsed_in;
-	create_cmd_parse_array(parsed_in, cmd_p);
+	list_start = tokens;
+	create_cmd_parse_array(tokens, cmd_p);
 	i = 0;
-	while (*cmd_p[i])
+	while ((*cmd_p)[i])
 	{
-		fill_cmd_struct(parsed_in, **cmd_p, envp);
+		fill_cmd_struct(tokens, **cmd_p, envp);
 		i++;
+	}
+}
+
+// create expantion struct and and add if its quote or not, add start if isnt
+int	store_value_from_env(char *str, char **envp, t_tkn *tk, int start)
+{
+	int				i;
+	char			*key;
+	const char		*value;
+	t_list			*new;
+	t_expansions	*expansion;
+
+	i = 0;
+	while (ft_isalnum(str[i]))
+		i++;
+	key = ft_strndup(str, i);
+	value = get_env(envp, key);
+	if (!value)
+		value = ft_strdup("");
+	expansion = ft_calloc(sizeof(t_expansions), 1);
+	// TODO verify alloc return value
+	expansion->value = value;
+	expansion->start = start;
+	expansion->len = ft_strlen(value);
+	expansion->key_len = ft_strlen(key);
+	new = ft_lstnew((void *)expansion);
+	ft_lstadd_back(&tk->expansions, new);
+	free(key);
+	return (i);
+}
+// create expantion struct and and add if its quote or not, add start if isnt
+// int store_value_from_env(char *strstart
+int	check_and_fetch(t_tkn *token, char **envp)
+{
+	char						*data;
+	struct s_litteral_tracker	lt;
+	int							i;
+
+	lt.is_lit = 0;
+	lt.quote = 0;
+	data = (char *)token->data;
+	i = 0;
+	while (data[i])
+	{
+		if (data[i] == '$' && (lt.is_lit == 0 || (lt.quote == '\"'
+					&& lt.is_lit == 1)))
+		{
+			i += store_value_from_env(&data[i + 1], envp, token, i);
+		}
+		lit_track(data[i], &lt);
+		i++;
+	}
+	return (0);
+}
+
+int	load_vars_per_token(t_list *tokens, char **envp)
+{
+	while (tokens)
+	{
+		if (((t_tkn *)tokens->content)->data_type == DATA)
+		{
+			check_and_fetch((t_tkn *)tokens->content, envp);
+		}
+		tokens = tokens->next;
+	}
+	return (0);
+}
+
+bool	is_printed(char *str, struct s_litteral_tracker *lt)
+{
+	lit_track(str[0], lt);
+	if (lt->is_lit == 1 && lt->quote == str[0])
+		return (false);
+	if (lt->is_lit == 0 && (str[0] == '\'' || str[0] == '\"'))
+		return (false);
+	if (str[0] == '\\' && ((lt->is_lit == 0) || (lt->is_lit == 1
+				&& str[1] == '\"' || str[1] == '$' || str[1] == '\\')))
+		return (false);
+	return (true);
+}
+
+int	count_new_data_size(char *str, t_list *expansions)
+{
+	struct s_litteral_tracker	lt;
+	int							i;
+	int							count;
+
+	lt.is_lit = 0;
+	lt.quote = 0;
+	i = 0;
+	count = 0;
+	while (str[i])
+	{
+		if (str[i] == '$' && (lt.is_lit == 0 || (lt.quote == '\"'
+					&& lt.is_lit == 1)))
+		{
+			((t_expansions *)expansions->content)->is_quoted = lt.is_lit;
+			((t_expansions *)expansions->content)->start = count;
+			count += ((t_expansions *)expansions->content)->len;
+			i += ((t_expansions *)expansions->content)->key_len;
+			expansions = expansions->next;
+		}
+		else if (is_printed(&str[i], &lt))
+			count++;
+		i++;
+	}
+	return (count);
+}
+
+int	fill_new_data(char *new_string, char *original, t_list *expansions)
+{
+	struct s_litteral_tracker	lt;
+	int							i;
+	int							j;
+
+	j = 0;
+	i = 0;
+	lt.is_lit = 0;
+	lt.quote = 0;
+	while (original[j])
+	{
+		if (original[j] == '$' && (lt.is_lit == 0 || (lt.quote == '\"'
+					&& lt.is_lit == 1)))
+		{
+			ft_strcpy(&new_string[i],
+				((t_expansions *)expansions->content)->value);
+			j += ((t_expansions *)expansions->content)->key_len;
+			i += ((t_expansions *)expansions->content)->len;
+			expansions = expansions->next;
+		}
+		else if (is_printed(&original[j], &lt))
+			new_string[i++] = original[j];
+		j++;
+	}
+}
+
+int	expand(t_tkn *tk)
+{
+	int	count;
+
+	tk->original = (char *)tk->data;
+	count = count_new_data_size((char *)tk->data, tk->expansions);
+	tk->data = (uint64_t)ft_calloc(sizeof(char), count + 1);
+	fill_new_data((char *)tk->data, tk->original, tk->expansions);
+}
+
+int	expand_vars(t_list *tokens)
+{
+	t_tkn	*tk;
+
+	while (tokens)
+	{
+		tk = (t_tkn *)tokens->content;
+		if (tk->data_type == DATA)
+			expand(tk);
+		tokens = tokens->next;
 	}
 }
 
 int	parse_input(char *input, t_cmd_parse ***input_parse, char **envp)
 {
-	t_list *tokens;
+	t_list	*tokens;
+
 	if (is_string_over(input) != 0)
 	{
 		// TODO print error message
@@ -438,5 +687,7 @@ int	parse_input(char *input, t_cmd_parse ***input_parse, char **envp)
 		return (-1);
 	}
 	// TODO check for syntax error (token that needs data after has token instead)
+	load_vars_per_token(tokens, envp);
+	expand_vars(tokens);
 	token_to_cmd(tokens, input_parse, envp);
 }
