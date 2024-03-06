@@ -6,7 +6,7 @@
 /*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:41:40 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/04 17:57:10 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/06 13:37:14 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ int	count_redirect(t_list *tokens)
 	return (count);
 }
 
+
+//TODO improve
 int	count_split_var(t_list *expansions, char *data)
 {
 	int				i;
@@ -38,12 +40,12 @@ int	count_split_var(t_list *expansions, char *data)
 	bool			is_in_var;
 	int				count;
 
-	count = 0;
-	has_char = false;
-	is_in_var = false;
 	if (!expansions)
 		return (1);
 	i = 0;
+	count = 0;
+	has_char = false;
+	is_in_var = false;
 	exp = (t_expansions *)expansions->content;
 	while (data[i] && expansions)
 	{
@@ -72,7 +74,7 @@ int	count_split_var(t_list *expansions, char *data)
 	}
 	if (has_char)
 		count++;
-	else if (!has_char && data[i + 1] != 0)
+	else if (!has_char && ((data[i] && data[i + 1]) || exp->is_quoted))
 		count++;
 	return (count);
 }
@@ -82,7 +84,9 @@ int	store_redirection_info(t_tkn *tk, t_cmd_parse *cmd_p, int type, int i)
 	int	count;
 
 	count = 1;
-	if (tk->data != R_HERE_DOC)
+	if (tk->data == R_HERE_DOC)
+		cmd_p->redirections[i]->str = ft_strdup(tk->original);
+	else
 		count = count_split_var(tk->expansions, (char *)tk->data);
 	cmd_p->redirections[i]->redirect_type = type;
 	if (count != 1)
@@ -140,7 +144,7 @@ int	alloc_redirection_array(t_list *tokens, t_cmd_parse *cmd_p)
 	return (count);
 }
 
-int	get_redirections(t_list *tokens, t_cmd_parse *cmd_p)
+int	extract_redirections(t_list *tokens, t_cmd_parse *cmd_p)
 {
 	int	temp;
 

@@ -6,7 +6,7 @@
 /*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:29:23 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/04 17:57:15 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/06 13:50:00 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,19 @@
 
 bool	is_printed(char *str, struct s_litteral_tracker *lt)
 {
+	int	temp;
+
+	temp = lt->is_lit;
 	lit_track(str[0], lt);
+	if (temp == 2)
+		return (true);
 	if (lt->is_lit == 1 && lt->quote == str[0])
 		return (false);
 	if (lt->is_lit == 0 && (str[0] == '\'' || str[0] == '\"'))
 		return (false);
-	if (str[0] == '\\' && ((lt->is_lit == 0) || (lt->is_lit == 1
-				&& str[1] == '\"' || str[1] == '$' || str[1] == '\\')))
+	if (str[0] == '\\' && ((lt->is_lit == 1 && lt->quote == 0)
+			|| (lt->is_lit == 2 && str[1] == '\"' || str[1] == '$'
+				|| str[1] == '\\')))
 		return (false);
 	return (true);
 }
@@ -80,6 +86,24 @@ int	fill_new_data(char *new_string, char *original, t_list *expansions)
 	}
 }
 
+void	remove_quoted_expansions(t_list **expansions)
+{
+	t_list			*lst_p;
+	t_expansions	*exp;
+	t_list			*temp;
+
+	lst_p = *expansions;
+	while (lst_p)
+	{
+		temp = lst_p->next;
+		exp = (t_expansions *)lst_p->content;
+		if (exp->is_quoted)
+			ft_lstdeletenode(expansions, lst_p, &free);
+		lst_p = temp;
+	}
+}
+
+// TODO remove quoted expansions from list
 int	expand(t_tkn *tk)
 {
 	int	count;
@@ -88,6 +112,7 @@ int	expand(t_tkn *tk)
 	count = count_new_data_size((char *)tk->data, tk->expansions);
 	tk->data = (uint64_t)ft_calloc(sizeof(char), count + 1);
 	fill_new_data((char *)tk->data, tk->original, tk->expansions);
+	remove_quoted_expansions(&tk->expansions);
 }
 
 int	expand_vars(t_list *tokens)

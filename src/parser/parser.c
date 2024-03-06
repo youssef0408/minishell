@@ -155,12 +155,160 @@ bool	is_cmd_block_end(t_list *parsedin)
 	return (false);
 }
 
-int	fill_cmd_struct(t_list *tokens, t_cmd_parse *cmd_p, char **envp)
+int	lst_auto_add_back(t_list **lst, void *content)
 {
-	get_redirections(tokens, cmd_p);
+	t_list	*new;
+
+	new = ft_lstnew(content);
+	if (!new)
+		return (-1);
+	ft_lstadd_back(lst, new);
+	return (0);
 }
 
-int	token_to_cmd(t_list *tokens, t_cmd_parse ***cmd_p, char **envp)
+int	count_arg_size(char *str, t_list **expansions, bool *isquoted, int start)
+{
+	int				i;
+	t_expansions	*exp;
+
+	i = start;
+	exp = (t_expansions *)(*expansions)->content;
+	while (str[i])
+	{
+		if (i >= exp->start + exp->len)
+		{
+			*isquoted = true;
+			*expansions = (*expansions)->next;
+			if (*expansions)
+				exp = (t_expansions *)(*expansions)->content;
+			else
+				return (i + ft_strlen(&str[i]));
+		}
+		if (i == exp->start && !exp->is_quoted)
+			*isquoted = false;
+		if (str[i] == ' ' && !(*isquoted))
+			break ;
+		i++;
+	}
+	return (i - start);
+}
+
+int	count_var_space(char *str, t_list **expansions, bool *isquoted, int start)
+{
+	int				i;
+	t_expansions	*exp;
+
+	i = start;
+	exp = (t_expansions *)(*expansions)->content;
+	while (str[i])
+	{
+		if ((!(*isquoted) && str[i] != ' ') || *isquoted)
+			break ;
+		if (i == exp->start && !exp->is_quoted)
+			*isquoted = false;
+		if (!(*isquoted) && i >= exp->start + exp->len)
+		{
+			*isquoted = true;
+			*expansions = (*expansions)->next;
+			if (*expansions)
+				exp = (t_expansions *)(*expansions)->content;
+		}
+		i++;
+	}
+	return (i - start);
+}
+
+int	temp(t_tkn *tk, t_list **args)
+{
+	int		size;
+	int		i;
+	char	*str;
+	t_list	*exp;
+	bool	isquoted;
+
+	i = 0;
+	exp = tk->expansions;
+	if (!exp)
+	{
+		str = ft_strdup((char *)tk->data);
+		// TODO check malloc return value
+		lst_auto_add_back(args, (void *)str);
+		return (0);
+	}
+	if (count_split_var(tk->expansions, (char *)tk->data) == 0)
+		return (0);
+	isquoted = true;
+	while (((char *)tk->data)[i])
+	{
+		i += count_var_space(((char *)tk->data), &exp, &isquoted, i);
+		size = count_arg_size(((char *)tk->data), &exp, &isquoted, i);
+		str = ft_strndup(&((char *)tk->data)[i], size);
+		lst_auto_add_back(args, (void *)str);
+		i += size;
+	}
+}
+
+void	*lst_to_array(t_list *args)
+{
+	char	**array;
+	int		i;
+	int		size;
+
+	size = ft_lstsize(args);
+	array = ft_calloc(sizeof(char *), size + 1);
+	i = 0;
+	while (i < size)
+	{
+		array[i] = (char *)args->content;
+		args = args->next;
+		i++;
+	}
+	return ((void *)array);
+}
+
+int	get_split_args(t_list *tokens, t_cmd_parse *cmd_p)
+{
+	t_list	*args;
+	bool	is_red_data;
+	t_tkn	*tk;
+
+	is_red_data = false;
+	args = NULL;
+	while (!is_cmd_block_end(tokens))
+	{
+		tk = (t_tkn *)tokens->content;
+		if (tk->data_type == META_C)
+			is_red_data = true;
+		else if (is_red_data)
+			is_red_data = false;
+		else
+			temp(tk, &args);
+		tokens = tokens->next;
+	}
+	cmd_p->cmds = (char **)lst_to_array(args);
+}
+
+int	fill_cmd_struct(t_list *tokens, t_cmd_parse *cmd_p)
+{
+	extract_redirections(tokens, cmd_p);
+	get_split_args(tokens, cmd_p);
+}
+
+t_list	*get_to_next_cmd(t_list *tokens)
+{
+	t_tkn	*tk;
+
+	while (tokens)
+	{
+		tk = (t_tkn *)tokens->content;
+		if (tk->data_type == META_C && tk->data == PIPE)
+			return (tokens->next);
+		tokens = tokens->next;
+	}
+	return (tokens);
+}
+
+int	token_to_cmd(t_list *tokens, t_cmd_parse ***cmd_p)
 {
 	int		i;
 	t_list	*list_start;
@@ -170,7 +318,8 @@ int	token_to_cmd(t_list *tokens, t_cmd_parse ***cmd_p, char **envp)
 	i = 0;
 	while ((*cmd_p)[i])
 	{
-		fill_cmd_struct(tokens, **cmd_p, envp);
+		fill_cmd_struct(tokens, **cmd_p);
+		tokens = get_to_next_cmd(tokens);
 		i++;
 	}
 }
@@ -193,5 +342,5 @@ int	parse_input(char *input, t_cmd_parse ***input_parse, char **envp)
 	// TODO check for syntax error (token that needs data after has token instead)
 	load_vars_per_token(tokens, envp);
 	expand_vars(tokens);
-	token_to_cmd(tokens, input_parse, envp);
+	token_to_cmd(tokens, input_parse);
 }

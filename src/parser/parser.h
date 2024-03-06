@@ -6,7 +6,7 @@
 /*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:30:11 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/04 17:55:52 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/06 12:12:56 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,14 @@ typedef struct s_token
 int					expand_vars(t_list *tokens);
 int					tokenise(char *input, t_list **tokens);
 int					load_vars_per_token(t_list *tokens, char **envp);
-int					get_redirections(t_list *tokens, t_cmd_parse *cmd_p);
+int					extract_redirections(t_list *tokens, t_cmd_parse *cmd_p);
 int					expand_vars(t_list *tokens);
 int					parse_input(char *input, t_cmd_parse ***input_parse,
 						char **envp);
 const char			*get_env(char **env, char *key);
 bool				lit_track(char c, struct s_litteral_tracker *lt);
 bool				is_cmd_block_end(t_list *parsedin);
+
+int					count_split_var(t_list *expansions, char *data);
 
 #endif
