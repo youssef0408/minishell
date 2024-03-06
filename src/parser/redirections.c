@@ -6,7 +6,7 @@
 /*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:41:40 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/06 13:37:14 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/06 16:04:37 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ int	count_redirect(t_list *tokens)
 	return (count);
 }
 
-
-//TODO improve
+// TODO improve
 int	count_split_var(t_list *expansions, char *data)
 {
 	int				i;
@@ -94,7 +93,8 @@ int	store_redirection_info(t_tkn *tk, t_cmd_parse *cmd_p, int type, int i)
 		cmd_p->redirections[i]->redirect_type = R_AMBIGUOUS;
 		cmd_p->redirections[i]->str = ft_strdup(tk->original);
 	}
-	cmd_p->redirections[i]->str = ft_strdup((char *)tk->data);
+	else
+		cmd_p->redirections[i]->str = ft_strdup((char *)tk->data);
 	// TODO check alloc return value
 	return (0);
 }

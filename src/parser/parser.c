@@ -138,9 +138,9 @@ int	create_cmd_array(t_list *tokens, t_cmd_parse ***cmd_p)
 	i = 0;
 	while (i < cmd_count)
 	{
-		*cmd_p[i] = ft_calloc(sizeof(t_cmd_parse), 1);
+		(*cmd_p)[i] = ft_calloc(sizeof(t_cmd_parse), 1);
 		// TODO check malloc return value
-		return (i++);
+		i++;
 	}
 	return (0);
 }
@@ -182,7 +182,7 @@ int	count_arg_size(char *str, t_list **expansions, bool *isquoted, int start)
 			if (*expansions)
 				exp = (t_expansions *)(*expansions)->content;
 			else
-				return (i + ft_strlen(&str[i]));
+				return (i - start + ft_strlen(&str[i]));
 		}
 		if (i == exp->start && !exp->is_quoted)
 			*isquoted = false;
@@ -310,15 +310,13 @@ t_list	*get_to_next_cmd(t_list *tokens)
 
 int	token_to_cmd(t_list *tokens, t_cmd_parse ***cmd_p)
 {
-	int		i;
-	t_list	*list_start;
+	int	i;
 
-	list_start = tokens;
 	create_cmd_array(tokens, cmd_p);
 	i = 0;
 	while ((*cmd_p)[i])
 	{
-		fill_cmd_struct(tokens, **cmd_p);
+		fill_cmd_struct(tokens, (*cmd_p)[i]);
 		tokens = get_to_next_cmd(tokens);
 		i++;
 	}
