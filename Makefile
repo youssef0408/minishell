@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bplante <bplante@student.42.fr>            +#+  +:+       +#+         #
+#    By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/30 08:17:58 by ldufour           #+#    #+#              #
-#    Updated: 2024/02/20 16:11:59 by bplante          ###   ########.fr        #
+#    Updated: 2024/02/21 17:24:32 by bplante/Wal      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ READLINE_INC    = -I$(READLINE_DIR)/include
 READLINE_URL    = ftp://ftp.gnu.org/gnu/readline/readline-8.1.tar.gz
 
 INC             = -I$(INC_DIR) -I$(LIBFT_DIR) $(READLINE_INC)
-LIBS            = -lncurses -L$(READLINE_DIR) -lreadline -lhistory -Llib/libft -lft
+LIBS            = -L$(READLINE_DIR) -lreadline -lhistory -lncurses -Llib/libft -lft
 
 SRC_FILES = 	main.c  prompt.c builtin/pwd.c\
      			utils.c builtin/cd.c  env_utils.c\

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:27:43 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/01/18 12:53:07 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/02/21 17:23:50 by bplante/Wal      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	init_sigint_handler(void)
 
 	sig_init.sa_flags = 0;
 	sig_init.sa_handler = 0;
-	sig_init.sa_mask = 0;
+	sigemptyset(&sig_init.sa_mask);
 	sig_init.sa_handler = handle_ctl_c;
 	if (sigaction(SIGINT, &sig_init, NULL) == -1)
 		print_in_color(RED, "SIGINT ERROR!\n");
@@ -39,7 +39,7 @@ static void	init_sigquit_handler(void)
 	struct sigaction	sig_quit;
 
 	sig_quit.sa_flags = 0;
-	sig_quit.sa_mask = 0;
+	sigemptyset(&sig_quit.sa_mask);
 	sig_quit.sa_handler = SIG_IGN;
 	if (sigaction(SIGQUIT, &sig_quit, NULL) == -1)
 		print_in_color(RED, "SIGQUIT ERROR!\n");

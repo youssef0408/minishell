@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:57:48 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/01/17 18:40:16 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:09:03 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ void	export_exec(t_command *cmd)
 		else
 		{
 			tmp = ft_split(cmd->option, '=');
-			handle_export(*cmd, tmp[1], tmp[0]);
+			// handle_export(*cmd, tmp[1], tmp[0]);
+			handle_export(*cmd, parse_env2(*cmd,tmp[1]), parse_env2(*cmd, tmp[0]));
 			return ;
 		}
 	}
