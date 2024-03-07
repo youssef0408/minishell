@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:57:48 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/02/21 17:30:01 by bplante/Wal      ###   ########.fr       */
+/*   Updated: 2024/03/07 13:56:58 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,50 @@ void	export_exec(t_command *cmd)
 		else
 		{
 			tmp = ft_split(cmd->option, '=');
-			// handle_export(*cmd, tmp[1], tmp[0]);
-			handle_export(*cmd, parse_env2(*cmd,tmp[1]), parse_env2(*cmd, tmp[0]));
+			handle_export(*cmd, tmp[1], tmp[0]);
 			return ;
 		}
 	}
 }
+
+
+
+
+
+// void	export_exec(t_command *cmd)
+// {
+// 	char	**tmp;
+// 	int		i;
+
+// 	i = 0;
+// 	cmd->exit_status = 0;
+// 	if (!ft_strcmp(cmd->option, ""))
+// 		return (print_declare_env(cmd));
+// 	else
+// 	{
+// 		if (!is_valid_var_id(*cmd) || ft_strcmp(cmd->option2, ""))
+// 		{
+// 			print_in_color(RED, "not a valid identifier\n");
+// 			cmd->exit_status = 1;
+// 			return ;
+// 		}
+// 		else
+// 		{
+// 			tmp = ft_split(cmd->option, '=');
+// 			// handle_export(*cmd, tmp[1], tmp[0]);
+// 			handle_export(*cmd, parse_env2(*cmd,tmp[1]), parse_env2(*cmd, tmp[0]));
+// 			return ;
+// 		}
+// 	}
+// }
+
+
+
+
+
+
+
+//NOTES:
 
 // export + option
 // possibilité 1: option contient (var id seulement)

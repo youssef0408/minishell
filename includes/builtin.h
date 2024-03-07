@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:43:37 by yothmani          #+#    #+#             */
-/*   Updated: 2024/02/21 13:58:24 by bplante/Wal      ###   ########.fr       */
+/*   Updated: 2024/03/07 13:56:39 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@ typedef struct s_command
 	char	*pwd;
 	int		exit_status;
 	char 	**cmd_table;
-    int 	fd_input;
-    int 	fd_output;
-    char 	*outfile;
-    char 	*infile;
+	
+    // int 	fd_input;
+    // int 	fd_output;
+    // char 	*outfile;
+    // char 	*infile;
 	t_list	list;
 }			t_command;
 
