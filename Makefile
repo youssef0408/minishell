@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+         #
+#    By: bplante <bplante@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/30 08:17:58 by ldufour           #+#    #+#              #
-#    Updated: 2024/02/21 18:05:58 by bplante/Wal      ###   ########.fr        #
+#    Updated: 2024/03/07 13:50:35 by bplante          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRC_DIR         = src
 OBJ_DIR			= obj
 INC_DIR         = includes
 LIBFT_DIR       = lib/libft
-READLINE_DIR    = lib/readline-8.1
+READLINE_DIR    = lib/readline
 READLINE_LIB    = $(READLINE_DIR)/libreadline.a
 READLINE_INC    = -I$(READLINE_DIR)
 READLINE_URL    = ftp://ftp.gnu.org/gnu/readline/readline-8.1.tar.gz
@@ -34,7 +34,8 @@ SRC_FILES = 	main.c  prompt.c builtin/pwd.c\
 	  			tokenizer/quotes_handler.c child_process.c\
       			builtin/built_exit.c signals.c\
 	  			builtin/export.c builtin/unset.c builtin/builtin_execution.c \
-				command_execution.c
+				command_execution.c parser/ft_strndup.c parser/parser.c parser/redirections.c parser/tokenizer.c parser/var_loading.c \
+				parser/variable_expansion.c
 
 SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 
