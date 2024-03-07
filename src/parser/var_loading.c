@@ -6,11 +6,11 @@
 /*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:38:06 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/07 13:13:50 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/07 14:30:28 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/parser.h"
+#include "includes/minishell.h"
 
 // create expantion struct and and add if its quote or not, add start if isnt
 int	store_value_from_env(char *str, char **envp, t_tkn *tk, int start)

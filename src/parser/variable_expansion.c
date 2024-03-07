@@ -6,11 +6,11 @@
 /*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:29:23 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/07 13:13:53 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/07 14:30:48 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/parser.h"
+#include "includes/minishell.h"
 
 bool	is_printed(char *str, struct s_litteral_tracker *lt)
 {

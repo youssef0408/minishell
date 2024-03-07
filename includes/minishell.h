@@ -6,18 +6,14 @@
 /*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:18:40 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/07 13:32:48 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/07 14:29:34 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "builtin.h"
-# include "execution.h"
-# include "includes/parser.h"
 # include "libft/includes/libft.h"
-# include "parse.h"
 # include <ctype.h>
 # include <errno.h>
 # include <fcntl.h>
@@ -34,6 +30,9 @@
 # include <string.h>
 # include <sys/wait.h>
 # include <unistd.h>
+# include "parser.h"
+# include "builtin.h"
+# include "execution.h"
 
 /*#############################|| Characters ||#####################*/
 // # define PIPE 124        // |

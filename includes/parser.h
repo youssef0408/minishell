@@ -6,7 +6,7 @@
 /*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:30:11 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/07 13:22:17 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/07 14:29:07 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define PARSER_H
 
 # include "includes/minishell.h"
-# include <stdbool.h>
 
 # define PIPE 0
 # define R_HERE_DOC 1

@@ -6,13 +6,13 @@
 /*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:43:37 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/07 13:56:39 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/07 14:28:54 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef BUILTIN_H
 # define BUILTIN_H
-# include "libft/includes/libft.h"
+
 # include "includes/minishell.h"
 
 typedef struct s_command
@@ -26,6 +26,7 @@ typedef struct s_command
 	char	*pwd;
 	int		exit_status;
 	char 	**cmd_table;
+	t_cmd_parse **parsed;
 	
     // int 	fd_input;
     // int 	fd_output;

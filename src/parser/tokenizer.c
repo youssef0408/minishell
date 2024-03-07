@@ -6,11 +6,11 @@
 /*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:34:09 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/07 13:13:47 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/07 14:30:25 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/parser.h"
+#include "includes/minishell.h"
 
 int	count_spaces(const char *str)
 {
