@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:20:32 by yothmani          #+#    #+#             */
-/*   Updated: 2024/02/21 13:55:55 by bplante/Wal      ###   ########.fr       */
+/*   Updated: 2024/03/07 15:42:13 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,23 +53,40 @@ void	exec_cmd(t_command cmd, char **envp)
 	pid = fork();
 	if (pid == -1)
 		printf(" fork failed\n");
-	if (pid ==  0)
+	if (pid == 0)
 	{
+		sleep(10);
 		if (exec_builtin(cmd, cmd.env))
 		{
-			tmp = ft_split(cmd.cmd_str, ' ');
+			tmp = cmd.parsed[0]->cmds;
+			printf("1=====>%s\n", tmp[0]);
+			printf("1=====>%s\n", tmp[1]);
 			cmd_path = get_cmd_path(tmp[0], envp);
 			if (!cmd_path || execve(cmd_path, tmp, cmd.env) == -1)
 			{
 				clean_table(tmp);
 				print_in_color(RED, "🚨command not found:  ");
-				print_in_color(RED, cmd.name);
+				print_in_color(RED, tmp[0]);
 				printf("\n");
 			}
 		}
 	}
+	else
+	{
+		// if (exec_builtin(cmd, cmd.env))
+		// {
+		// 	tmp = cmd.parsed[0]->cmds;
+		// 	printf("2=====>%s\n", tmp[0]);
+		// 	cmd_path = get_cmd_path(tmp[0], envp);
+		// 	if (!cmd_path || execve(cmd_path, tmp, cmd.env) == -1)
+		// 	{
+		// 		clean_table(tmp);
+		// 		print_in_color(RED, "🚨command not found:  ");
+		// 		print_in_color(RED, cmd.name);
+		// 		printf("\n");
+		// 	}
+		// }
+	}
 	waitpid(pid, NULL, 0);
-	
-
 	// return (0);
 }

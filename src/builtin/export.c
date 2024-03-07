@@ -6,7 +6,7 @@
 /*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:57:48 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/03/07 13:56:58 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/07 15:44:04 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	export_exec(t_command *cmd)
 
 	i = 0;
 	cmd->exit_status = 0;
-	if (!ft_strcmp(cmd->option, ""))
+	if (!ft_strcmp(cmd->parsed[0]->cmds[1], ""))
 		return (print_declare_env(cmd));
 	else
 	{
