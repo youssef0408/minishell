@@ -6,7 +6,7 @@
 #    By: bplante <bplante@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/30 08:17:58 by ldufour           #+#    #+#              #
-#    Updated: 2024/03/07 13:59:43 by bplante          ###   ########.fr        #
+#    Updated: 2024/03/07 15:22:13 by bplante          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,8 +30,6 @@ LIBS            = -L$(READLINE_DIR) -lreadline -lhistory -Llib/libft -lft -lncur
 SRC_FILES = 	main.c  prompt.c builtin/pwd.c\
      			utils.c builtin/cd.c  env_utils.c\
       			builtin/echo.c  builtin/env.c\
-	  			tokenizer/redirections.c tokenizer/syntax.c tokenizer/syntax_error.c\
-	  			tokenizer/quotes_handler.c\
       			builtin/built_exit.c signals.c\
 	  			builtin/export.c builtin/unset.c builtin/builtin_execution.c \
 				command_execution.c parser/ft_strndup.c parser/parser.c parser/redirections.c parser/tokenizer.c parser/var_loading.c \
