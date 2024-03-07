@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:20:32 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/07 15:42:13 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/07 15:53:47 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	exec_cmd(t_command cmd, char **envp)
 		printf(" fork failed\n");
 	if (pid == 0)
 	{
-		sleep(10);
+		// sleep(10);
 		if (exec_builtin(cmd, cmd.env))
 		{
 			tmp = cmd.parsed[0]->cmds;

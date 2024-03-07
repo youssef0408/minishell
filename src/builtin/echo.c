@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 18:40:38 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/03/07 13:56:52 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/07 17:02:19 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,27 @@
 void	exec_echo(t_command cmd)
 {
 	char	*tmp;
-
-	if (!ft_strcmp(cmd.option, "-n"))
-		printf("%s", cmd.option2);
-	else
+	int i = 1;
+	bool has_nl = true;
+	if (!ft_strcmp(cmd.parsed[0]->cmds[i], "-n"))
 	{
-		tmp = ft_strjoin(cmd.option, cmd.option2);  //TODO: à vérifier ce que je reçois du parser
-		printf("%s\n", tmp);
-		free(tmp);
+		i++;
+		has_nl = false;
+	}
+	while(cmd.parsed[0]->cmds[i])
+	{
+		printf("%s", cmd.parsed[0]->cmds[i]);
+		i++;
+		if(cmd.parsed[0]->cmds[i])
+			printf(" ");
+	}
+	if(has_nl)
+		printf("\n");
+		printf("====>%i\n", i);
+	
+	
 	}
 
-}
 
 // void	exec_echo(t_command cmd)
 // {

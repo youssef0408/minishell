@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 15:23:38 by yothmani          #+#    #+#             */
-/*   Updated: 2024/02/21 13:56:30 by bplante/Wal      ###   ########.fr       */
+/*   Updated: 2024/03/07 16:40:16 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,25 @@
 
 void	exec_unset(t_command *cmd)
 {
-	int idx;
-	int i;
-    
-	idx = find_in_env(cmd->option, cmd->env);
-	if (idx != -1)
+	int	idx;
+	int	i;
+	int	j;
+
+	j = 1;
+	while (cmd->parsed[0]->cmds[j])
 	{
-		free(cmd->env[idx]);
-		i = idx;
-		while (cmd->env[i])
+		idx = find_in_env(cmd->parsed[0]->cmds[j], cmd->env);
+		if (idx != -1)
 		{
-			cmd->env[i] = cmd->env[i + 1];
-            i++;
+			free(cmd->env[idx]);
+			i = idx;
+			while (cmd->env[i])
+			{
+				cmd->env[i] = cmd->env[i + 1];
+				i++;
+			}
+			update_env(cmd, NULL);
 		}
-    	update_env(cmd, NULL);
+		j++;
 	}
 }

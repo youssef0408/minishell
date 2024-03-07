@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:57:48 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/03/07 15:44:04 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/07 16:34:57 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,30 +71,26 @@ void	export_exec(t_command *cmd)
 	char	**tmp;
 	int		i;
 
-	i = 0;
+	i = 1;
 	cmd->exit_status = 0;
-	if (!ft_strcmp(cmd->parsed[0]->cmds[1], ""))
+	if (!cmd->parsed[0]->cmds[1])
 		return (print_declare_env(cmd));
-	else
+	while (cmd->parsed[0]->cmds[i])
 	{
-		if (!is_valid_var_id(*cmd) || ft_strcmp(cmd->option2, ""))
+		if (!is_valid_var_id(*cmd))
 		{
 			print_in_color(RED, "not a valid identifier\n");
 			cmd->exit_status = 1;
-			return ;
 		}
 		else
 		{
-			tmp = ft_split(cmd->option, '=');
+			tmp = ft_split(cmd->parsed[0]->cmds[i], '=');
 			handle_export(*cmd, tmp[1], tmp[0]);
-			return ;
+			clean_table(tmp);
 		}
+		i++;
 	}
 }
-
-
-
-
 
 // void	export_exec(t_command *cmd)
 // {
@@ -117,19 +113,14 @@ void	export_exec(t_command *cmd)
 // 		{
 // 			tmp = ft_split(cmd->option, '=');
 // 			// handle_export(*cmd, tmp[1], tmp[0]);
-// 			handle_export(*cmd, parse_env2(*cmd,tmp[1]), parse_env2(*cmd, tmp[0]));
+// 			handle_export(*cmd, parse_env2(*cmd,tmp[1]), parse_env2(*cmd,
+					// tmp[0]));
 // 			return ;
 // 		}
 // 	}
 // }
 
-
-
-
-
-
-
-//NOTES:
+// NOTES:
 
 // export + option
 // possibilité 1: option contient (var id seulement)
