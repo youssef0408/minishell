@@ -6,7 +6,7 @@
 #    By: bplante <bplante@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/30 08:17:58 by ldufour           #+#    #+#              #
-#    Updated: 2024/03/07 13:50:35 by bplante          ###   ########.fr        #
+#    Updated: 2024/03/07 13:59:43 by bplante          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +31,7 @@ SRC_FILES = 	main.c  prompt.c builtin/pwd.c\
      			utils.c builtin/cd.c  env_utils.c\
       			builtin/echo.c  builtin/env.c\
 	  			tokenizer/redirections.c tokenizer/syntax.c tokenizer/syntax_error.c\
-	  			tokenizer/quotes_handler.c child_process.c\
+	  			tokenizer/quotes_handler.c\
       			builtin/built_exit.c signals.c\
 	  			builtin/export.c builtin/unset.c builtin/builtin_execution.c \
 				command_execution.c parser/ft_strndup.c parser/parser.c parser/redirections.c parser/tokenizer.c parser/var_loading.c \
@@ -71,7 +71,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@echo "Compiled $<"
 
 $(OBJ_DIR):
-	mkdir -p obj/builtin obj/tokenizer
+	mkdir -p obj/builtin obj/tokenizer obj/parser
 readline-8.1_EXISTS := $(wildcard lib/readline-8.1)
 
 install: $(READLINE_LIB)
