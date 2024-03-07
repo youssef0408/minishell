@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:41:40 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/06 16:04:37 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/07 13:13:45 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "includes/parser.h"
 
 int	count_redirect(t_list *tokens)
 {

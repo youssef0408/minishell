@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:34:09 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/04 17:36:41 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/07 13:13:47 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "includes/parser.h"
 
 int	count_spaces(const char *str)
 {

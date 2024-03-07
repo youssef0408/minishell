@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   var_loading.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:38:06 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/04 17:38:51 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/07 13:13:50 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include "includes/parser.h"
 
 // create expantion struct and and add if its quote or not, add start if isnt
 int	store_value_from_env(char *str, char **envp, t_tkn *tk, int start)

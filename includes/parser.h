@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:30:11 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/06 12:12:56 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/07 13:22:17 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,7 @@ bool				lit_track(char c, struct s_litteral_tracker *lt);
 bool				is_cmd_block_end(t_list *parsedin);
 
 int					count_split_var(t_list *expansions, char *data);
+char				*ft_strndup(char *src, int n);
+int					ft_strcmp(char *s1, char *s2);
 
 #endif

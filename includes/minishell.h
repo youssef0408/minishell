@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:18:40 by yothmani          #+#    #+#             */
-/*   Updated: 2024/02/21 14:11:15 by bplante/Wal      ###   ########.fr       */
+/*   Updated: 2024/03/07 13:32:48 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,16 @@
 
 # include "builtin.h"
 # include "execution.h"
+# include "includes/parser.h"
 # include "libft/includes/libft.h"
 # include "parse.h"
 # include <ctype.h>
 # include <errno.h>
 # include <fcntl.h>
-# include <lib/readline-8.1/history.h>
-# include <lib/readline-8.1/readline.h>
 # include <limits.h>
 # include <math.h>
+# include <readline/history.h>
+# include <readline/readline.h>
 # include <signal.h>
 # include <stdarg.h>
 # include <stdbool.h>

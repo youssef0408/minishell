@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
-#include "parser.h"
+#include "includes/parser.h"
 
 const char	*get_env(char **env, char *key)
 {
