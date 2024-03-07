@@ -4,6 +4,6 @@ obj/
 .DS_Store
 *.a
 minishell
-lib/readline-8.1/
+lib/readline/
 
 
