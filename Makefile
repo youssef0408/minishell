@@ -6,7 +6,7 @@
 #    By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/30 08:17:58 by ldufour           #+#    #+#              #
-#    Updated: 2024/02/21 17:24:32 by bplante/Wal      ###   ########.fr        #
+#    Updated: 2024/02/21 18:05:58 by bplante/Wal      ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,11 +21,11 @@ INC_DIR         = includes
 LIBFT_DIR       = lib/libft
 READLINE_DIR    = lib/readline-8.1
 READLINE_LIB    = $(READLINE_DIR)/libreadline.a
-READLINE_INC    = -I$(READLINE_DIR)/include
+READLINE_INC    = -I$(READLINE_DIR)
 READLINE_URL    = ftp://ftp.gnu.org/gnu/readline/readline-8.1.tar.gz
 
-INC             = -I$(INC_DIR) -I$(LIBFT_DIR) $(READLINE_INC)
-LIBS            = -L$(READLINE_DIR) -lreadline -lhistory -lncurses -Llib/libft -lft
+INC             = -Ilib $(READLINE_INC) -I.
+LIBS            = -L$(READLINE_DIR) -lreadline -lhistory -Llib/libft -lft -lncurses
 
 SRC_FILES = 	main.c  prompt.c builtin/pwd.c\
      			utils.c builtin/cd.c  env_utils.c\
@@ -40,9 +40,9 @@ SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
-all: install $(NAME)
+all: $(NAME)
 
-$(NAME):	$(OBJ_DIR) $(OBJ) $(LIBFT) $(READLINE_LIB)
+$(NAME): $(OBJ_DIR) $(OBJ) $(LIBFT) $(READLINE_LIB)
 	@$(DISPLAY_LOGOS)
 	@$(CC) $(CFLAGS) -o $@ $(OBJ) $(LIBS)
 	@echo $(CUT) $(CUT) 

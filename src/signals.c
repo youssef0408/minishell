@@ -6,11 +6,11 @@
 /*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:27:43 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/02/21 17:23:50 by bplante/Wal      ###   ########.fr       */
+/*   Updated: 2024/02/21 17:29:55 by bplante/Wal      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "includes/minishell.h"
 
 void rl_replace_line (const char *text, int clear_undo);
 

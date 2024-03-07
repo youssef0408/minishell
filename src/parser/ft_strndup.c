@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/06 18:56:45 by yothmani          #+#    #+#             */
-/*   Updated: 2024/02/21 13:56:33 by bplante/Wal      ###   ########.fr       */
+/*   Created: 2024/02/27 18:43:07 by bplante           #+#    #+#             */
+/*   Updated: 2024/03/04 17:56:57 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-char	*get_pwd(void)
+char	*ft_strndup(char *src, int n)
 {
-	char	*path;
+	char	*new;
+	int		i;
 
-	path = getcwd(NULL, 0);
-	return (path);
-}
-
-void	exec_pwd(char *cmd)
-{
-	if (!ft_strcmp(cmd, ""))
-		printf("%s\n", get_pwd());
-	else
-		print_in_color(RED, "🚨pwd: too many arguments\n");
-		
+	if (n == 0)
+		return (NULL);
+	new = ft_calloc(n + 1, sizeof(char));
+	if (!new)
+		return (NULL);
+	i = 0;
+	while (i < n && src[i])
+	{
+		new[i] = src[i];
+		i++;
+	}
+	return (new);
 }

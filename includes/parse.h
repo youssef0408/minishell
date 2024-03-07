@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parse.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 16:00:23 by yothmani          #+#    #+#             */
-/*   Updated: 2024/02/19 13:10:11 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/02/27 18:58:56 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSE_H
 # define PARSE_H
 # include "builtin.h"
-# include "minishell.h"
+# include "includes/minishell.h"
 # include <stdbool.h>
 
 char	*parse_env(char *str);
@@ -45,5 +45,7 @@ int		step_through_quote(char *str, char quote);
 int		create_token(t_list **tokenlist, int *i, int *pos, char *str);
 int		split_tokens(t_list **tokenlist, int *i, int *pos, char *str);
 void	tokenize(char *str, t_command *cmd, t_list **tokens);
+
+char	*ft_strndup(char *src, int n);
 
 #endif

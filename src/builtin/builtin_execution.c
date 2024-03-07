@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 13:33:01 by yothmani          #+#    #+#             */
-/*   Updated: 2024/01/18 13:33:02 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/02/21 13:56:51 by bplante/Wal      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 
-#include "../../includes/minishell.h"
+#include "includes/minishell.h"
 
 void	parse_cmd(char *str_cmd, t_command *cmd)
 {
