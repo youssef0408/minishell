@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:41:40 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/07 14:30:07 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/11 17:52:54 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,11 +133,10 @@ int	alloc_redirection_array(t_list *tokens, t_cmd_parse *cmd_p)
 	if (count)
 	{
 		i = 0;
-		cmd_p->redirections = ft_calloc(sizeof(t_redirection *), count + 1);
+		cmd_p->redirections = safe_calloc(sizeof(t_redirection *), count + 1);
 		while (i < count)
 		{
-			cmd_p->redirections[i] = ft_calloc(sizeof(t_redirection), 1);
-			// TODO check alloc return value
+			cmd_p->redirections[i] = safe_calloc(sizeof(t_redirection), 1);
 			i++;
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variable_expansion.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:29:23 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/07 17:07:30 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:52:40 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ int	expand(t_tkn *tk)
 
 	tk->original = (char *)tk->data;
 	count = count_new_data_size((char *)tk->data, tk->expansions);
-	tk->data = (uint64_t)ft_calloc(sizeof(char), count + 1);
+	tk->data = (uint64_t)safe_calloc(sizeof(char), count + 1);
 	fill_new_data((char *)tk->data, tk->original, tk->expansions);
 	remove_quoted_expansions(&tk->expansions);
 }

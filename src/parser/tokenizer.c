@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:34:09 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/07 14:30:25 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/11 17:56:34 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,10 @@ int	store_meta(char *str, t_list **tokens)
 	int		i;
 	t_tkn	*token;
 
-	token = ft_calloc(1, sizeof(t_tkn));
-	if (!token)
-		return (-1);
+	token = safe_calloc(1, sizeof(t_tkn));
 	new = ft_lstnew((void *)token);
 	if (!new)
-	{
-		free(token);
-		return (-1);
-	}
+		exit_prg_at_error("malloc failure");
 	token->data_type = META_C;
 	i = find_meta_type(str, token);
 	ft_lstadd_back(tokens, new);
@@ -99,51 +94,30 @@ int	store_data(char *str, t_list **tokens)
 	t_list	*new;
 	int		len;
 
-	token = ft_calloc(1, sizeof(t_tkn));
-	if (!token)
-		return (-1);
+	token = safe_calloc(1, sizeof(t_tkn));
 	new = ft_lstnew((void *)token);
 	if (!new)
-	{
-		free(token);
-		return (-1);
-	}
+		exit_prg_at_error("Malloc failure");
 	token->data_type = DATA;
 	len = count_data_len(str);
 	token->data = (uint64_t)ft_strndup(str, len);
 	if (!token->data)
-	{
-		free(token);
-		free(new);
-		return (-1);
-	}
+		exit_prg_at_error("malloc failure");
 	ft_lstadd_back(tokens, new);
 	return (len);
 }
 
-int	tokenise(char *input, t_list **tokens)
+void	tokenise(char *input, t_list **tokens)
 {
 	int	i;
-	int	temp;
 
 	i = 0;
 	while (input[i])
 	{
 		if (input[i] == '|' || input[i] == '>' || input[i] == '<')
-		{
-			temp = store_meta(&input[i], tokens);
-			if (temp == -1)
-				return (-1);
-			i += temp;
-		}
+			i += store_meta(&input[i], tokens);
 		else if (input[i] != ' ')
-		{
-			temp = store_data(&input[i], tokens);
-			if (temp == -1)
-				return (-1);
-			i += temp;
-		}
+			i += store_data(&input[i], tokens);
 		i += count_spaces(&input[i]);
 	}
-	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_loading.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:38:06 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/07 14:30:28 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/11 18:00:00 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,14 @@ int	store_value_from_env(char *str, char **envp, t_tkn *tk, int start)
 	value = get_env(envp, key);
 	if (!value)
 		value = ft_strdup("");
-	expansion = ft_calloc(sizeof(t_expansions), 1);
-	// TODO verify alloc return value
+	expansion = safe_calloc(sizeof(t_expansions), 1);
 	expansion->value = value;
 	expansion->start = start;
 	expansion->len = ft_strlen(value);
 	expansion->key_len = ft_strlen(key);
 	new = ft_lstnew((void *)expansion);
+	if (!new)
+		exit_prg_at_error("malloc failure");
 	ft_lstadd_back(&tk->expansions, new);
 	free(key);
 	return (i);

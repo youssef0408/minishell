@@ -105,23 +105,19 @@ int	count_cmd_blocks(t_list *tokens)
 	return (block_count);
 }
 
-int	create_cmd_array(t_list *tokens, t_cmd_parse ***cmd_p)
+void	create_cmd_array(t_list *tokens, t_cmd_parse ***cmd_p)
 {
 	int	cmd_count;
 	int	i;
 
 	cmd_count = count_cmd_blocks(tokens);
-	*cmd_p = (t_cmd_parse **)ft_calloc(sizeof(t_cmd_parse *), cmd_count + 1);
-	if (!*cmd_p)
-		return (-1);
+	*cmd_p = (t_cmd_parse **)safe_calloc(sizeof(t_cmd_parse *), cmd_count + 1);
 	i = 0;
 	while (i < cmd_count)
 	{
-		(*cmd_p)[i] = ft_calloc(sizeof(t_cmd_parse), 1);
-		// TODO check malloc return value
+		(*cmd_p)[i] = safe_calloc(sizeof(t_cmd_parse), 1);
 		i++;
 	}
-	return (0);
 }
 
 bool	is_cmd_block_end(t_list *parsedin)
@@ -140,7 +136,7 @@ int	lst_auto_add_back(t_list **lst, void *content)
 
 	new = ft_lstnew(content);
 	if (!new)
-		return (-1);
+		exit_prg_at_error("malloc failure");
 	ft_lstadd_back(lst, new);
 	return (0);
 }
@@ -234,7 +230,7 @@ void	*lst_to_array(t_list *args)
 	int		size;
 
 	size = ft_lstsize(args);
-	array = ft_calloc(sizeof(char *), size + 1);
+	array = safe_calloc(sizeof(char *), size + 1);
 	i = 0;
 	while (i < size)
 	{
@@ -315,11 +311,7 @@ int	parse_input(char *input, t_cmd_parse ***input_parse, char **envp)
 		return (-1);
 	}
 	tokens = NULL;
-	if (tokenise(input, &tokens) == -1)
-	{
-		ft_lstclear(&tokens, &free_token);
-		return (-1);
-	}
+	tokenise(input, &tokens);
 	if (syntax_errors(tokens) != 0)
 	{
 		ft_lstclear(&tokens, &free_token);
