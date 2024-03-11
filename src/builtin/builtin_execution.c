@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 13:33:01 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/07 13:56:44 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/11 14:23:39 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ int	exec_builtin(t_command cmd, char **envp)
 	else if (!ft_strcmp(cmd.name, "exit"))
 		exec_exit(&cmd);
 	else if (!ft_strcmp(cmd.name, "echo"))
-		exec_echo(cmd);
+		exec_echo(&cmd);
 	else if (!ft_strcmp(cmd.name, "unset"))
 		exec_unset(&cmd);
 	else

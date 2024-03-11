@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:30:11 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/07 14:29:07 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/11 15:07:38 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,6 @@ bool				is_cmd_block_end(t_list *parsedin);
 int					count_split_var(t_list *expansions, char *data);
 char				*ft_strndup(char *src, int n);
 int					ft_strcmp(char *s1, char *s2);
+int					syntax_errors(t_list *tokens);
 
 #endif

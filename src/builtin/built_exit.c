@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 19:50:09 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/02/21 13:56:58 by bplante/Wal      ###   ########.fr       */
+/*   Updated: 2024/03/11 14:53:35 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	exit_value(t_command *cmd)
 
 	if (ft_strcmp(cmd->option2, ""))
 	{
+		//TODO print to stderror
 		printf("exit: too many arguments\n");
 		res = 1;
 	}

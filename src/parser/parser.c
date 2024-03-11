@@ -327,7 +327,7 @@ int	parse_input(char *input, t_cmd_parse ***input_parse, char **envp)
 
 	if (is_string_over(input) != 0)
 	{
-		// TODO print error message
+		write(2, "Incomplete Input\n", 18);
 		return (-1);
 	}
 	tokens = NULL;
@@ -336,7 +336,8 @@ int	parse_input(char *input, t_cmd_parse ***input_parse, char **envp)
 		ft_lstclear(&tokens, &free_token);
 		return (-1);
 	}
-	// TODO check for syntax error (token that needs data after has token instead)
+	if (syntax_errors(tokens) != 0)
+		return (-1);
 	load_vars_per_token(tokens, envp);
 	expand_vars(tokens);
 	token_to_cmd(tokens, input_parse);
