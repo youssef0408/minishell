@@ -6,7 +6,7 @@
 /*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:30:11 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/11 15:07:38 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/11 17:20:41 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,8 @@ int					count_split_var(t_list *expansions, char *data);
 char				*ft_strndup(char *src, int n);
 int					ft_strcmp(char *s1, char *s2);
 int					syntax_errors(t_list *tokens);
+
+void				free_cmd_parse(void *cmd_p);
+void				free_token(void *tk);
 
 #endif

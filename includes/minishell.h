@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:18:40 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/11 14:24:20 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:17:13 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void		exit_prg_at_error(char *str);
 void		free_token(void *token_ptr);
 void		free_cmd(void *cmd);
 void		clean_table(char **table);
-void		free_array(void **content);
+void		free_array(void **content, void (del)(void *));
 
 int			**pipes_creation(int lst_size);
 void		main_exec(t_list *cmd_list, char **envp);

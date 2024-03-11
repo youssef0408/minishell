@@ -6,7 +6,7 @@
 /*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:20:32 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/11 15:40:39 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/11 16:40:02 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,22 +69,6 @@ void	exec_cmd(t_command cmd, char **envp)
 			}
 		}
 		exit(1);
-	}
-	else
-	{
-		// if (exec_builtin(cmd, cmd.env))
-		// {
-		// 	tmp = cmd.parsed[0]->cmds;
-		// 	printf("2=====>%s\n", tmp[0]);
-		// 	cmd_path = get_cmd_path(tmp[0], envp);
-		// 	if (!cmd_path || execve(cmd_path, tmp, cmd.env) == -1)
-		// 	{
-		// 		clean_table(tmp);
-		// 		print_in_color(RED, "🚨command not found:  ");
-		// 		print_in_color(RED, cmd.name);
-		// 		printf("\n");
-		// 	}
-		// }
 	}
 	waitpid(pid, NULL, 0);
 	// return (0);
