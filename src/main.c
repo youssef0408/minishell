@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 08:37:27 by ldufour           #+#    #+#             */
-/*   Updated: 2024/03/11 13:57:41 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/11 17:43:59 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,13 @@ int	main(int argc, char **argv, char **envp)
 		cmd_str = trim_str(cmd_str);
 		if (ft_strcmp(cmd_str, ""))
 		{
-			parse_input(cmd_str, &cmd.parsed, cmd.env);
-			init_cmd(cmd_str, &cmd);
-			exec_cmd(cmd, cmd.env);
-		}
-		if (cmd_str && cmd_str[0])
+			if (parse_input(cmd_str, &cmd.parsed, cmd.env) != -1)
+			{
+				init_cmd(cmd_str, &cmd);
+				exec_cmd(cmd, cmd.env);
+			}
 			add_history(cmd_str);
+		}
 		if (!cmd_str)
 		{
 			printf("exit\n");
@@ -44,5 +45,3 @@ int	main(int argc, char **argv, char **envp)
 	free(cmd_str);
 	return (0);
 }
-
-
