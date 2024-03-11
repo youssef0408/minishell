@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 18:39:16 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/07 15:27:36 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/11 13:43:28 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,34 +25,34 @@ void	change_dir(char *str, t_command *cmd)
 	tmp = cmd->env[find_in_env("OLDPWD", cmd->env)];
 	current_pwd = get_pwd();
 	home = getenv("HOME");
-	if (!str || !ft_strcmp(str, "") || !ft_strcmp(str, "~"))
-		str = home;
+	if (!cmd->parsed[0]->cmds[1] || !ft_strcmp(cmd->parsed[0]->cmds[1], "~"))
+		cmd->parsed[0]->cmds[1] = home;
 	else if (!ft_strcmp(str, "-"))
-		str = ft_substr(tmp, 7, ft_strlen(tmp));
+		cmd->parsed[0]->cmds[1] = ft_substr(tmp, 7, ft_strlen(tmp));
 	else
 	{
 		// str = parse_env2(*cmd, str);
-		if (!str || !ft_strcmp(str, ""))
-			str = home;
+		if (!cmd->parsed[0]->cmds[1])
+			cmd->parsed[0]->cmds[1] = home;
 	}
-	if (access(str, F_OK))
+	if (access(cmd->parsed[0]->cmds[1], F_OK))
 	{
 		print_in_color(RED, "🚨cd: no such file or directory: ");
-		print_in_color(RED, str);
+		print_in_color(RED, cmd->parsed[0]->cmds[1]);
 		printf("\n");
 		cmd->exit_status = 1;
 		return;
 	}
-	if (access(str, R_OK))
+	if (access(cmd->parsed[0]->cmds[1], R_OK))
 	{
 		print_in_color(RED, "🚨cd: Permission denied\n");
 		cmd->exit_status = 1;
 		return ;
 	}
-	if (!str || !ft_strcmp(str, " ") || chdir(str) != 0)
+	if (!cmd->parsed[0]->cmds[1] || chdir(cmd->parsed[0]->cmds[1]) != 0)
 	{
 		print_in_color(RED, "🚨cd: execution failed!");
-		print_in_color(RED, str);
+		print_in_color(RED, cmd->parsed[0]->cmds[1]);
 		printf("\n");
 		cmd->exit_status = 1;
 	}
@@ -80,7 +80,7 @@ void	change_dir(char *str, t_command *cmd)
 // 		str = ft_substr(tmp, 7, ft_strlen(tmp));
 // 	else
 // 	{
-// 		str = parse_env2(*cmd, str);
+// 		// str = parse_env2(*cmd, str);
 // 		if (!str || !ft_strcmp(str, ""))
 // 			str = home;
 // 	}

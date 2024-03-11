@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:43:37 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/07 14:28:54 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/11 13:57:28 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_command
 }			t_command;
 
 void		exec_exit(t_command *cmd);
-void		parse_cmd(char *str_cmd, t_command *cmd);
+void		init_cmd(char *str_cmd, t_command *cmd);
 void		change_dir(char *str, t_command *cmd);
 char		*get_pwd(void);
 char		**split_with_delimiter(char *s, char c);

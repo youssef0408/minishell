@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:18:40 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/07 14:29:34 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/11 14:24:20 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,7 @@ void		print_token(void *content);
 
 /*#############################|| Prompt.c ||############################*/
 char		*display_prompt(void);
-static char	*print_colored_message(const char *user, const char *path);
-
+char	*print_colored_message(const char *user, const char *path);
 /*#############################|| free_and_exit.c ||#####################*/
 
 void		exit_prg_at_error(char *str);

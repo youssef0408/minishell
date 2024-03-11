@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:27:43 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/02/21 17:29:55 by bplante/Wal      ###   ########.fr       */
+/*   Updated: 2024/03/11 14:42:26 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	handle_ctl_c(int sig)
 	(void)sig;
 	write(1, "\n", 1);
 	rl_replace_line("", 0);
-	rl_on_new_line();
+	rl_forced_update_display(); 
 	rl_redisplay();
 }
 

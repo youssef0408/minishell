@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:20:32 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/07 15:53:47 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/11 13:45:08 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ void	exec_cmd(t_command cmd, char **envp)
 		if (exec_builtin(cmd, cmd.env))
 		{
 			tmp = cmd.parsed[0]->cmds;
-			printf("1=====>%s\n", tmp[0]);
-			printf("1=====>%s\n", tmp[1]);
 			cmd_path = get_cmd_path(tmp[0], envp);
 			if (!cmd_path || execve(cmd_path, tmp, cmd.env) == -1)
 			{

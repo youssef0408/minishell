@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 18:40:38 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/03/07 17:02:19 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/11 13:46:54 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,6 @@ void	exec_echo(t_command cmd)
 	}
 	if(has_nl)
 		printf("\n");
-		printf("====>%i\n", i);
-	
-	
 	}
 
 
