@@ -6,7 +6,7 @@
 /*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:29:23 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/11 17:52:40 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/12 00:34:21 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	count_new_data_size(char *str, t_list *expansions)
 	while (str[i])
 	{
 		if (str[i] == '$' && (lt.is_lit == 0 || (lt.quote == '\"'
-					&& lt.is_lit == 1)))
+					&& lt.is_lit == 1)) && expansions)
 		{
 			((t_expansions *)expansions->content)->is_quoted = lt.is_lit;
 			((t_expansions *)expansions->content)->start = count;
@@ -77,7 +77,7 @@ int	fill_new_data(char *new_string, char *original, t_list *expansions)
 	while (original[j])
 	{
 		if (original[j] == '$' && (lt.is_lit == 0 || (lt.quote == '\"'
-					&& lt.is_lit == 1)))
+					&& lt.is_lit == 1)) && expansions)
 		{
 			ft_strcpy(&new_string[i],
 				((t_expansions *)expansions->content)->value);

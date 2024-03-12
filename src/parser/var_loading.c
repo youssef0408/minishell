@@ -6,7 +6,7 @@
 /*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:38:06 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/11 18:00:00 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/12 00:28:02 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,15 @@ int	store_value_from_env(char *str, char **envp, t_tkn *tk, int start)
 	t_expansions	*expansion;
 
 	i = 0;
-	while (ft_isalnum(str[i]))
-		i++;
+	if (str[i] == '?')
+		i = 1;
+	else
+	{
+		while (ft_isalnum(str[i]))
+			i++;
+	}
+	if (i == 0)
+		return (0);
 	key = ft_strndup(str, i);
 	value = get_env(envp, key);
 	if (!value)
