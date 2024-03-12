@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bplante <benplante99@gmail.com>            +#+  +:+       +#+         #
+#    By: bplante <bplante@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/30 08:17:58 by ldufour           #+#    #+#              #
-#    Updated: 2024/03/11 17:40:15 by bplante          ###   ########.fr        #
+#    Updated: 2024/03/12 14:02:02 by bplante          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ SRC_FILES = 	main.c  prompt.c builtin/pwd.c\
       			builtin/built_exit.c signals.c\
 	  			builtin/export.c builtin/unset.c builtin/builtin_execution.c \
 				command_execution.c parser/ft_strndup.c parser/parser.c parser/redirections.c parser/tokenizer.c parser/var_loading.c \
-				parser/variable_expansion.c parser/syntax_errors.c parser/struct_free.c parser/free_array.c
+				parser/variable_expansion.c parser/syntax_errors.c parser/struct_free.c parser/free_array.c parser/count_cmd.c
 
 SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 

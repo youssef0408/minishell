@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:30:11 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/11 17:57:27 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/12 14:01:29 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct s_token
 }					t_tkn;
 
 int					expand_vars(t_list *tokens);
-void					tokenise(char *input, t_list **tokens);
+void				tokenise(char *input, t_list **tokens);
 int					load_vars_per_token(t_list *tokens, char **envp);
 int					extract_redirections(t_list *tokens, t_cmd_parse *cmd_p);
 int					expand_vars(t_list *tokens);
@@ -78,5 +78,7 @@ int					syntax_errors(t_list *tokens);
 
 void				free_cmd_parse(void *cmd_p);
 void				free_token(void *tk);
+
+int					get_cmd_count(t_cmd_parse **cmd_p);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:20:32 by yothmani          #+#    #+#             */
-/*   Updated: 2024/02/20 16:08:59 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/12 13:48:52 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ void	exec_cmd(t_command cmd, char **envp)
 				printf("\n");
 			}
 		}
+		exit(1);
 	}
 	waitpid(pid, NULL, 0);
 	
