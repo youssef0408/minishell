@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:30:11 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/12 14:01:29 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/13 13:45:18 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,7 @@ bool				lit_track(char c, struct s_litteral_tracker *lt);
 bool				is_cmd_block_end(t_list *parsedin);
 
 int					count_split_var(t_list *expansions, char *data);
-char				*ft_strndup(char *src, int n);
-int					ft_strcmp(char *s1, char *s2);
+char				*ft_strndup(const char *src, int n);
 int					syntax_errors(t_list *tokens);
 
 void				free_cmd_parse(void *cmd_p);

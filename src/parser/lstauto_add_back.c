@@ -1,30 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strndup.c                                       :+:      :+:    :+:   */
+/*   lstauto_add_back.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/27 18:43:07 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/13 13:12:52 by bplante          ###   ########.fr       */
+/*   Created: 2024/03/13 11:45:53 by bplante           #+#    #+#             */
+/*   Updated: 2024/03/13 11:46:39 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-char	*ft_strndup(const char *src, int n)
+int	lst_auto_add_back(t_list **lst, void *content)
 {
-	char	*new;
-	int		i;
+	t_list	*new;
 
-	if (n == 0)
-		return (NULL);
-	new = safe_calloc(n + 1, sizeof(char));
-	i = 0;
-	while (i < n && src[i])
-	{
-		new[i] = src[i];
-		i++;
-	}
-	return (new);
+	new = ft_lstnew(content);
+	if (!new)
+		exit_prg_at_error("malloc failure");
+	ft_lstadd_back(lst, new);
+	return (0);
 }

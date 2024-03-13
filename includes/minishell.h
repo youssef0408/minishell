@@ -6,7 +6,7 @@
 /*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:18:40 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/11 17:17:13 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/13 13:42:36 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ char		*trim_str(char *str);
 void		*safe_calloc(size_t nmemb, size_t size);
 void		print_in_color(char *color, char *msg);
 bool		is_white_space(char c);
-int			ft_strcmp(char *s1, char *s2);
+int			ft_strcmp(const char *s1, const char *s2);
 void		close_pipes(int lst_size, int **pipes);
 /*#############################|| debug.c ||##############################*/
 void		log_printf(const char *format, ...);
@@ -120,5 +120,17 @@ void		clean_process(t_list *token_list, t_list *cmd_list, char *cmd_str);
 /*#############################|| signals.c ||#####################*/
 
 void		init_signal_handlers(void);
+
+/*#############################|| env ||###############################*/
+
+const char	*get_value_with_key(t_list *env, const char *key);
+char		**envp_to_array(t_list *env);
+void		add_to_env(t_list **env, const char *key, char *value);
+void		remove_from_env(t_list **env, const char *key);
+t_list		*convert_envp(char **envp);
+char		*get_key(const char *str);
+void		free_key_value(void *key_value);
+
+int			lst_auto_add_back(t_list **lst, void *content);
 
 #endif

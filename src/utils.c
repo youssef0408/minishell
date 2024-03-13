@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 13:59:55 by yothmani          #+#    #+#             */
-/*   Updated: 2024/02/21 13:55:32 by bplante/Wal      ###   ########.fr       */
+/*   Updated: 2024/03/13 13:13:46 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ void	*safe_calloc(size_t nmemb, size_t size)
 	return (ret);
 }
 
-int	ft_strcmp(char *s1, char *s2)
+int	ft_strcmp(const char *s1,const char *s2)
 {
 	while (*s1 != '\0' && *s2 != '\0')
 	{

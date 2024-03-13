@@ -130,17 +130,6 @@ bool	is_cmd_block_end(t_list *parsedin)
 	return (false);
 }
 
-int	lst_auto_add_back(t_list **lst, void *content)
-{
-	t_list	*new;
-
-	new = ft_lstnew(content);
-	if (!new)
-		exit_prg_at_error("malloc failure");
-	ft_lstadd_back(lst, new);
-	return (0);
-}
-
 int	count_arg_size(char *str, t_list **expansions, bool *isquoted, int start)
 {
 	int				i;
