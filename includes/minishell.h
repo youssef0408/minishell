@@ -6,7 +6,7 @@
 /*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:18:40 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/13 13:42:36 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/13 14:01:58 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,13 +123,39 @@ void		init_signal_handlers(void);
 
 /*#############################|| env ||###############################*/
 
+/**
+ * @brief Get the value in the list that matches the key, returns null if no key found
+ * 
+ * @return returns a const char *, do not free it is a pointer to the original value
+ */
 const char	*get_value_with_key(t_list *env, const char *key);
-char		**envp_to_array(t_list *env);
+/**
+ * @brief converts the list to char ** array to be passed to execve
+ */
+char		**env_list_to_envp(t_list *env);
+/**
+ * @brief adds a key value pair to env if pair is not found, if key already exists updates the key
+ * 
+ * @param env 
+ * @param key if key is null it segfaults, key cannot be null
+ * @param value if value is NULL, stores a zero len string instead
+ */
 void		add_to_env(t_list **env, const char *key, char *value);
+/**
+ * @brief removes a key value pair from the list, if key isnt found it does nothing
+ */
 void		remove_from_env(t_list **env, const char *key);
+/**
+ * @brief converts an envp array to a dict list for internal use
+ */
 t_list		*convert_envp(char **envp);
-char		*get_key(const char *str);
+/**
+ * @brief function to free_the_struct inside the list to free the list
+ * to be used with ft_lstclear()
+ */
 void		free_key_value(void *key_value);
+
+
 
 int			lst_auto_add_back(t_list **lst, void *content);
 

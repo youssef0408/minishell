@@ -6,7 +6,7 @@
 /*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 11:43:04 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/13 13:42:33 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/13 13:57:23 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	add_to_env(t_list **env, const char *key, char *value)
 	}
 }
 
-char	**envp_to_array(t_list *env)
+char	**env_list_to_envp(t_list *env)
 {
 	char		**env_array;
 	int			i;
