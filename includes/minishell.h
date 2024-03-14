@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:18:40 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/13 14:01:58 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/14 14:16:23 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void		clean_process(t_list *token_list, t_list *cmd_list, char *cmd_str);
 void		init_signal_handlers(void);
 
 /*#############################|| env ||###############################*/
-
+char 				*join_key_value(t_list *node);
 /**
  * @brief Get the value in the list that matches the key, returns null if no key found
  * 

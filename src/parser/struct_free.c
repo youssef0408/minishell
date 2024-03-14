@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct_free.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:06:27 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/11 17:23:11 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/14 13:21:30 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	free_cmd_parse(void *cmd)
 	if (!cmd_p)
 		return ;
 	cmd_p = (t_cmd_parse *)cmd;
-	if (cmd_p->cmds)
-		free_array((void **)cmd_p->cmds, &free);
+	if (cmd_p->args)
+		free_array((void **)cmd_p->args, &free);
 	if (cmd_p->redirections)
 		free_array((void **)cmd_p->redirections, &free);
 	free(cmd_p);

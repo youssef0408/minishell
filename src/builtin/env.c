@@ -3,67 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante/Walord <benplante99@gmail.com>     +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 13:51:44 by yothmani          #+#    #+#             */
-/*   Updated: 2024/02/21 13:56:39 by bplante/Wal      ###   ########.fr       */
+/*   Updated: 2024/03/14 16:20:37 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int	find_in_env(char *key, char **envp)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i] != NULL)
-	{
-		if (ft_strnstr(envp[i], key, ft_strlen(key)))
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-void	open_and_handle_new_terminal(t_command cmd)
+void	set_shlvl(t_list **env)
 {
 	int		idx;
 	char	*old;
+	char	*shlvl;
 
-	idx = find_in_env("SHLVL", cmd.env);
-	old = ft_substr(cmd.env[idx], 6, ft_strlen(cmd.env[idx]));
-	cmd.env[idx] = ft_strjoin("SHLVL=", ft_itoa(ft_atoi(old) + 1));
-	execve("minishell", NULL, cmd.env);
+	shlvl = get_value_with_key(*env, "SHLVL");
+	if (!shlvl)
+		add_to_env(env, "SHLVL", itoa(1));
+	else
+		add_to_env("SHLVL", ft_itoa(ft_atoi(shlvl) + 1));
+	add_to_env(env, "?", itoa(0));
+	return ;
 }
 
-void	exec_env(t_command *cmd)
+void	exec_env(t_command *info, t_cmd_parse *cmd)
 {
-	int	i;
+	int		i;
+	t_list	*tmp;
+	char	*kv;
 
 	i = 0;
-	cmd->exit_status = 0;
-	if(ft_strcmp(cmd->option, ""))
+	info->exit_status = 0;
+	if (cmd->args[1])
 	{
 		print_in_color(RED, "🚨env: too many arguments\n");
-		cmd->exit_status = 1;
-		return;
+		info->exit_status = 1;
+		return ;
 	}
-	while (cmd->env[i])
+	tmp = info->env;
+	while (tmp)
 	{
-		printf("%s\n", cmd->env[i]);
-		i++;
+		kv = join_key_value(tmp);
+		printf("%s\n", kv);
+		free(kv);
+		tmp = tmp->next;
 	}
-}
-
-void	update_env(t_command *cmd, char *new_var)
-{
-	size_t	i;
-
-	i = 0;
-	while (cmd->env[i] != NULL)
-		i++;
-	cmd->env[i] = new_var;
-	i++;
-	cmd->env[i] = NULL;
 }

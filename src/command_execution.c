@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:20:32 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/11 16:40:02 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/14 16:56:47 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char	*get_cmd_path(char *cmd, char **envp)
 	return (NULL);
 }
 
-void	exec_cmd(t_command cmd, char **envp)
+void	exec_cmd(t_command *info, t_cmd_parse **cmd)
 {
 	int		i;
 	char	*old;
@@ -49,6 +49,8 @@ void	exec_cmd(t_command cmd, char **envp)
 	char	*cmd_path;
 	pid_t	pid;
 
+
+	if(get_cmd_count(cmd) == 1 && exec_builtin(info, cmd[0])) //TODO: modifier la fonction exec_cmd au complet
 	i = 0;
 	pid = fork();
 	if (pid == -1)
@@ -58,7 +60,7 @@ void	exec_cmd(t_command cmd, char **envp)
 		// sleep(10);
 		if (exec_builtin(cmd, cmd.env))
 		{
-			tmp = cmd.parsed[0]->cmds;
+			tmp = cmd.parsed[0]->args;
 			cmd_path = get_cmd_path(tmp[0], envp);
 			if (!cmd_path || execve(cmd_path, tmp, cmd.env) == -1)
 			{

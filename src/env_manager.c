@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_manager.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 11:43:04 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/13 13:57:23 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/14 14:12:39 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,17 @@ char	*get_key(const char *str)
 	while (str[i] && str[i] != '=')
 		i++;
 	return (ft_strndup(str, i));
+}
+
+char *join_key_value(t_list *node)
+{
+	if (!node)
+		return NULL;
+	t_key_value *kv = node->content;
+	char *temp = ft_strjoin(kv->key, "=");
+	char *ret = ft_strjoin(temp, kv->value);
+	free(temp)
+	return ret;
 }
 
 t_list	*convert_envp(char **envp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 19:50:09 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/03/11 14:53:35 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/14 16:48:03 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,20 @@ bool	is_numeral(const char *str)
 	return (true);
 }
 
-int	exit_value(t_command *cmd)
+int	exit_value(t_cmd_parse *cmd)
 {
 	int	res;
 
-	if (ft_strcmp(cmd->option2, ""))
+	if (!cmd->args[2])
 	{
-		//TODO print to stderror
 		printf("exit: too many arguments\n");
 		res = 1;
 	}
-	else if (cmd->option)
+	else if (cmd->args[1])
 	{
-		if (is_numeral(cmd->option))
+		if (is_numeral(cmd->args[1]))
 		{
-			res = ft_atoi(cmd->option);
+			res = ft_atoi(cmd->args[1]);
 			res = 0;
 			if (res < 0)
 				res = 256;
@@ -50,39 +49,25 @@ int	exit_value(t_command *cmd)
 		}
 		else
 		{
-			printf("exit: %s: numeric argument required\n", cmd->option);
+			printf("exit: %s: numeric argument required\n", cmd->args[1]);
 			res = 255;
 		}
+	}
+	else
+	{
+		res = 0;
+		printf("exit\n");
 	}
 	return (res);
 }
 
-void	exec_exit(t_command *cmd)
+void	exec_exit(t_command *info, t_cmd_parse *cmd)
 {
-	int	result;
-	int	i;
-
-	cmd->exit_status = exit_value(cmd);
-	handle_exit_status(*cmd);
-	exit(cmd->exit_status);
+	info->exit_status = exit_value(cmd);
+	free_and_exit(info->exit_status); //TODO: implement this func
 }
 
-void	handle_exit_status(t_command cmd)
+void	handle_exit_status(t_command *info)
 {
-	int		idx;
-	char	*old;
-	char	*new_var;
-
-	idx = find_in_env("?", cmd.env);
-	if (idx != -1)
-	{
-		old = ft_substr(cmd.env[idx], 2, ft_strlen(cmd.env[idx]));
-		cmd.env[idx] = ft_strjoin("?=", ft_itoa(cmd.exit_status));
-		free(old);
-	}
-	else
-	{
-		new_var = ft_strjoin("?=", ft_itoa(cmd.exit_status));
-		update_env(&cmd, new_var);
-	}
+	add_to_env(&info->env, "?", itoa(info->exit_status));
 }

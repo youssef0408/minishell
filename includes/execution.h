@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 16:03:20 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/11 15:42:27 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/14 16:45:14 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 # include "includes/minishell.h"
 
 void	exec_cmd(t_command cmd, char **envp);
-int		exec_builtin(t_command cmd, char **envp);
-void		exec_pwd(char *cmd);
-void		exec_env(t_command *cmd);
-void		exec_echo(t_command *cmd);
+// int		exec_builtin(t_command cmd, char **envp);
+// void		exec_pwd(char *cmd);
+// void		exec_env(t_command *cmd);
+// void		exec_echo(t_command *cmd);
 // void	exec_non_builtin(t_command cmd, char **envp);
 #endif

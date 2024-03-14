@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 13:33:01 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/11 15:40:43 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/14 16:51:47 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,48 +47,42 @@ void	init_cmd(char *str_cmd, t_command *cmd)
 	cmd->option2 = tmp;
 }
 
-int	exec_builtin(t_command cmd, char **envp)
+int	exec_builtin(t_command *info, t_cmd_parse *cmd)
 {
 	int		i;
 	char	*tmp;
 	int		result;
 
 	i = 0;
-	if (!ft_strcmp(cmd.name, "pwd"))
-		exec_pwd(cmd.option);
-	else if (!ft_strcmp(cmd.name, "./minishell"))
+	if (!ft_strcmp(cmd->args[0], "pwd"))
+		exec_pwd(cmd);
+	else if (!ft_strcmp(cmd->args[0], "cd"))
 	{
-		open_and_handle_new_terminal(cmd);
-		handle_exit_status(cmd);
+		change_dir(cmd, info);
+		handle_exit_status(info);
 		return 0;
 	}
-	else if (!ft_strcmp(cmd.name, "cd"))
+	else if (!ft_strcmp(cmd->args[0], "export"))
 	{
-		change_dir(cmd.option, &cmd);
-		handle_exit_status(cmd);
-		return 0;
-	}
-	else if (!ft_strcmp(cmd.name, "export"))
-	{
-		export_exec(&cmd);
-		handle_exit_status(cmd);
+		export_exec(info, cmd);
+		handle_exit_status(info);
 		return(0);	
 	}
-	else if (!ft_strcmp(cmd.name, "env"))
+	else if (!ft_strcmp(cmd->args[0], "env"))
 		{
-			exec_env(&cmd);
-			handle_exit_status(cmd);
+			exec_env(info, cmd);
+			handle_exit_status(info);
 			return(0);
 		}
-	else if (!ft_strcmp(cmd.name, "exit"))
-		exec_exit(&cmd);
-	else if (!ft_strcmp(cmd.name, "echo"))
-		exec_echo(&cmd);
-	else if (!ft_strcmp(cmd.name, "unset"))
-		exec_unset(&cmd);
+	else if (!ft_strcmp(cmd->args[0], "exit"))
+		exec_exit(info, cmd);
+	else if (!ft_strcmp(cmd->args[0], "echo"))
+		exec_echo(cmd);
+	else if (!ft_strcmp(cmd->args[0], "unset"))
+		exec_unset(info, cmd);
 	else
 		return (1);
-	cmd.exit_status=0;
-	handle_exit_status(cmd);
+	info.exit_status=0;
+	handle_exit_status(info);
 	return (0);
 }

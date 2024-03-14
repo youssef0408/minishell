@@ -249,7 +249,7 @@ int	get_split_args(t_list *tokens, t_cmd_parse *cmd_p)
 			arg_splitter(tk, &args);
 		tokens = tokens->next;
 	}
-	cmd_p->cmds = (char **)lst_to_array(args);
+	cmd_p->args = (char **)lst_to_array(args);
 }
 
 int	fill_cmd_struct(t_list *tokens, t_cmd_parse *cmd_p)

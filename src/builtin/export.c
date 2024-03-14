@@ -6,138 +6,83 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:57:48 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/03/07 16:34:57 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/14 15:41:34 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-static void	print_declare_env(t_command *cmd)
+static void	print_declare_env(t_list *env)
 {
-	int	i;
+	int		i;
+	char	*kv;
 
 	i = 0;
-	while (cmd->env[i])
+	while (env)
 	{
-		printf("declare -x %s\n", cmd->env[i]);
-		i++;
+		kv = join_key_value(env);
+		printf("declare -x %s\n", kv);
+		env = env->next;
+		free(kv);
 	}
 }
 
-static void	handle_export(t_command cmd, char *value, char *key)
-{
-	int		idx;
-	char	*old;
-	char	*tmp;
-	char	*new_var;
-
-	tmp = ft_strjoin(key, "=");
-	idx = find_in_env(key, cmd.env);
-	if (idx != -1)
-	{
-		old = ft_substr(cmd.env[idx], ft_strlen(key) + 1,
-				ft_strlen(cmd.env[idx]));
-		cmd.env[idx] = ft_strjoin(tmp, value);
-		free(old);
-	}
-	else
-	{
-		new_var = ft_strjoin(tmp, value);
-		update_env(&cmd, new_var);
-	}
-	free(tmp);
-}
-
-bool	is_valid_var_id(t_command cmd)
+bool	is_valid_var_id(char *id)
 {
 	int	i;
 
-	if (!cmd.option)
-		return (true);
-	if (!ft_isalpha(cmd.option[0]) || cmd.option[0] != '_')
-		return (true);
+	if (!id)
+		return (false);
+	if (!ft_isalpha(id[0]) || id[0] != '_')
+		return (false);
 	i = 1;
-	while (cmd.option[i])
+	while (id[i])
 	{
-		if (!ft_isalnum(cmd.option[i]) || cmd.option[i] != '_')
-			return (true);
+		if (!ft_isalnum(id[i]) || id[i] != '_')
+			return (false);
 		i++;
 	}
-	return (false);
+	return (true);
 }
 
-void	export_exec(t_command *cmd)
+void	export_exec(t_command *info, t_cmd_parse *cmd)
 {
 	char	**tmp;
 	int		i;
+	char	*value;
+	char	*key;
 
 	i = 1;
-	cmd->exit_status = 0;
-	if (!cmd->parsed[0]->cmds[1])
-		return (print_declare_env(cmd));
-	while (cmd->parsed[0]->cmds[i])
+	info->exit_status = 0;
+	if (!cmd->args[1])
+		return (print_declare_env(info->env));
+	while (cmd->args[i])
 	{
-		if (!is_valid_var_id(*cmd))
+		if (ft_strchr(cmd->args[i], "="))
 		{
-			print_in_color(RED, "not a valid identifier\n");
-			cmd->exit_status = 1;
+			key = ft_substr(*cmd, 0, ft_strchr(cmd->args[i], '=')
+					- cmd->args[i]);
+			if (is_valid_var_id(key))
+			{
+				value = ft_substr(*cmd, ft_strlen(key) + 1,
+						(ft_strlen(*cmd->args[i]) - ft_strlen(key) - 1));
+				add_to_env(&info->env, key, value);
+			}
+			else
+			{
+				print_in_color(RED, "not a valid identifier\n");
+				info->exit_status = 1;
+			}
+			free(key);
 		}
 		else
 		{
-			tmp = ft_split(cmd->parsed[0]->cmds[i], '=');
-			handle_export(*cmd, tmp[1], tmp[0]);
-			clean_table(tmp);
+			if (!is_valid_var_id(cmd->args[i]))
+			{
+				print_in_color(RED, "not a valid identifier\n");
+				info->exit_status = 1;
+			}
 		}
 		i++;
 	}
 }
-
-// void	export_exec(t_command *cmd)
-// {
-// 	char	**tmp;
-// 	int		i;
-
-// 	i = 0;
-// 	cmd->exit_status = 0;
-// 	if (!ft_strcmp(cmd->option, ""))
-// 		return (print_declare_env(cmd));
-// 	else
-// 	{
-// 		if (!is_valid_var_id(*cmd) || ft_strcmp(cmd->option2, ""))
-// 		{
-// 			print_in_color(RED, "not a valid identifier\n");
-// 			cmd->exit_status = 1;
-// 			return ;
-// 		}
-// 		else
-// 		{
-// 			tmp = ft_split(cmd->option, '=');
-// 			// handle_export(*cmd, tmp[1], tmp[0]);
-// 			handle_export(*cmd, parse_env2(*cmd,tmp[1]), parse_env2(*cmd,
-					// tmp[0]));
-// 			return ;
-// 		}
-// 	}
-// }
-
-// NOTES:
-
-// export + option
-// possibilité 1: option contient (var id seulement)
-// possibilité 2: option contient (var id avec '=')
-// on commence par verifier le  var_id  si pas valid
-/* on return(1) avec un message "not a valid identifier"
- * si le var id est valid:
- * on check on est dans quelle forme(celle du = ou pas)
- * on  ft_split(option, '=):
- *
- * I- si on la trouve:
- * 		on extract de 0 jusqu'au '=' sera le key_export
- * 		on extract de ('='+ 1) jusqu'à la fin sera export_value
- *  	on l'ajoute à env key et on assigne la valeur
- * * II- si on la trouve pas:
- * 		var_id sera key_export
- * 		export value sera ""
- *
- *
- */
