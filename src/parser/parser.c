@@ -219,6 +219,8 @@ void	*lst_to_array(t_list *args)
 	int		size;
 
 	size = ft_lstsize(args);
+	if (size == 0)
+		return (NULL);
 	array = safe_calloc(sizeof(char *), size + 1);
 	i = 0;
 	while (i < size)
@@ -290,7 +292,7 @@ void	parser_cleanup(t_list *tokens)
 {
 }
 
-int	parse_input(char *input, t_cmd_parse ***input_parse, char **envp)
+int	parse_input(char *input, t_cmd_parse ***input_parse, t_list *env)
 {
 	t_list	*tokens;
 
@@ -306,7 +308,7 @@ int	parse_input(char *input, t_cmd_parse ***input_parse, char **envp)
 		ft_lstclear(&tokens, &free_token);
 		return (-1);
 	}
-	load_vars_per_token(tokens, envp);
+	load_vars_per_token(tokens, env);
 	expand_vars(tokens);
 	token_to_cmd(tokens, input_parse);
 	ft_lstclear(&tokens, &free_token);

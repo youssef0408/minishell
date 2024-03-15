@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:57:48 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/03/14 15:41:34 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/14 23:56:55 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ bool	is_valid_var_id(char *id)
 
 	if (!id)
 		return (false);
-	if (!ft_isalpha(id[0]) || id[0] != '_')
+	if (!ft_isalpha(id[0]) && id[0] != '_')
 		return (false);
 	i = 1;
 	while (id[i])
 	{
-		if (!ft_isalnum(id[i]) || id[i] != '_')
+		if (!ft_isalnum(id[i]) && id[i] != '_')
 			return (false);
 		i++;
 	}
@@ -58,14 +58,14 @@ void	export_exec(t_command *info, t_cmd_parse *cmd)
 		return (print_declare_env(info->env));
 	while (cmd->args[i])
 	{
-		if (ft_strchr(cmd->args[i], "="))
+		if (ft_strchr(cmd->args[i], '='))
 		{
-			key = ft_substr(*cmd, 0, ft_strchr(cmd->args[i], '=')
+			key = ft_substr(cmd->args[i], 0, ft_strchr(cmd->args[i], '=')
 					- cmd->args[i]);
 			if (is_valid_var_id(key))
 			{
-				value = ft_substr(*cmd, ft_strlen(key) + 1,
-						(ft_strlen(*cmd->args[i]) - ft_strlen(key) - 1));
+				value = ft_substr(cmd->args[i], ft_strlen(key) + 1,
+						(ft_strlen(cmd->args[i]) - ft_strlen(key) - 1));
 				add_to_env(&info->env, key, value);
 			}
 			else

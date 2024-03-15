@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 13:59:55 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/14 15:54:18 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/15 00:17:32 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*trim_str(char *str)
 	return (trimmed_str);
 }
 
-void	print_in_color(char *color, char *msg)
+void	print_in_color(const char *color, const char *msg)
 {
 	printf("\033[%sm%s\033[0m", color, msg);
 }

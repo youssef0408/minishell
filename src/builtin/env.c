@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 13:51:44 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/14 16:20:37 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/14 22:59:00 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ void	set_shlvl(t_list **env)
 {
 	int		idx;
 	char	*old;
-	char	*shlvl;
+	const char	*shlvl;
 
 	shlvl = get_value_with_key(*env, "SHLVL");
 	if (!shlvl)
-		add_to_env(env, "SHLVL", itoa(1));
+		add_to_env(env, "SHLVL", ft_itoa(1));
 	else
-		add_to_env("SHLVL", ft_itoa(ft_atoi(shlvl) + 1));
-	add_to_env(env, "?", itoa(0));
+		add_to_env(env, "SHLVL", ft_itoa(ft_atoi(shlvl) + 1));
+	add_to_env(env, "?", ft_itoa(0));
 	return ;
 }
 

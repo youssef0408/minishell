@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_manager.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 11:43:04 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/14 14:12:39 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/14 22:40:34 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char *join_key_value(t_list *node)
 	t_key_value *kv = node->content;
 	char *temp = ft_strjoin(kv->key, "=");
 	char *ret = ft_strjoin(temp, kv->value);
-	free(temp)
+	free(temp);
 	return ret;
 }
 

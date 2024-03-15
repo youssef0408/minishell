@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 19:50:09 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/03/14 16:48:03 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/14 23:20:44 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,10 @@ int	exit_value(t_cmd_parse *cmd)
 void	exec_exit(t_command *info, t_cmd_parse *cmd)
 {
 	info->exit_status = exit_value(cmd);
-	free_and_exit(info->exit_status); //TODO: implement this func
+	//free_and_exit(info->exit_status); //TODO: implement this func
 }
 
 void	handle_exit_status(t_command *info)
 {
-	add_to_env(&info->env, "?", itoa(info->exit_status));
+	add_to_env(&info->env, "?", ft_itoa(info->exit_status));
 }

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   command_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:20:32 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/14 16:56:47 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/14 23:28:26 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-static char	*get_cmd_path(char *cmd, char **envp)
+static char	*get_cmd_path(t_command *info, char *cmd_name)
 {
 	char	**paths;
 	char	*path;
@@ -20,24 +20,24 @@ static char	*get_cmd_path(char *cmd, char **envp)
 	char	*part_path;
 
 	i = 0;
-	while (ft_strnstr(envp[i], "PATH", 4) == 0)
-		i++;
-	paths = ft_split(envp[i] + 5, ':');
+	paths = ft_split(get_value_with_key(info->env, "PATH"), ':');
+	if (!paths)
+		return (NULL);
 	i = 0;
 	while (paths[i])
 	{
 		part_path = ft_strjoin(paths[i], "/");
-		path = ft_strjoin(part_path, cmd);
+		path = ft_strjoin(part_path, cmd_name);
 		free(part_path);
 		if (access(path, F_OK) == 0)
+		{
+			free_array((void **)paths, &free);
 			return (path);
+		}
 		free(path);
 		i++;
 	}
-	i = -1;
-	while (paths[++i])
-		free(paths[i]);
-	free(paths);
+	free_array((void **)paths, &free);
 	return (NULL);
 }
 
@@ -49,29 +49,36 @@ void	exec_cmd(t_command *info, t_cmd_parse **cmd)
 	char	*cmd_path;
 	pid_t	pid;
 
-
-	if(get_cmd_count(cmd) == 1 && exec_builtin(info, cmd[0])) //TODO: modifier la fonction exec_cmd au complet
-	i = 0;
-	pid = fork();
-	if (pid == -1)
-		printf(" fork failed\n");
-	if (pid == 0)
+	if (get_cmd_count(cmd) == 1 && !exec_builtin(info, cmd[0]))
 	{
-		// sleep(10);
-		if (exec_builtin(cmd, cmd.env))
+	}
+	else
+	{
+		// TODO: modifier la fonction exec_cmd au complet
+		i = 0;
+		pid = fork();
+		if (pid == -1)
+			printf(" fork failed\n");
+		if (pid == 0)
 		{
-			tmp = cmd.parsed[0]->args;
-			cmd_path = get_cmd_path(tmp[0], envp);
-			if (!cmd_path || execve(cmd_path, tmp, cmd.env) == -1)
+			// sleep(10);
+			if (exec_builtin(info, cmd[0]))
 			{
-				clean_table(tmp);
+				tmp = cmd[0]->args;
+				cmd_path = get_cmd_path(info, tmp[0]);
+				if (cmd_path)
+				{
+					tmp[0] = cmd_path;
+					execve(cmd_path, tmp, env_list_to_envp(info->env));
+				}
+				free(cmd_path);
 				print_in_color(RED, "🚨command not found:  ");
 				print_in_color(RED, tmp[0]);
 				printf("\n");
 			}
+			exit(1);
 		}
-		exit(1);
+		waitpid(pid, NULL, 0);
 	}
-	waitpid(pid, NULL, 0);
 	// return (0);
 }

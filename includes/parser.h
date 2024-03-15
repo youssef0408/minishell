@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:30:11 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/14 14:16:02 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/14 23:22:42 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,11 @@ typedef struct s_token
 
 int					expand_vars(t_list *tokens);
 void				tokenise(char *input, t_list **tokens);
-int					load_vars_per_token(t_list *tokens, char **envp);
+int					load_vars_per_token(t_list *tokens, t_list *env);
 int					extract_redirections(t_list *tokens, t_cmd_parse *cmd_p);
 int					expand_vars(t_list *tokens);
 int					parse_input(char *input, t_cmd_parse ***input_parse,
-						char **envp);
+						t_list *env);
 const char			*get_env(char **env, char *key);
 bool				lit_track(char c, struct s_litteral_tracker *lt);
 bool				is_cmd_block_end(t_list *parsedin);

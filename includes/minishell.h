@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:18:40 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/14 14:16:23 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/15 00:18:09 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@
 /*#############################|| utils.c ||##############################*/
 char		*trim_str(char *str);
 void		*safe_calloc(size_t nmemb, size_t size);
-void		print_in_color(char *color, char *msg);
+void		print_in_color(const char *color, const char *msg);
 bool		is_white_space(char c);
 int			ft_strcmp(const char *s1, const char *s2);
 void		close_pipes(int lst_size, int **pipes);

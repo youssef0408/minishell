@@ -6,14 +6,14 @@
 /*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:38:06 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/12 00:28:02 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/14 23:22:22 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
 // create expantion struct and and add if its quote or not, add start if isnt
-int	store_value_from_env(char *str, char **envp, t_tkn *tk, int start)
+int	store_value_from_env(char *str, t_list *env, t_tkn *tk, int start)
 {
 	int				i;
 	char			*key;
@@ -32,7 +32,7 @@ int	store_value_from_env(char *str, char **envp, t_tkn *tk, int start)
 	if (i == 0)
 		return (0);
 	key = ft_strndup(str, i);
-	value = get_env(envp, key);
+	value = get_value_with_key(env, key);
 	if (!value)
 		value = ft_strdup("");
 	expansion = safe_calloc(sizeof(t_expansions), 1);
@@ -49,7 +49,7 @@ int	store_value_from_env(char *str, char **envp, t_tkn *tk, int start)
 }
 // create expantion struct and and add if its quote or not, add start if isnt
 // int store_value_from_env(char *strstart
-int	check_and_fetch(t_tkn *token, char **envp)
+int	check_and_fetch(t_tkn *token, t_list *env)
 {
 	char						*data;
 	struct s_litteral_tracker	lt;
@@ -64,7 +64,7 @@ int	check_and_fetch(t_tkn *token, char **envp)
 		if (data[i] == '$' && (lt.is_lit == 0 || (lt.quote == '\"'
 					&& lt.is_lit == 1)))
 		{
-			i += store_value_from_env(&data[i + 1], envp, token, i);
+			i += store_value_from_env(&data[i + 1], env, token, i);
 		}
 		lit_track(data[i], &lt);
 		i++;
@@ -72,13 +72,13 @@ int	check_and_fetch(t_tkn *token, char **envp)
 	return (0);
 }
 
-int	load_vars_per_token(t_list *tokens, char **envp)
+int	load_vars_per_token(t_list *tokens, t_list *env)
 {
 	while (tokens)
 	{
 		if (((t_tkn *)tokens->content)->data_type == DATA)
 		{
-			check_and_fetch((t_tkn *)tokens->content, envp);
+			check_and_fetch((t_tkn *)tokens->content, env);
 		}
 		tokens = tokens->next;
 	}
