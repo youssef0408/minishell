@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 13:33:01 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/14 23:02:59 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/15 16:06:19 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "includes/minishell.h"
 
@@ -31,8 +30,6 @@
 // 		return ;
 // 	cmd->option = tab_cmd[1];
 
-
-	
 // 	i = 2;
 // 	tmp = "";
 // 	if (!tab_cmd[2])
@@ -47,14 +44,15 @@
 // 	cmd->option2 = tmp;
 // }
 
-
-//TODO: Proper exit status management with the builtins
+// TODO: Proper exit status management with the builtins
 int	exec_builtin(t_command *info, t_cmd_parse *cmd)
 {
 	int		i;
 	char	*tmp;
 	int		result;
 
+	info->exit_status = 0;
+	handle_exit_status(info);
 	i = 0;
 	if (!ft_strcmp(cmd->args[0], "pwd"))
 		exec_pwd(cmd);
@@ -62,20 +60,20 @@ int	exec_builtin(t_command *info, t_cmd_parse *cmd)
 	{
 		change_dir(cmd, info);
 		handle_exit_status(info);
-		return 0;
+		return (0);
 	}
 	else if (!ft_strcmp(cmd->args[0], "export"))
 	{
 		export_exec(info, cmd);
 		handle_exit_status(info);
-		return(0);	
+		return (0);
 	}
 	else if (!ft_strcmp(cmd->args[0], "env"))
-		{
-			exec_env(info, cmd);
-			handle_exit_status(info);
-			return(0);
-		}
+	{
+		exec_env(info, cmd);
+		handle_exit_status(info);
+		return (0);
+	}
 	else if (!ft_strcmp(cmd->args[0], "exit"))
 		exec_exit(info, cmd);
 	else if (!ft_strcmp(cmd->args[0], "echo"))
