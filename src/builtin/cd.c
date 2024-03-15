@@ -6,7 +6,7 @@
 /*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 18:39:16 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/15 00:16:37 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/15 00:35:54 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,4 @@ void	change_dir(t_cmd_parse *cmd, t_command *info)
 		check_and_exec(get_value_with_key(info->env, "OLDPWD"), info);
 	else
 		check_and_exec(cmd->args[1], info);
-	free(home);
 }
