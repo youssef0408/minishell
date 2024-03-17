@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:43:37 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/14 16:52:23 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/17 13:11:11 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,9 @@ typedef struct s_command
 {
 	int			exit_status;
 	t_list		*env;
-	t_cmd_parse	**parsed;
-	t_list		list;
+	int 		*pids;
+	int			*fds;
+	bool		is_running_cmds;
 }				t_command;
 
 void			init_cmd(char *str_cmd, t_command *cmd);

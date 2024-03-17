@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 13:33:01 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/15 16:06:19 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/17 15:46:40 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,28 +52,14 @@ int	exec_builtin(t_command *info, t_cmd_parse *cmd)
 	int		result;
 
 	info->exit_status = 0;
-	handle_exit_status(info);
-	i = 0;
 	if (!ft_strcmp(cmd->args[0], "pwd"))
 		exec_pwd(cmd);
 	else if (!ft_strcmp(cmd->args[0], "cd"))
-	{
 		change_dir(cmd, info);
-		handle_exit_status(info);
-		return (0);
-	}
 	else if (!ft_strcmp(cmd->args[0], "export"))
-	{
 		export_exec(info, cmd);
-		handle_exit_status(info);
-		return (0);
-	}
 	else if (!ft_strcmp(cmd->args[0], "env"))
-	{
 		exec_env(info, cmd);
-		handle_exit_status(info);
-		return (0);
-	}
 	else if (!ft_strcmp(cmd->args[0], "exit"))
 		exec_exit(info, cmd);
 	else if (!ft_strcmp(cmd->args[0], "echo"))
@@ -82,6 +68,5 @@ int	exec_builtin(t_command *info, t_cmd_parse *cmd)
 		exec_unset(info, cmd);
 	else
 		return (1);
-	handle_exit_status(info);
 	return (0);
 }

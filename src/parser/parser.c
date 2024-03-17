@@ -219,8 +219,6 @@ void	*lst_to_array(t_list *args)
 	int		size;
 
 	size = ft_lstsize(args);
-	if (size == 0)
-		return (NULL);
 	array = safe_calloc(sizeof(char *), size + 1);
 	i = 0;
 	while (i < size)
