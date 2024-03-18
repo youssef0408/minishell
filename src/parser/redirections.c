@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:41:40 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/11 17:52:54 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/18 16:52:36 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ int	store_redirection_info(t_tkn *tk, t_cmd_parse *cmd_p, int type, int i)
 	}
 	else
 		cmd_p->redirections[i]->str = ft_strdup((char *)tk->data);
-	// TODO check alloc return value
 	return (0);
 }
 

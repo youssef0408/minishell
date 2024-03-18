@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 19:50:09 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/03/18 15:20:13 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/18 17:14:23 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,30 +28,36 @@ bool	is_numeral(const char *str)
 	return (true);
 }
 
+int	exit_val_if_args_provided(t_cmd_parse *cmd)
+{
+	int	res;
+
+	if (is_numeral(cmd->args[1]))
+	{
+		res = ft_atoi(cmd->args[1]);
+		res = res % 256;
+		if (res < 0)
+			res = 256 + res;
+		if (cmd->args[2])
+		{
+			printf("exit: too many arguments\n");
+			return (1);
+		}
+	}
+	else
+	{
+		printf("exit: %s: numeric argument required\n", cmd->args[1]);
+		res = 255;
+	}
+	return (res);
+}
+
 int	exit_value(t_cmd_parse *cmd)
 {
 	int	res;
 
 	if (cmd->args[1])
-	{
-		if (is_numeral(cmd->args[1]))
-		{
-			res = ft_atoi(cmd->args[1]);
-			res = res % 256;
-			if (res < 0)
-				res = 256 + res;
-			if (cmd->args[2])
-			{
-				printf("exit: too many arguments\n");
-				return 1;
-			}
-		}
-		else
-		{
-			printf("exit: %s: numeric argument required\n", cmd->args[1]);
-			res = 255;
-		}
-	}
+		res = exit_val_if_args_provided(cmd);
 	else
 	{
 		res = 0;
@@ -63,12 +69,7 @@ int	exit_value(t_cmd_parse *cmd)
 void	exec_exit(t_command *info, t_cmd_parse *cmd)
 {
 	info->exit_status = exit_value(cmd);
-	// free_array((void **)parsed, &free_cmd_parse);
-	// ft_lstclear(&cmd.env, &free_key_value);
-	// ft_lstclear(&cmd.env, &);
-	// free();
 	exit(info->exit_status);
-	// free_and_exit(info->exit_status); //TODO: implement this func
 }
 
 void	handle_exit_status(t_command *info)

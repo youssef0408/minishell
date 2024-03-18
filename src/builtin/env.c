@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 13:51:44 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/18 15:20:08 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:08:41 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	set_shlvl(t_list **env)
 {
-	int		idx;
-	char	*old;
 	const char	*shlvl;
 
 	shlvl = get_value_with_key(*env, "SHLVL");

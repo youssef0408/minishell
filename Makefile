@@ -3,16 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bplante <benplante99@gmail.com>            +#+  +:+       +#+         #
+#    By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/30 08:17:58 by ldufour           #+#    #+#              #
-#    Updated: 2024/03/13 13:37:58 by bplante          ###   ########.fr        #
+#    Updated: 2024/03/18 17:54:17 by yothmani         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME            = minishell
 CC              = gcc
-CFLAGS          = -g #-Wall -Wextra -Werror
+CFLAGS          = -g -Wall -Wextra -Werror
 RM              = rm -rf
 LIBFT           = $(LIBFT_DIR)/libft.a
 SRC_DIR         = src
@@ -28,10 +28,10 @@ INC             = -Ilib $(READLINE_INC) -I.
 LIBS            = -L$(READLINE_DIR) -lreadline -lhistory -Llib/libft -lft -lncurses
 
 SRC_FILES = 	main.c  prompt.c builtin/pwd.c\
-     			utils.c builtin/cd.c  env_utils.c\
+     			utils.c builtin/cd.c\
       			builtin/echo.c  builtin/env.c\
       			builtin/built_exit.c signals.c\
-	  			builtin/export.c builtin/unset.c builtin/builtin_execution.c \
+	  			builtin/export.c builtin/export_utils.c builtin/unset.c builtin/builtin_execution.c \
 				command_execution.c parser/ft_strndup.c parser/parser.c parser/redirections.c parser/tokenizer.c parser/var_loading.c \
 				parser/variable_expansion.c parser/syntax_errors.c parser/struct_free.c parser/free_array.c parser/count_cmd.c parser/lstauto_add_back.c \
 				env_manager.c

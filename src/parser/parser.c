@@ -182,7 +182,7 @@ int	count_var_space(char *str, t_list **expansions, bool *isquoted, int start)
 	return (i - start);
 }
 
-int	arg_splitter(t_tkn *tk, t_list **args)
+void	arg_splitter(t_tkn *tk, t_list **args)
 {
 	int		size;
 	int		i;
@@ -195,12 +195,11 @@ int	arg_splitter(t_tkn *tk, t_list **args)
 	if (!exp)
 	{
 		str = ft_strdup((char *)tk->data);
-		// TODO check malloc return value
 		lst_auto_add_back(args, (void *)str);
-		return (0);
+		return ;
 	}
 	if (count_split_var(tk->expansions, (char *)tk->data) == 0)
-		return (0);
+		return ;
 	isquoted = true;
 	while (((char *)tk->data)[i])
 	{
@@ -230,7 +229,7 @@ void	*lst_to_array(t_list *args)
 	return ((void *)array);
 }
 
-int	get_split_args(t_list *tokens, t_cmd_parse *cmd_p)
+void	get_split_args(t_list *tokens, t_cmd_parse *cmd_p)
 {
 	t_list	*args;
 	bool	is_red_data;
@@ -252,7 +251,7 @@ int	get_split_args(t_list *tokens, t_cmd_parse *cmd_p)
 	cmd_p->args = (char **)lst_to_array(args);
 }
 
-int	fill_cmd_struct(t_list *tokens, t_cmd_parse *cmd_p)
+void	fill_cmd_struct(t_list *tokens, t_cmd_parse *cmd_p)
 {
 	extract_redirections(tokens, cmd_p);
 	get_split_args(tokens, cmd_p);
@@ -272,7 +271,7 @@ t_list	*get_to_next_cmd(t_list *tokens)
 	return (tokens);
 }
 
-int	token_to_cmd(t_list *tokens, t_cmd_parse ***cmd_p)
+void	token_to_cmd(t_list *tokens, t_cmd_parse ***cmd_p)
 {
 	int	i;
 
@@ -286,14 +285,11 @@ int	token_to_cmd(t_list *tokens, t_cmd_parse ***cmd_p)
 	}
 }
 
-void	parser_cleanup(t_list *tokens)
-{
-}
-
 int	parse_input(char *input, t_cmd_parse ***input_parse, t_list *env)
 {
 	t_list	*tokens;
 
+	*input_parse = NULL;
 	if (is_string_over(input) != 0)
 	{
 		write(2, "Incomplete Input\n", 18);
@@ -310,4 +306,5 @@ int	parse_input(char *input, t_cmd_parse ***input_parse, t_list *env)
 	expand_vars(tokens);
 	token_to_cmd(tokens, input_parse);
 	ft_lstclear(&tokens, &free_token);
+	return (0);
 }

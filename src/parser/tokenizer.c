@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:34:09 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/11 17:56:34 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/18 16:13:25 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ int	find_meta_type(char *str, t_tkn *token)
 		token->data = R_OUT_TRUNC;
 		return (1);
 	}
+	return (0);
 }
 
 int	store_meta(char *str, t_list **tokens)

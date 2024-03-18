@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:18:40 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/18 15:17:20 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:46:59 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ void		print_token(void *content);
 
 /*#############################|| Prompt.c ||############################*/
 char		*display_prompt(void);
-char	*print_colored_message(const char *user, const char *path);
+char		*print_colored_message(const char *user, const char *path);
 /*#############################|| free_and_exit.c ||#####################*/
 
 void		exit_prg_at_error(char *str);
@@ -122,11 +122,13 @@ void		clean_process(t_list *token_list, t_list *cmd_list, char *cmd_str);
 void		init_signal_handlers(void);
 
 /*#############################|| env ||###############################*/
-char 				*join_key_value(t_list *node);
+char		*join_key_value(t_list *node);
 /**
- * @brief Get the value in the list that matches the key, returns null if no key found
- * 
- * @return returns a const char *, do not free it is a pointer to the original value
+ * @brief Get the value in the list that matches the key,
+	returns null if no key found
+ *
+ * @return returns a const char *,
+	do not free it is a pointer to the original value
  */
 const char	*get_value_with_key(t_list *env, const char *key);
 /**
@@ -134,15 +136,17 @@ const char	*get_value_with_key(t_list *env, const char *key);
  */
 char		**env_list_to_envp(t_list *env);
 /**
- * @brief adds a key value pair to env if pair is not found, if key already exists updates the key
- * 
- * @param env 
+ * @brief adds a key value pair to env if pair is not found,
+	if key already exists updates the key
+ *
+ * @param env
  * @param key if key is null it segfaults, key cannot be null
  * @param value if value is NULL, stores a zero len string instead
  */
 void		add_to_env(t_list **env, const char *key, char *value);
 /**
- * @brief removes a key value pair from the list, if key isnt found it does nothing
+ * @brief removes a key value pair from the list,
+	if key isnt found it does nothing
  */
 void		remove_from_env(t_list **env, const char *key);
 /**
@@ -154,8 +158,6 @@ t_list		*convert_envp(char **envp);
  * to be used with ft_lstclear()
  */
 void		free_key_value(void *key_value);
-
-
 
 int			lst_auto_add_back(t_list **lst, void *content);
 

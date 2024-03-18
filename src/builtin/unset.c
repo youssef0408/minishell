@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 15:23:38 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/18 15:20:27 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:08:59 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	exec_unset(t_command *info, t_cmd_parse *cmd)
 {
-	int	idx;
 	int	i;
 
 	i = 1;

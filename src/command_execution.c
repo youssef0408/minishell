@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:20:32 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/18 15:20:44 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:55:40 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,7 +194,7 @@ void	exec_single_builtin(t_command *info, t_cmd_parse *cmd)
 	}
 	if (fds[FD_OUT] != NO_RED)
 	{
-		old_std_in = dup(1);
+		old_std_out = dup(1);
 		dup2(fds[FD_OUT], 1);
 		close(fds[FD_OUT]);
 	}
@@ -206,8 +206,8 @@ void	exec_single_builtin(t_command *info, t_cmd_parse *cmd)
 	}
 	if (fds[FD_OUT] != NO_RED)
 	{
-		dup2(old_std_in, 1);
-		close(old_std_in);
+		dup2(old_std_out, 1);
+		close(old_std_out);
 	}
 }
 
@@ -307,7 +307,6 @@ void	create_child(t_command *info, t_cmd_parse **cmds, int pos)
 		printf("fork failed\n");
 	if (pid == 0)
 	{
-		// init_sigint_handler();
 		close_irrelevant_fds(info->fds, pos);
 		dup2(info->fds[pos * 2 + FD_IN], 0);
 		dup2(info->fds[pos * 2 + FD_OUT], 1);
@@ -333,7 +332,6 @@ void	create_child(t_command *info, t_cmd_parse **cmds, int pos)
 				info->exit_status = 127;
 			}
 		}
-		// free everything
 		exit(info->exit_status);
 	}
 	info->pids[pos] = pid;

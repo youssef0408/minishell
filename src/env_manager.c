@@ -6,17 +6,11 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 11:43:04 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/18 14:17:47 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:57:17 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
-
-typedef struct s_key_value
-{
-	char	*key;
-	char	*value;
-}			t_key_value;
 
 void	free_key_value(void *key_value)
 {
@@ -40,15 +34,19 @@ char	*get_key(const char *str)
 	return (ft_strndup(str, i));
 }
 
-char *join_key_value(t_list *node)
+char	*join_key_value(t_list *node)
 {
+	t_key_value	*kv;
+	char		*temp;
+	char		*ret;
+
 	if (!node)
-		return NULL;
-	t_key_value *kv = node->content;
-	char *temp = ft_strjoin(kv->key, "=");
-	char *ret = ft_strjoin(temp, kv->value);
+		return (NULL);
+	kv = node->content;
+	temp = ft_strjoin(kv->key, "=");
+	ret = ft_strjoin(temp, kv->value);
 	free(temp);
-	return ret;
+	return (ret);
 }
 
 t_list	*convert_envp(char **envp)
@@ -150,8 +148,8 @@ char	**env_list_to_envp(t_list *env)
 
 const char	*get_value_with_key(t_list *env, const char *key)
 {
-	t_list *node;
-	t_key_value *kv;
+	t_list		*node;
+	t_key_value	*kv;
 
 	node = get_kv_node(env, key);
 	if (node)

@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 18:39:16 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/18 15:19:57 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/18 17:17:15 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,17 @@ void	check_and_exec(const char *path, t_command *info)
 	add_to_env(&info->env, "PWD", get_pwd());
 }
 
+void	oldpwd_not_set(t_command *info)
+{
+	printf("cd: OLDPWD not set\n");
+	info->exit_status = 1;
+	return ;
+}
+
 void	change_dir(t_cmd_parse *cmd, t_command *info)
 {
 	const char	*home;
-	char		*temp;
-	const char		*path;
+	const char	*path;
 
 	if (cmd->args[2])
 	{
@@ -54,15 +60,14 @@ void	change_dir(t_cmd_parse *cmd, t_command *info)
 		return ;
 	}
 	home = get_value_with_key(info->env, "HOME");
-	if (!cmd->args[1]) //|| !ft_strcmp(cmd->args[1], "~"))
+	if (!cmd->args[1])
 		check_and_exec(home, info);
 	else if (!ft_strcmp(cmd->args[1], "-"))
 	{
 		path = get_value_with_key(info->env, "OLDPWD");
 		if (!path)
 		{
-			printf("cd: OLDPWD not set\n");
-			info->exit_status = 1;
+			oldpwd_not_set(info);
 			return ;
 		}
 		check_and_exec(path, info);

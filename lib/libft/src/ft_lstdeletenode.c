@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstclearnode.c                                  :+:      :+:    :+:   */
+/*   ft_lstdeletenode.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/06 11:32:34 by yothmani          #+#    #+#             */
-/*   Updated: 2024/02/06 11:34:37 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:32:19 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_lstdeletenode(t_list **lst, t_list *node, void (*del)(void *))
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	tmp = *lst;
 	if (tmp == NULL || node == NULL)

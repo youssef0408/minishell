@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variable_expansion.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:29:23 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/12 00:34:21 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/18 16:54:26 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ bool	is_printed(char *str, struct s_litteral_tracker *lt)
 	if (lt->is_lit == 0 && (str[0] == '\'' || str[0] == '\"'))
 		return (false);
 	if (str[0] == '\\' && ((lt->is_lit == 1 && lt->quote == 0)
-			|| (lt->is_lit == 2 && str[1] == '\"' || str[1] == '$'
-				|| str[1] == '\\')))
+			|| (lt->is_lit == 2 && str[1] == '\"') || str[1] == '$'
+			|| str[1] == '\\'))
 		return (false);
 	return (true);
 }
 
-//TODO:Quotes handler to fix "spaces when echo"
+// TODO:Quotes handler to fix "spaces when echo"
 // ────────> 🔥Ready... 🔥 echo " iug iugh iugh iug ug uyg      h    g"
 //  iug iugh iugh iug ug uyg h g
 // ====>2
@@ -64,7 +64,7 @@ int	count_new_data_size(char *str, t_list *expansions)
 	return (count);
 }
 
-int	fill_new_data(char *new_string, char *original, t_list *expansions)
+void	fill_new_data(char *new_string, char *original, t_list *expansions)
 {
 	struct s_litteral_tracker	lt;
 	int							i;
@@ -109,7 +109,7 @@ void	remove_quoted_expansions(t_list **expansions)
 }
 
 // TODO remove quoted expansions from list
-int	expand(t_tkn *tk)
+void	expand(t_tkn *tk)
 {
 	int	count;
 
@@ -120,7 +120,7 @@ int	expand(t_tkn *tk)
 	remove_quoted_expansions(&tk->expansions);
 }
 
-int	expand_vars(t_list *tokens)
+void	expand_vars(t_list *tokens)
 {
 	t_tkn	*tk;
 

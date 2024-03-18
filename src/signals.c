@@ -6,14 +6,13 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:27:43 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/03/18 15:27:56 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:58:24 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-
-t_command g_info;
+t_command	g_info;
 void		rl_replace_line(const char *text, int clear_undo);
 
 static void	handle_ctl_c(int sig)
@@ -23,7 +22,6 @@ static void	handle_ctl_c(int sig)
 	if (g_info.is_running_cmds == false)
 	{
 		rl_replace_line("", 0);
-		// rl_forced_update_display();
 		rl_on_new_line();
 		rl_redisplay();
 	}
@@ -39,6 +37,7 @@ static void	init_sigint_handler(void)
 	if (sigaction(SIGINT, &sig_init, NULL) == -1)
 		print_in_color(RED, "SIGINT ERROR!\n");
 }
+
 static void	init_sigquit_handler(void)
 {
 	struct sigaction	sig_quit;

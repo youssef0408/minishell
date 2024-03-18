@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:30:11 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/14 23:22:42 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/18 16:57:04 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,12 @@ typedef struct s_litteral_tracker
 # define META_C 0
 # define DATA 1
 
+typedef struct s_key_value
+{
+	char			*key;
+	char			*value;
+}					t_key_value;
+
 typedef struct s_token
 {
 	int				data_type;
@@ -60,11 +66,10 @@ typedef struct s_token
 	char			*original;
 }					t_tkn;
 
-int					expand_vars(t_list *tokens);
+void				expand_vars(t_list *tokens);
 void				tokenise(char *input, t_list **tokens);
 int					load_vars_per_token(t_list *tokens, t_list *env);
 int					extract_redirections(t_list *tokens, t_cmd_parse *cmd_p);
-int					expand_vars(t_list *tokens);
 int					parse_input(char *input, t_cmd_parse ***input_parse,
 						t_list *env);
 const char			*get_env(char **env, char *key);

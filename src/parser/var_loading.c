@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_loading.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:38:06 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/14 23:22:22 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/18 16:54:14 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	store_value_from_env(char *str, t_list *env, t_tkn *tk, int start)
 	free(key);
 	return (i);
 }
+
 // create expantion struct and and add if its quote or not, add start if isnt
 // int store_value_from_env(char *strstart
 int	check_and_fetch(t_tkn *token, t_list *env)
