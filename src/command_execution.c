@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:20:32 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/17 15:07:12 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/18 12:45:01 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -310,7 +310,7 @@ void	create_child(t_command *info, t_cmd_parse **cmds, int pos)
 		printf("fork failed\n");
 	if (pid == 0)
 	{
-		//sleep(10);
+		//init_sigint_handler();
 		close_irrelevant_fds(info->fds, pos);
 		dup2(info->fds[pos * 2 + FD_IN], 0);
 		dup2(info->fds[pos * 2 + FD_OUT], 1);
@@ -338,6 +338,7 @@ void	create_child(t_command *info, t_cmd_parse **cmds, int pos)
 		// free everything
 		exit(info->exit_status);
 	}
+	info->pids[pos] = pid;
 }
 
 int	wait_all(int *pids)
@@ -365,6 +366,7 @@ void	exec_cmd_array(t_command *info, t_cmd_parse **cmds)
 		info->fds = create_pipe_array(cmds);
 		info->pids = create_pid_array(cmds);
 		manage_redirections(info->fds, cmds);
+		info->is_running_cmds = true;
 		i = 0;
 		while (cmds[i])
 		{
@@ -377,32 +379,5 @@ void	exec_cmd_array(t_command *info, t_cmd_parse **cmds)
 		free(info->pids);
 		handle_exit_status(info);
 	}
-}
-
-void	old_exec_cmd(t_command *info, t_cmd_parse **cmd)
-{
-	int		i;
-	pid_t	pid;
-
-	// TODO: modifier la fonction exec_cmd au complet
-	i = 0;
-	pid = fork();
-	if (pid == -1)
-		printf(" fork failed\n");
-	if (pid == 0)
-	{
-		// sleep(10);
-		if (exec_builtin(info, cmd[0]))
-		{
-			if (get_cmd_path(info, cmd[0]->args) == 0)
-				execve(cmd[0]->args[0], cmd[0]->args,
-					env_list_to_envp(info->env));
-			print_in_color(RED, "🚨command not found:  ");
-			print_in_color(RED, cmd[0]->args[0]);
-			printf("\n");
-		}
-		exit(info->exit_status);
-	}
-	waitpid(pid, NULL, 0);
-	// return (0);
+	info->is_running_cmds = false;
 }
