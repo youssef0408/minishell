@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:18:40 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/15 00:18:09 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/18 15:17:20 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ char	*print_colored_message(const char *user, const char *path);
 
 void		exit_prg_at_error(char *str);
 void		free_token(void *token_ptr);
-void		free_cmd(void *cmd);
+void		free_cmd(void *info);
 void		clean_table(char **table);
 void		free_array(void **content, void (del)(void *));
 

@@ -3,27 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:27:43 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/03/18 12:55:15 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/18 15:27:56 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
 
-t_command cmd;
+t_command g_info;
 void		rl_replace_line(const char *text, int clear_undo);
 
 static void	handle_ctl_c(int sig)
 {
 	(void)sig;
 	write(1, "\n", 1);
-	if (cmd.is_running_cmds == false)
+	if (g_info.is_running_cmds == false)
 	{
 		rl_replace_line("", 0);
-		rl_forced_update_display();
+		// rl_forced_update_display();
+		rl_on_new_line();
 		rl_redisplay();
 	}
 }

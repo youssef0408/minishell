@@ -3,30 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 18:40:38 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/03/17 15:42:20 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/18 15:17:20 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void	exec_echo(t_cmd_parse *cmd)
+void	exec_echo(t_cmd_parse *info)
 {
 	char	*tmp;
 	int i = 1;
 	bool has_nl = true;
-	if (cmd->args[1] && !ft_strcmp(cmd->args[1], "-n"))
+	if (info->args[1] && !ft_strcmp(info->args[1], "-n"))
 	{
 		i++;
 		has_nl = false;
 	}
-	while(cmd->args[i])
+	while(info->args[i])
 	{
-		printf("%s", cmd->args[i]);
+		printf("%s", info->args[i]);
 		i++;
-		if(cmd->args[i])
+		if(info->args[i])
 			printf(" ");
 	}
 	if(has_nl)

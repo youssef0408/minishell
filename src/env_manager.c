@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_manager.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 11:43:04 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/14 22:40:34 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/18 14:17:47 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ char *join_key_value(t_list *node)
 t_list	*convert_envp(char **envp)
 {
 	t_list		*env;
-	int			i;
 	t_key_value	*kv;
+	int			i;
 
 	i = 0;
 	env = NULL;

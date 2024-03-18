@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 19:50:09 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/03/18 13:34:50 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/18 15:20:13 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,10 @@ int	exit_value(t_cmd_parse *cmd)
 void	exec_exit(t_command *info, t_cmd_parse *cmd)
 {
 	info->exit_status = exit_value(cmd);
+	// free_array((void **)parsed, &free_cmd_parse);
+	// ft_lstclear(&cmd.env, &free_key_value);
+	// ft_lstclear(&cmd.env, &);
+	// free();
 	exit(info->exit_status);
 	// free_and_exit(info->exit_status); //TODO: implement this func
 }

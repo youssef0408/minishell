@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:43:37 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/17 13:11:11 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/18 15:18:57 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ typedef struct s_command
 	bool		is_running_cmds;
 }				t_command;
 
-void			init_cmd(char *str_cmd, t_command *cmd);
+// void			init_cmd(char *str_cmd, t_command *cmd);
 void			change_dir(t_cmd_parse *cmd, t_command *info);
+// char			**split_with_delimiter(char *s, char c);
 char			*get_pwd(void);
-char			**split_with_delimiter(char *s, char c);
 void			set_shlvl(t_list **env);
 void			handle_exit_status(t_command *info);
 void			export_exec(t_command *info, t_cmd_parse *cmd);

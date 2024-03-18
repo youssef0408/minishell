@@ -3,16 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 08:37:27 by ldufour           #+#    #+#             */
-/*   Updated: 2024/03/18 12:42:58 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/18 15:42:58 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-t_command	cmd;
+t_command	g_info;
+
+bool is_tty_valid(void)
+{
+	if(!isatty(0) || !isatty(1) || !isatty(2))
+	{
+		write(2, "Standard file descriptors not bound to a tty\n", 45);
+		return false;
+	}
+	return true;
+}
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -21,11 +31,14 @@ int	main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
-	cmd.env = convert_envp(envp);
-	set_shlvl(&cmd.env);
-	cmd.exit_status = 0;
-	cmd.is_running_cmds = false;
+	if(!is_tty_valid())
+		return(EXIT_FAILURE);
+	g_info.env = convert_envp(envp);
+	set_shlvl(&g_info.env);
+	g_info.exit_status = 0;
+	g_info.is_running_cmds = false;
 	init_signal_handlers();
+	remove_from_env(&g_info.env, "OLDPWD");
 	while (true)
 	{
 		cmd_str = display_prompt();
@@ -34,12 +47,13 @@ int	main(int argc, char **argv, char **envp)
 			printf("exit\n");
 			break ;
 		}
-		if (parse_input(cmd_str, &parsed, cmd.env) != -1)
-			exec_cmd_array(&cmd, parsed);
+		if (parse_input(cmd_str, &parsed, g_info.env) != -1)
+			exec_cmd_array(&g_info, parsed);
 		add_history(cmd_str);
 		free_array((void **)parsed, &free_cmd_parse);
 		free(cmd_str);
-	}	// free and exit
-	ft_lstclear(&cmd.env, &free_key_value);
-	return (0);
+	}
+	rl_clear_history();
+	ft_lstclear(&g_info.env, &free_key_value);
+	return (EXIT_SUCCESS);
 }
