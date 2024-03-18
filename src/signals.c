@@ -6,14 +6,14 @@
 /*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:27:43 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/03/18 12:45:39 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/18 12:55:15 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
 
-extern t_command cmd;
+t_command cmd;
 void		rl_replace_line(const char *text, int clear_undo);
 
 static void	handle_ctl_c(int sig)

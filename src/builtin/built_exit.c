@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 19:50:09 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/03/14 23:20:44 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/18 13:34:50 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,19 @@ int	exit_value(t_cmd_parse *cmd)
 {
 	int	res;
 
-	if (!cmd->args[2])
-	{
-		printf("exit: too many arguments\n");
-		res = 1;
-	}
-	else if (cmd->args[1])
+	if (cmd->args[1])
 	{
 		if (is_numeral(cmd->args[1]))
 		{
 			res = ft_atoi(cmd->args[1]);
-			res = 0;
+			res = res % 256;
 			if (res < 0)
-				res = 256;
-			res = res + res % 256;
+				res = 256 + res;
+			if (cmd->args[2])
+			{
+				printf("exit: too many arguments\n");
+				return 1;
+			}
 		}
 		else
 		{
@@ -64,7 +63,8 @@ int	exit_value(t_cmd_parse *cmd)
 void	exec_exit(t_command *info, t_cmd_parse *cmd)
 {
 	info->exit_status = exit_value(cmd);
-	//free_and_exit(info->exit_status); //TODO: implement this func
+	exit(info->exit_status);
+	// free_and_exit(info->exit_status); //TODO: implement this func
 }
 
 void	handle_exit_status(t_command *info)

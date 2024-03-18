@@ -6,7 +6,7 @@
 /*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:20:32 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/18 12:45:01 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/18 13:56:26 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,11 @@ int	here_doc(char *del)
 	char	*temp;
 
 	pipe(fd_pipe);
-	while (1)
+	while (true)
 	{
 		line = readline("> ");
 		if (!line)
-		{
-			// error message
 			break ;
-		}
 		if (ft_strcmp(line, del) == 0)
 		{
 			free(line);
@@ -310,7 +307,7 @@ void	create_child(t_command *info, t_cmd_parse **cmds, int pos)
 		printf("fork failed\n");
 	if (pid == 0)
 	{
-		//init_sigint_handler();
+		// init_sigint_handler();
 		close_irrelevant_fds(info->fds, pos);
 		dup2(info->fds[pos * 2 + FD_IN], 0);
 		dup2(info->fds[pos * 2 + FD_OUT], 1);
@@ -333,6 +330,7 @@ void	create_child(t_command *info, t_cmd_parse **cmds, int pos)
 				print_in_color(RED, "🚨command not found:  ");
 				print_in_color(RED, cmds[pos]->args[0]);
 				printf("\n");
+				info->exit_status = 127;
 			}
 		}
 		// free everything
@@ -352,7 +350,7 @@ int	wait_all(int *pids)
 		waitpid(pids[i], &exit_st, 0);
 		i++;
 	}
-	return (exit_st);
+	return (exit_st / 256);
 }
 
 void	exec_cmd_array(t_command *info, t_cmd_parse **cmds)
@@ -377,7 +375,7 @@ void	exec_cmd_array(t_command *info, t_cmd_parse **cmds)
 		info->exit_status = wait_all(info->pids);
 		free(info->fds);
 		free(info->pids);
-		handle_exit_status(info);
 	}
+	handle_exit_status(info);
 	info->is_running_cmds = false;
 }

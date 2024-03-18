@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 18:39:16 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/15 00:35:54 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/18 13:52:57 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	check_and_exec(const char *path, t_command *info)
 void	change_dir(t_cmd_parse *cmd, t_command *info)
 {
 	const char	*home;
-	char *temp;
+	char		*temp;
+	const char		*path;
 
 	if (cmd->args[2])
 	{
@@ -56,7 +57,17 @@ void	change_dir(t_cmd_parse *cmd, t_command *info)
 	if (!cmd->args[1]) //|| !ft_strcmp(cmd->args[1], "~"))
 		check_and_exec(home, info);
 	else if (!ft_strcmp(cmd->args[1], "-"))
-		check_and_exec(get_value_with_key(info->env, "OLDPWD"), info);
+	{
+		path = get_value_with_key(info->env, "OLDPWD");
+		if (!path)
+		{
+			printf("cd: OLDPWD not set\n");
+			info->exit_status = 1;
+			return ;
+		}
+		check_and_exec(path, info);
+		printf("%s\n", get_value_with_key(info->env, "PWD"));
+	}
 	else
 		check_and_exec(cmd->args[1], info);
 }
