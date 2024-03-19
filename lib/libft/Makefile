@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+         #
+#    By: bplante <bplante@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/09 01:24:00 by yothmani          #+#    #+#              #
-#    Updated: 2024/02/06 11:35:51 by yothmani         ###   ########.fr        #
+#    Updated: 2024/03/19 12:59:43 by bplante          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,8 @@ $(SRC_DIR)/ft_strchr.c $(SRC_DIR)/ft_isascii.c $(SRC_DIR)/ft_striteri.c $(SRC_DI
 $(SRC_DIR)/ft_lstiter.c $(SRC_DIR)/ft_lstclear.c $(SRC_DIR)/ft_lstdelone.c $(SRC_DIR)/ft_lstdeletenode.c\
 $(SRC_DIR)/ft_lstsize.c $(SRC_DIR)/ft_lstlast.c $(SRC_DIR)/ft_lstadd_front.c\
 $(SRC_DIR)/ft_lstnew.c $(SRC_DIR)/ft_putstr.c $(SRC_DIR)/ft_putchar.c $(SRC_DIR)/ft_lstadd_back.c\
+$(SRC_DIR)/printf/ft_printf_convertion.c $(SRC_DIR)/printf/ft_printf_utils.c $(SRC_DIR)/printf/ft_printf.c \
+$(SRC_DIR)/lstauto_add_back.c
 
 OBJ 				= $(SRC:.c=.o)
 
