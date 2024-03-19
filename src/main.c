@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 08:37:27 by ldufour           #+#    #+#             */
-/*   Updated: 2024/03/18 18:05:49 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/19 13:07:15 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		cmd_str = display_prompt();
 		if (!cmd_str)
-		{
-			printf("exit\n");
 			break ;
-		}
 		if (parse_input(cmd_str, &parsed, g_info.env) != -1)
 			exec_cmd_array(&g_info, parsed);
 		add_history(cmd_str);
@@ -60,5 +57,6 @@ int	main(int argc, char **argv, char **envp)
 	}
 	rl_clear_history();
 	ft_lstclear(&g_info.env, &free_key_value);
+	printf("exit\n");
 	return (EXIT_SUCCESS);
 }

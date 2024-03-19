@@ -1,29 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_printf_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/06 18:56:45 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/19 13:31:11 by bplante          ###   ########.fr       */
+/*   Created: 2023/05/23 11:34:42 by bplante           #+#    #+#             */
+/*   Updated: 2024/03/19 12:45:06 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "libft.h"
 
-char	*get_pwd(void)
+int	number_char_amount(int n)
 {
-	char	*path;
+	int	i;
+	int	j;
 
-	path = getcwd(NULL, 0);
-	return (path);
+	i = 0;
+	j = 1;
+	while (n / j != 0)
+	{
+		i++;
+		j *= 10;
+	}
+	return (1);
 }
 
-void	exec_pwd(t_cmd_parse *info)
+char	*char_to_str(char c)
 {
-	if (!info->args[1])
-		printf("%s\n", get_pwd());
-	else
-		ft_printf_fd("pwd: too many arguments\n", 2);
+	char	*output;
+
+	output = ft_calloc(2, sizeof(char));
+	if (!output)
+		return (NULL);
+	output[0] = c;
+	return (output);
 }

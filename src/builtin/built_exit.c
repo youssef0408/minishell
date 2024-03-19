@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 19:50:09 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/03/18 17:14:23 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/19 13:07:00 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ int	exit_val_if_args_provided(t_cmd_parse *cmd)
 			res = 256 + res;
 		if (cmd->args[2])
 		{
-			printf("exit: too many arguments\n");
+			ft_printf_fd("exit: too many arguments\n", 2);
 			return (1);
 		}
 	}
 	else
 	{
-		printf("exit: %s: numeric argument required\n", cmd->args[1]);
+		ft_printf_fd("exit: %s: numeric argument required\n", 2, cmd->args[1]);
 		res = 255;
 	}
 	return (res);
@@ -59,10 +59,7 @@ int	exit_value(t_cmd_parse *cmd)
 	if (cmd->args[1])
 		res = exit_val_if_args_provided(cmd);
 	else
-	{
 		res = 0;
-		printf("exit\n");
-	}
 	return (res);
 }
 

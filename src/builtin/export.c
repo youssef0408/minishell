@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/16 14:57:48 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/03/18 17:57:59 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/19 13:29:02 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,7 @@ bool	is_valid_var_id(char *id)
 
 void	handle_export_error(t_command *info, t_cmd_parse *cmd, int i)
 {
-	print_in_color(RED, "export: '");
-	print_in_color(RED, cmd->args[i]);
-	print_in_color(RED, "' :not a valid identifier\n");
+	ft_printf_fd("export: '%s': not a valid identifier\n", 2, cmd->args[i]);
 	info->exit_status = 1;
 }
 
