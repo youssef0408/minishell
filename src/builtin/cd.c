@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 18:39:16 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/18 17:17:15 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/19 13:26:26 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,19 @@ void	check_and_exec(const char *path, t_command *info)
 {
 	if (access(path, F_OK))
 	{
-		print_in_color(RED, "🚨cd: no such file or directory: ");
-		print_in_color(RED, path);
-		printf("\n");
+		ft_printf_fd("cd: no such file or directory: %s\n", 2, path);
 		info->exit_status = 1;
 		return ;
 	}
 	if (access(path, R_OK))
 	{
-		print_in_color(RED, "🚨cd: Permission denied\n");
+		ft_printf_fd( "🚨cd: Permission denied: %s\n", 2, path);
 		info->exit_status = 1;
 		return ;
 	}
 	if (chdir(path) != 0)
 	{
-		print_in_color(RED, "🚨cd: execution failed!");
-		print_in_color(RED, path);
-		printf("\n");
+		ft_printf_fd("🚨cd: execution failed!\n", 2);
 		info->exit_status = 1;
 		return ;
 	}
@@ -43,7 +39,7 @@ void	check_and_exec(const char *path, t_command *info)
 
 void	oldpwd_not_set(t_command *info)
 {
-	printf("cd: OLDPWD not set\n");
+	ft_printf_fd("cd: OLDPWD not set\n", 2);
 	info->exit_status = 1;
 	return ;
 }
@@ -55,7 +51,7 @@ void	change_dir(t_cmd_parse *cmd, t_command *info)
 
 	if (cmd->args[2])
 	{
-		printf("cd: too many arguments\n");
+		ft_printf_fd("cd: too many arguments\n", 2);
 		info->exit_status = 1;
 		return ;
 	}

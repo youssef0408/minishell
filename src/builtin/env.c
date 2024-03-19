@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 13:51:44 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/18 16:08:41 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/19 13:27:11 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	exec_env(t_command *info, t_cmd_parse *cmd)
 	info->exit_status = 0;
 	if (cmd->args[1])
 	{
-		print_in_color(RED, "🚨env: too many arguments\n");
+		ft_printf_fd("env: too many arguments\n", 2);
 		info->exit_status = 1;
 		return ;
 	}

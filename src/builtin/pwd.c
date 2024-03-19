@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 18:56:45 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/18 15:17:20 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/19 13:31:11 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,5 +25,5 @@ void	exec_pwd(t_cmd_parse *info)
 	if (!info->args[1])
 		printf("%s\n", get_pwd());
 	else
-		print_in_color(RED, "🚨pwd: too many arguments\n");
+		ft_printf_fd("pwd: too many arguments\n", 2);
 }
