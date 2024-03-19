@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:27:43 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/03/18 16:58:24 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/19 15:11:00 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	init_sigint_handler(void)
 	sigemptyset(&sig_init.sa_mask);
 	sig_init.sa_handler = handle_ctl_c;
 	if (sigaction(SIGINT, &sig_init, NULL) == -1)
-		print_in_color(RED, "SIGINT ERROR!\n");
+		ft_printf_fd("SIGINT ERROR!\n", 2);
 }
 
 static void	init_sigquit_handler(void)
@@ -46,7 +46,7 @@ static void	init_sigquit_handler(void)
 	sigemptyset(&sig_quit.sa_mask);
 	sig_quit.sa_handler = SIG_IGN;
 	if (sigaction(SIGQUIT, &sig_quit, NULL) == -1)
-		print_in_color(RED, "SIGQUIT ERROR!\n");
+		ft_printf_fd("SIGINT ERROR!\n", 2);
 }
 
 void	init_signal_handlers(void)

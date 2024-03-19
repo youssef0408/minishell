@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 18:39:16 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/19 13:26:26 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/19 15:12:15 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	check_and_exec(const char *path, t_command *info)
 	}
 	if (access(path, R_OK))
 	{
-		ft_printf_fd( "🚨cd: Permission denied: %s\n", 2, path);
+		ft_printf_fd("🚨cd: Permission denied: %s\n", 2, path);
 		info->exit_status = 1;
 		return ;
 	}
