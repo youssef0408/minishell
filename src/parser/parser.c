@@ -63,7 +63,6 @@ bool	lit_track(char c, struct s_litteral_tracker *lt)
 	return (true);
 }
 
-// TODO check if string ends with non-litteral pipe
 char	is_string_over(char *input)
 {
 	struct s_litteral_tracker	lt;

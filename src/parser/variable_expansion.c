@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:29:23 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/18 16:54:26 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/19 16:58:05 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,6 @@ bool	is_printed(char *str, struct s_litteral_tracker *lt)
 		return (false);
 	return (true);
 }
-
-// TODO:Quotes handler to fix "spaces when echo"
-// ────────> 🔥Ready... 🔥 echo " iug iugh iugh iug ug uyg      h    g"
-//  iug iugh iugh iug ug uyg h g
-// ====>2
 
 int	count_new_data_size(char *str, t_list *expansions)
 {

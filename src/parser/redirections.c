@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:41:40 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/18 16:52:36 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/19 17:01:38 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	count_redirect(t_list *tokens)
 	return (count);
 }
 
-// TODO improve
 int	count_split_var(t_list *expansions, char *data)
 {
 	int				i;
@@ -66,9 +65,7 @@ int	count_split_var(t_list *expansions, char *data)
 		}
 		else if (!has_char && ((is_in_var && !exp->is_quoted && data[i] != ' ')
 				|| exp->is_quoted))
-		{
 			has_char = true;
-		}
 		i++;
 	}
 	if (has_char)
