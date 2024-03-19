@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:43:37 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/19 15:14:14 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/19 16:51:33 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,6 @@ void		process_export_without_assignment(t_command *info, t_cmd_parse *cmd,
 char		*get_key_from_assignment(char *arg);
 char		*get_value_from_assignment(char *arg, char *key);
 bool		is_builtin(char *name);
+void		exec_single_builtin(t_command *info, t_cmd_parse *cmd);
 
 #endif

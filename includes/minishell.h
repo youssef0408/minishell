@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:18:40 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/19 16:30:33 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/19 16:52:30 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,5 +163,9 @@ t_list		*convert_envp(char **envp);
 void		free_key_value(void *key_value);
 
 int			lst_auto_add_back(t_list **lst, void *content);
+int			here_doc(char *del);
+void		close_irrelevant_fds(int *fds, int pos);
+void		close_non_std_fds(int *fds);
+int			get_cmd_path(t_command *info, char **args);
 
 #endif
