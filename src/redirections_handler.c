@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirections.c                                     :+:      :+:    :+:   */
+/*   redirections_handler.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:33:55 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/19 16:37:46 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/20 23:30:43 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ int	here_doc(char *del)
 	char	*line;
 	char	*temp;
 
-	pipe(fd_pipe);
+	if (pipe(fd_pipe))
+		return (-1);
 	while (true)
 	{
 		line = readline("> ");
@@ -40,7 +41,7 @@ int	here_doc(char *del)
 
 void	open_redirections(t_cmd_parse *cmd, int *fds)
 {
-	int				i;
+	int	i;
 
 	fds[FD_IN] = NO_RED;
 	fds[FD_OUT] = NO_RED;
@@ -49,16 +50,20 @@ void	open_redirections(t_cmd_parse *cmd, int *fds)
 	i = 0;
 	while (cmd->redirections[i])
 	{
-		if (cmd->redirections[i]->redirect_type == R_AMBIGUOUS)
-			handle_ambiguous_redirect(cmd, fds, i);
-		else if (cmd->redirections[i]->redirect_type == R_IN_FILE)
-			handle_in_file(cmd, fds, i);
-		else if (cmd->redirections[i]->redirect_type == R_OUT_APPEND)
-			handle_out_append(cmd, fds, i);
-		else if (cmd->redirections[i]->redirect_type == R_OUT_TRUNC)
-			handle_out_trunc(cmd, fds, i);
-		else
-			handle_other_redirection(cmd, fds, i);
+		if (cmd->redirections[i]->redirect_type == R_AMBIGUOUS
+			&& handle_ambiguous_redirect(cmd, fds, i) != 0)
+			break ;
+		else if (cmd->redirections[i]->redirect_type == R_IN_FILE
+			&& handle_in_file(cmd, fds, i) != 0)
+			break ;
+		else if (cmd->redirections[i]->redirect_type == R_OUT_APPEND
+			&& handle_out_append(cmd, fds, i) != 0)
+			break ;
+		else if (cmd->redirections[i]->redirect_type == R_OUT_TRUNC
+			&& handle_out_trunc(cmd, fds, i) != 0)
+			break ;
+		else if (handle_other_redirection(cmd, fds, i) != 0)
+			break ;
 		i++;
 	}
 }

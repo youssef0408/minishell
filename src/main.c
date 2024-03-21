@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 08:37:27 by ldufour           #+#    #+#             */
-/*   Updated: 2024/03/19 13:07:15 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/20 14:30:14 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	prog_init(char **envp)
 int	main(int argc, char **argv, char **envp)
 {
 	char		*cmd_str;
-	t_cmd_parse	**parsed;
 
 	(void)argc;
 	(void)argv;
@@ -49,10 +48,10 @@ int	main(int argc, char **argv, char **envp)
 		cmd_str = display_prompt();
 		if (!cmd_str)
 			break ;
-		if (parse_input(cmd_str, &parsed, g_info.env) != -1)
-			exec_cmd_array(&g_info, parsed);
+		if (parse_input(cmd_str, &g_info.cmds , g_info.env) != -1)
+			exec_cmd_array(&g_info, g_info.cmds);
 		add_history(cmd_str);
-		free_array((void **)parsed, &free_cmd_parse);
+		free_array((void **)g_info.cmds, &free_cmd_parse);
 		free(cmd_str);
 	}
 	rl_clear_history();

@@ -3,56 +3,75 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 15:17:22 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/19 16:40:46 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/20 23:28:23 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void	handle_ambiguous_redirect(t_cmd_parse *cmd, int *fds, int i)
+int	handle_ambiguous_redirect(t_cmd_parse *cmd, int *fds, int i)
 {
 	printf("%s: ambiguous redirect\n", cmd->redirections[i]->str);
 	fds[FD_IN] = -1;
 	fds[FD_OUT] = -1;
+	return (-1);
 }
 
-void	handle_in_file(t_cmd_parse *cmd, int *fds, int i)
+int	handle_in_file(t_cmd_parse *cmd, int *fds, int i)
 {
-	if (fds[FD_IN] != NO_RED)
+	if (fds[FD_IN] >= 0)
 		close(fds[FD_IN]);
 	fds[FD_IN] = open(cmd->redirections[i]->str, O_RDONLY);
 	if (fds[FD_IN] == -1)
+	{
 		printf("%s: %s\n", cmd->redirections[i]->str, strerror(errno));
+		return (-1);
+	}
+	return (0);
 }
 
-void	handle_out_append(t_cmd_parse *cmd, int *fds, int i)
+int	handle_out_append(t_cmd_parse *cmd, int *fds, int i)
 {
-	if (fds[FD_OUT] != NO_RED)
+	if (fds[FD_OUT] >= 0)
 		close(fds[FD_OUT]);
 	fds[FD_OUT] = open(cmd->redirections[i]->str, O_WRONLY | O_APPEND | O_CREAT,
 			0644);
 	if (fds[FD_OUT] == -1)
+	{
 		printf("%s: %s\n", cmd->redirections[i]->str, strerror(errno));
+		return (-1);
+	}
+	return (0);
 }
 
-void	handle_out_trunc(t_cmd_parse *cmd, int *fds, int i)
+int	handle_out_trunc(t_cmd_parse *cmd, int *fds, int i)
 {
-	if (fds[FD_OUT] != NO_RED)
+	if (fds[FD_OUT] >= 0)
 		close(fds[FD_OUT]);
 	fds[FD_OUT] = open(cmd->redirections[i]->str, O_WRONLY | O_TRUNC | O_CREAT,
 			0644);
 	if (fds[FD_OUT] == -1)
+	{
 		printf("%s: %s\n", cmd->redirections[i]->str, strerror(errno));
+		return (-1);
+	}
+	return (0);
 }
 
-void	handle_other_redirection(t_cmd_parse *cmd, int *fds, int i)
+int	handle_other_redirection(t_cmd_parse *cmd, int *fds, int i)
 {
-	if (fds[FD_IN] != NO_RED)
+	if (fds[FD_IN] >= 0)
 		close(fds[FD_IN]);
 	fds[FD_IN] = here_doc(cmd->redirections[i]->str);
+	if (fds[FD_IN] == -1)
+	{
+		printf("%s: %s\n", cmd->redirections[i]->str, strerror(errno));
+		return (-1);
+	}
+	return (0);
 }
 
 // TODO:CHECK NEW OPEN_REDIRECTION FUNC.

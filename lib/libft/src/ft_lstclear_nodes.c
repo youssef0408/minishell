@@ -1,41 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handle_fds.c                                       :+:      :+:    :+:   */
+/*   ft_lstclear_nodes.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/19 16:14:35 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/20 23:41:27 by bplante          ###   ########.fr       */
+/*   Created: 2024/03/20 13:56:25 by bplante           #+#    #+#             */
+/*   Updated: 2024/03/20 14:02:50 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "libft.h"
 
-void	close_irrelevant_fds(int *fds, int pos)
+void	ft_lstclear_nodes(t_list **lst)
 {
-	int	i;
-
-	i = 0;
-	while (fds[i] != EOINTA)
-	{
-		if ((pos * 2 != i && pos * 2 + 1 != i) && fds[i] != -1)
-			close(fds[i]);
-		i++;
-	}
-}
-
-void	close_non_std_fds(int *fds)
-{
-	int	i;
-
-	if (!fds)
+	t_list *tmp;
+	if (!lst)
 		return ;
-	i = 0;
-	while (fds[i] != EOINTA)
+	while (*lst)
 	{
-		if (fds[i] > 2)
-			close(fds[i]);
-		i++;
+		tmp = (*lst)->next;
+		free(*lst);
+		*lst = tmp;
 	}
+	*lst = NULL;
 }

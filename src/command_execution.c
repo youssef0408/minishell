@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:20:32 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/19 16:37:56 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/20 23:45:52 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,14 @@ void	create_child(t_command *info, t_cmd_parse **cmds, int pos)
 		{
 			info->exit_status = 0;
 		}
+		else if (info->fds[pos * 2 + FD_IN] == -1 || info->fds[pos * 2
+			+ FD_OUT] == -1)
+		{
+			if (info->fds[pos * 2 + FD_IN] > 2)
+				close(info->fds[pos * 2 + FD_IN]);
+			if (info->fds[pos * 2 + FD_OUT] > 2)
+				close(info->fds[pos * 2 + FD_OUT]);
+		}
 		else
 		{
 			if (get_cmd_path(info, cmds[pos]->args) == 0)
@@ -74,12 +82,16 @@ void	create_child(t_command *info, t_cmd_parse **cmds, int pos)
 			}
 			else
 			{
-				print_in_color(RED, "🚨command not found:  ");
-				print_in_color(RED, cmds[pos]->args[0]);
-				printf("\n");
+				ft_printf_fd("command not found: %s\n", 2, cmds[pos]->args[0]);
 				info->exit_status = 127;
 			}
 		}
+		if (info->fds[pos * 2 + FD_IN] > 2)
+			close(info->fds[pos * 2 + FD_IN]);
+		if (info->fds[pos * 2 + FD_OUT] > 2)
+			close(info->fds[pos * 2 + FD_OUT]);
+		rl_clear_history();
+		free_t_commdand(info);
 		exit(info->exit_status);
 	}
 	info->pids[pos] = pid;

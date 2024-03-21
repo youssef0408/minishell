@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 18:45:53 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/19 15:12:02 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/20 13:27:42 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ char	*display_prompt(void)
 	path = get_pwd();
 	msg = create_prompt(getenv("USER"), path);
 	read_cmd = readline(msg);
+	free(path);
 	free(msg);
 	return (read_cmd);
 }

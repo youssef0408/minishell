@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_manager.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 11:43:04 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/18 16:57:17 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/20 13:30:06 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,17 +84,11 @@ t_list	*get_kv_node(t_list *env, const char *key)
 
 void	remove_from_env(t_list **env, const char *key)
 {
-	t_key_value	*kv;
 	t_list		*node;
 
 	node = get_kv_node(*env, key);
 	if (node)
-	{
-		kv = (t_key_value *)node->content;
 		ft_lstdeletenode(env, node, &free_key_value);
-	}
-	else
-		return ;
 }
 
 void	add_to_env(t_list **env, const char *key, char *value)

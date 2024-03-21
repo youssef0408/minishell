@@ -248,6 +248,7 @@ void	get_split_args(t_list *tokens, t_cmd_parse *cmd_p)
 		tokens = tokens->next;
 	}
 	cmd_p->args = (char **)lst_to_array(args);
+	ft_lstclear_nodes(&args);
 }
 
 void	fill_cmd_struct(t_list *tokens, t_cmd_parse *cmd_p)

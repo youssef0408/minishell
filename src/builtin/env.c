@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 13:51:44 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/19 13:27:11 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/20 13:28:20 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,9 @@ void	set_shlvl(t_list **env)
 
 void	exec_env(t_command *info, t_cmd_parse *cmd)
 {
-	int		i;
 	t_list	*tmp;
 	char	*kv;
 
-	i = 0;
 	info->exit_status = 0;
 	if (cmd->args[1])
 	{

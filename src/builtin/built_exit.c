@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 19:50:09 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/03/19 13:07:00 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/20 23:45:58 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,12 @@ int	exit_value(t_cmd_parse *cmd)
 void	exec_exit(t_command *info, t_cmd_parse *cmd)
 {
 	info->exit_status = exit_value(cmd);
+	close_non_std_fds(info->fds);
+	free(info->fds);
+	free(info->pids);
+	ft_lstclear(&info->env, &free_key_value);
+	free_array((void **)info->cmds, &free_cmd_parse);
+	rl_clear_history();
 	exit(info->exit_status);
 }
 

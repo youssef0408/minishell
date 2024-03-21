@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:18:40 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/19 16:52:30 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/20 14:50:12 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ t_list		*convert_envp(char **envp);
  * to be used with ft_lstclear()
  */
 void		free_key_value(void *key_value);
+void		free_t_commdand(t_command *info);
 
 int			lst_auto_add_back(t_list **lst, void *content);
 int			here_doc(char *del);
