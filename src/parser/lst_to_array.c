@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer.c                                        :+:      :+:    :+:   */
+/*   to_array.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/04 17:34:09 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/23 01:07:30 by yothmani         ###   ########.fr       */
+/*   Created: 2024/03/23 01:27:07 by yothmani          #+#    #+#             */
+/*   Updated: 2024/03/23 01:27:56 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void	tokenise(char *input, t_list **tokens)
+void	*lst_to_array(t_list *args)
 {
-	int	i;
+	char	**array;
+	int		i;
+	int		size;
 
+	size = ft_lstsize(args);
+	array = safe_calloc(sizeof(char *), size + 1);
 	i = 0;
-	while (input[i])
+	while (i < size)
 	{
-		if (input[i] == '|' || input[i] == '>' || input[i] == '<')
-			i += store_meta(&input[i], tokens);
-		else if (input[i] != ' ')
-			i += store_data(&input[i], tokens);
-		i += count_spaces(&input[i]);
+		array[i] = (char *)args->content;
+		args = args->next;
+		i++;
 	}
+	return ((void *)array);
 }

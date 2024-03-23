@@ -3,47 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   command_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:20:32 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/20 23:45:52 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/23 00:04:55 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int	*create_pipe_array(t_cmd_parse **cmds)
+void	close_fds_if_invalid(int *fds, int pos)
 {
-	int	size;
-	int	*fd_array;
-	int	i;
-	int	temp;
-
-	size = get_cmd_count(cmds) * 2;
-	fd_array = safe_calloc(size + 1, sizeof(int));
-	fd_array[size] = EOINTA;
-	fd_array[size - 1] = 1;
-	i = 1;
-	while (i < size - 1)
-	{
-		pipe(&fd_array[i]);
-		temp = fd_array[i];
-		fd_array[i] = fd_array[i + 1];
-		fd_array[i + 1] = temp;
-		i += 2;
-	}
-	return (fd_array);
+	if (fds[pos * 2 + FD_IN] > 2)
+		close(fds[pos * 2 + FD_IN]);
+	if (fds[pos * 2 + FD_OUT] > 2)
+		close(fds[pos * 2 + FD_OUT]);
 }
 
-int	*create_pid_array(t_cmd_parse **cmds)
+void	exec_external_command(t_command *info, t_cmd_parse **cmds, int pos)
 {
-	int	size;
-	int	*pids;
+	if (get_cmd_path(info, cmds[pos]->args) == 0)
+	{
+		execve(cmds[pos]->args[0], cmds[pos]->args,
+			env_list_to_envp(info->env));
+		perror("minishell: ");
+	}
+	else
+	{
+		ft_printf_fd("command not found: %s\n", 2, cmds[pos]->args[0]);
+		info->exit_status = 127;
+	}
+}
 
-	size = get_cmd_count(cmds);
-	pids = safe_calloc(size + 1, sizeof(int));
-	pids[size] = EOINTA;
-	return (pids);
+void	clear_and_free(t_command *info)
+{
+	rl_clear_history();
+	ft_lstclear(&info->env, &free_key_value);
+	free_array((void **)info->cmds, &free_cmd_parse);
+	free_t_command(info);
 }
 
 void	create_child(t_command *info, t_cmd_parse **cmds, int pos)
@@ -61,54 +58,18 @@ void	create_child(t_command *info, t_cmd_parse **cmds, int pos)
 		if (is_builtin(cmds[pos]->args[0]))
 			exec_builtin(info, cmds[pos]);
 		else if (!cmds[pos]->args[0])
-		{
 			info->exit_status = 0;
-		}
 		else if (info->fds[pos * 2 + FD_IN] == -1 || info->fds[pos * 2
-			+ FD_OUT] == -1)
-		{
-			if (info->fds[pos * 2 + FD_IN] > 2)
-				close(info->fds[pos * 2 + FD_IN]);
-			if (info->fds[pos * 2 + FD_OUT] > 2)
-				close(info->fds[pos * 2 + FD_OUT]);
-		}
+				+ FD_OUT] == -1)
+			close_fds_if_invalid(info->fds, pos);
 		else
-		{
-			if (get_cmd_path(info, cmds[pos]->args) == 0)
-			{
-				execve(cmds[pos]->args[0], cmds[pos]->args,
-					env_list_to_envp(info->env));
-				perror("minishell: ");
-			}
-			else
-			{
-				ft_printf_fd("command not found: %s\n", 2, cmds[pos]->args[0]);
-				info->exit_status = 127;
-			}
-		}
-		if (info->fds[pos * 2 + FD_IN] > 2)
-			close(info->fds[pos * 2 + FD_IN]);
-		if (info->fds[pos * 2 + FD_OUT] > 2)
-			close(info->fds[pos * 2 + FD_OUT]);
-		rl_clear_history();
-		free_t_commdand(info);
+			exec_external_command(info, cmds, pos);
+		close(info->fds[pos * 2 + FD_IN]);
+		close(info->fds[pos * 2 + FD_OUT]);
+		clear_and_free(info);
 		exit(info->exit_status);
 	}
 	info->pids[pos] = pid;
-}
-
-int	wait_all(int *pids)
-{
-	int	i;
-	int	exit_st;
-
-	i = 0;
-	while (pids[i] != EOINTA)
-	{
-		waitpid(pids[i], &exit_st, 0);
-		i++;
-	}
-	return (exit_st / 256);
 }
 
 void	exec_cmd_array(t_command *info, t_cmd_parse **cmds)

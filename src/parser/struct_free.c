@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   struct_free.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 17:06:27 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/20 15:29:14 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/22 22:54:37 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-void	free_t_commdand(t_command *info)
+void	free_t_command(t_command *info)
 {
 	if (info->cmds)
 		free_array((void **)info->cmds, &free_cmd_parse);

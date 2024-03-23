@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 08:37:27 by ldufour           #+#    #+#             */
-/*   Updated: 2024/03/20 14:30:14 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/22 22:38:53 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	prog_init(char **envp)
 
 int	main(int argc, char **argv, char **envp)
 {
-	char		*cmd_str;
+	char	*cmd_str;
 
 	(void)argc;
 	(void)argv;
@@ -48,7 +48,7 @@ int	main(int argc, char **argv, char **envp)
 		cmd_str = display_prompt();
 		if (!cmd_str)
 			break ;
-		if (parse_input(cmd_str, &g_info.cmds , g_info.env) != -1)
+		if (parse_input(cmd_str, &g_info.cmds, g_info.env) != -1)
 			exec_cmd_array(&g_info, g_info.cmds);
 		add_history(cmd_str);
 		free_array((void **)g_info.cmds, &free_cmd_parse);
