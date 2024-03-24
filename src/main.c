@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 08:37:27 by ldufour           #+#    #+#             */
-/*   Updated: 2024/03/24 16:24:07 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/24 18:08:55 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,3 +69,5 @@ int	main(int argc, char **argv, char **envp)
 	exit_cleanup();
 	return (EXIT_SUCCESS);
 }
+
+// TODO: when CTL+D exit should be written on the same lline as the prompt
