@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:18:40 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/22 22:54:41 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/24 15:44:12 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,11 @@
 # define BOLD_MAGENTA "1;95"
 # define BOLD_CYAN "1;96"
 # define BOLD_WHITE "1;97"
-#define FD_IN 0
-#define FD_OUT 1
-#define NO_RED -2
-#define EOINTA -3
+# define FD_IN 0
+# define FD_OUT 1
+# define NO_RED -2
+# define EOINTA -3
+
 /*#############|| Structures and tokens ||################*/
 // typedef enum e_tokentype
 // {

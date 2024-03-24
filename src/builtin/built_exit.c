@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 19:50:09 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/03/23 01:30:26 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/24 16:06:29 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,17 @@ int	exit_value(t_cmd_parse *cmd)
 		res = 0;
 	return (res);
 }
-	// TODO:exec_exit:
-	// free(info->fds);
-	// free(info->pids);
-	// TODO: check les deux free entrainent un message derreur suitent à executer exit de plus d'un shlvl
-	//  minishell(6948,0x11acd4dc0) malloc: *** error for object 0x7f86ade04080: pointer being freed was not allocated
-	// minishell(6948,0x11acd4dc0) malloc: *** set a breakpoint in malloc_error_break to debug
-	// [1]    6948 abort      ./minishell
+/* TODO:exec_exit:
+free(info->fds);
+free(info->pids);
+TODO: check les deux free entrainent un message derreur
+suitent à executer exit de plus d'un shlvl
+minishell(6948,0x11acd4dc0) malloc: *** error for object
+0x7f86ade04080: pointer being freed was not allocated
+minishell(6948,0x11acd4dc0) malloc: *** set a breakpoint
+in malloc_error_break to debug
+[1] 6948 abort./ minishell */
+
 void	exec_exit(t_command *info, t_cmd_parse *cmd)
 {
 	info->exit_status = exit_value(cmd);
@@ -76,6 +80,7 @@ void	exec_exit(t_command *info, t_cmd_parse *cmd)
 	ft_lstclear(&info->env, &free_key_value);
 	free_array((void **)info->cmds, &free_cmd_parse);
 	rl_clear_history();
+	printf("exit\n");
 	exit(info->exit_status);
 }
 

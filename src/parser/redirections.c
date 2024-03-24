@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:41:40 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/23 01:03:02 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/24 17:51:55 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ bool	handle_variable_end(bool *is_in_var, t_list **expansions,
 	else
 		return (true);
 }
-
+//TODO: need to modify this func. to conform to norms
 int	count_split_var(t_list *expansions, char *data)
 {
 	int				i;

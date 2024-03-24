@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstclear_nodes.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/20 13:56:25 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/20 14:02:50 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/24 15:37:51 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	ft_lstclear_nodes(t_list **lst)
 {
-	t_list *tmp;
+	t_list	*tmp;
+
 	if (!lst)
 		return ;
 	while (*lst)

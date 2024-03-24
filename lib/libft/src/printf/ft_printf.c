@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/18 14:16:27 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/19 12:43:30 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/24 15:38:17 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,11 @@ int	print(const char *str, int fd, va_list args)
 		while (str[i] != '%' && str[i] != 0)
 			i++;
 		lst_auto_add_back(&segments, ft_substr((char *)&str[last_not_f], 0,
-					i - last_not_f));
+				i - last_not_f));
 		if (str[i] == '%')
 		{
 			lst_auto_add_back(&segments, specifier_selector(args, str[i
-						+ 1]));
+					+ 1]));
 			i += 2;
 			last_not_f = i;
 		}
