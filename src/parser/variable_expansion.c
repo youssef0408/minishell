@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   variable_expansion.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:29:23 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/23 01:29:41 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/24 23:40:10 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ void	remove_quoted_expansions(t_list **expansions)
 	}
 }
 
-// TODO remove quoted expansions from list
 void	expand(t_tkn *tk)
 {
 	int	count;

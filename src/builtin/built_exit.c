@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 19:50:09 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/03/24 16:06:29 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/24 23:47:09 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,7 @@ void	exec_exit(t_command *info, t_cmd_parse *cmd)
 {
 	info->exit_status = exit_value(cmd);
 	close_non_std_fds(info->fds);
-	ft_lstclear(&info->env, &free_key_value);
-	free_array((void **)info->cmds, &free_cmd_parse);
+	free_t_command(info);
 	rl_clear_history();
 	printf("exit\n");
 	exit(info->exit_status);

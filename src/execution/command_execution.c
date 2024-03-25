@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:20:32 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/24 15:43:33 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/24 23:57:19 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,9 @@ void	exec_cmd_array(t_command *info, t_cmd_parse **cmds)
 		close_non_std_fds(info->fds);
 		info->exit_status = wait_all(info->pids);
 		free(info->fds);
+		info->fds = NULL;
 		free(info->pids);
+		info->pids = NULL;
 	}
 	handle_exit_status(info);
 	info->is_running_cmds = false;
