@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bplante <bplante@student.42.fr>            +#+  +:+       +#+         #
+#    By: bplante <benplante99@gmail.com>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/12/09 01:24:00 by yothmani          #+#    #+#              #
-#    Updated: 2024/03/19 12:59:43 by bplante          ###   ########.fr        #
+#    Updated: 2024/03/24 23:35:41 by bplante          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,7 @@ $(SRC_DIR)/ft_lstiter.c $(SRC_DIR)/ft_lstclear.c $(SRC_DIR)/ft_lstdelone.c $(SRC
 $(SRC_DIR)/ft_lstsize.c $(SRC_DIR)/ft_lstlast.c $(SRC_DIR)/ft_lstadd_front.c\
 $(SRC_DIR)/ft_lstnew.c $(SRC_DIR)/ft_putstr.c $(SRC_DIR)/ft_putchar.c $(SRC_DIR)/ft_lstadd_back.c\
 $(SRC_DIR)/printf/ft_printf_convertion.c $(SRC_DIR)/printf/ft_printf_utils.c $(SRC_DIR)/printf/ft_printf.c \
-$(SRC_DIR)/lstauto_add_back.c
+$(SRC_DIR)/lstauto_add_back.c $(SRC_DIR)/ft_lstclear_nodes.c
 
 OBJ 				= $(SRC:.c=.o)
 
