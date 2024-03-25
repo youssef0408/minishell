@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 14:32:28 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/11 15:33:23 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/24 15:26:40 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,14 @@ int	syntax_error_message(t_tkn *tk)
 	return (-1);
 }
 
+void	requires_cmd_or_data(t_tkn *tk, bool *need_cmd, bool *need_data)
+{
+	if (tk->data == PIPE)
+		*need_cmd = true;
+	else
+		*need_data = true;
+}
+
 int	syntax_errors(t_list *tokens)
 {
 	bool	need_data;
@@ -52,12 +60,7 @@ int	syntax_errors(t_list *tokens)
 		else if (need_cmd && (tk->data_type == META_C && tk->data == PIPE))
 			return (syntax_error_message(tk));
 		if (tk->data_type == META_C)
-		{
-			if (tk->data == PIPE)
-				need_cmd = true;
-			else
-				need_data = true;
-		}
+			requires_cmd_or_data(tk, &need_cmd, &need_data);
 		else
 			need_data = false;
 		if ((tk->data_type == META_C && tk->data != PIPE)

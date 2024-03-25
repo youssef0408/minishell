@@ -6,11 +6,26 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:38:06 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/18 16:54:14 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/24 15:36:42 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
+
+int	calculate_key_length(char *str)
+{
+	int	i;
+
+	i = 0;
+	if (str[i] == '?')
+		i = 1;
+	else
+	{
+		while (ft_isalnum(str[i]))
+			i++;
+	}
+	return (i);
+}
 
 // create expantion struct and and add if its quote or not, add start if isnt
 int	store_value_from_env(char *str, t_list *env, t_tkn *tk, int start)
@@ -21,14 +36,7 @@ int	store_value_from_env(char *str, t_list *env, t_tkn *tk, int start)
 	t_list			*new;
 	t_expansions	*expansion;
 
-	i = 0;
-	if (str[i] == '?')
-		i = 1;
-	else
-	{
-		while (ft_isalnum(str[i]))
-			i++;
-	}
+	i = calculate_key_length(str);
 	if (i == 0)
 		return (0);
 	key = ft_strndup(str, i);

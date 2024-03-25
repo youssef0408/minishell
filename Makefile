@@ -6,7 +6,7 @@
 #    By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/30 08:17:58 by ldufour           #+#    #+#              #
-#    Updated: 2024/03/19 16:42:21 by yothmani         ###   ########.fr        #
+#    Updated: 2024/03/24 18:05:58 by yothmani         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,17 +27,17 @@ READLINE_URL    = ftp://ftp.gnu.org/gnu/readline/readline-8.1.tar.gz
 INC             = -Ilib $(READLINE_INC) -I.
 LIBS            = -L$(READLINE_DIR) -lreadline -lhistory -Llib/libft -lft -lncurses
 
-SRC_FILES = 	main.c  prompt.c builtin/pwd.c\
-     			utils.c builtin/cd.c redirections_handler.c\
-				redirections_utils.c\
-				cmd_path.c handle_fds.c\
-				exec_single_builtin.c\
+SRC_FILES = 	main.c  execution/prompt.c builtin/pwd.c\
+     			execution/utils.c builtin/cd.c execution/redirections_handler.c\
+				execution/redirections_utils.c\
+				execution/cmd_path.c execution/handle_fds.c\
+				execution/exec_single_builtin.c\
       			builtin/echo.c  builtin/env.c\
-      			builtin/built_exit.c signals.c\
+      			builtin/built_exit.c execution/signals.c\
 	  			builtin/export.c builtin/export_utils.c builtin/unset.c builtin/builtin_execution.c \
-				command_execution.c parser/ft_strndup.c parser/parser.c parser/redirections.c parser/tokenizer.c parser/var_loading.c \
+				execution/command_execution.c parser/ft_strndup.c parser/parser.c parser/redirections.c parser/tokenizer.c parser/var_loading.c \
 				parser/variable_expansion.c parser/syntax_errors.c parser/struct_free.c parser/free_array.c parser/count_cmd.c \
-				env_manager.c
+				execution/env_manager.c execution/exec_utils.c execution/env_utils.c parser/parse_utils.c parser/tokenizer_utils.c parser/lst_to_array.c\
 
 SRC = $(addprefix $(SRC_DIR)/, $(SRC_FILES))
 
@@ -69,8 +69,10 @@ $(LIBFT):
 	make -C $(LIBFT_DIR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) -o $@ -c $< $(INC)
 	@echo "Compiled $<"
+
 
 $(OBJ_DIR):
 	mkdir -p obj/builtin obj/tokenizer obj/parser

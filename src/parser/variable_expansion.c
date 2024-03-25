@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:29:23 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/19 16:58:05 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/23 01:29:41 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,17 +113,4 @@ void	expand(t_tkn *tk)
 	tk->data = (uint64_t)safe_calloc(sizeof(char), count + 1);
 	fill_new_data((char *)tk->data, tk->original, tk->expansions);
 	remove_quoted_expansions(&tk->expansions);
-}
-
-void	expand_vars(t_list *tokens)
-{
-	t_tkn	*tk;
-
-	while (tokens)
-	{
-		tk = (t_tkn *)tokens->content;
-		if (tk->data_type == DATA)
-			expand(tk);
-		tokens = tokens->next;
-	}
 }

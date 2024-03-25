@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_handler.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:33:55 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/20 23:30:43 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/24 15:43:53 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,35 @@ void	manage_redirections(int *fds, t_cmd_parse **cmds)
 		}
 		i++;
 	}
+}
+
+int	alloc_redirection_array(t_list *tokens, t_cmd_parse *cmd_p)
+{
+	int	count;
+	int	i;
+
+	count = count_redirect(tokens);
+	if (count)
+	{
+		i = 0;
+		cmd_p->redirections = safe_calloc(sizeof(t_redirection *), count + 1);
+		while (i < count)
+		{
+			cmd_p->redirections[i] = safe_calloc(sizeof(t_redirection), 1);
+			i++;
+		}
+	}
+	return (count);
+}
+
+int	extract_redirections(t_list *tokens, t_cmd_parse *cmd_p)
+{
+	int	temp;
+
+	temp = alloc_redirection_array(tokens, cmd_p);
+	if (temp > 0)
+		fill_redirection(tokens, cmd_p);
+	else if (temp == -1)
+		return (-1);
+	return (0);
 }

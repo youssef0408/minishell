@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:18:40 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/20 14:50:12 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/24 15:44:12 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,11 @@
 # define BOLD_MAGENTA "1;95"
 # define BOLD_CYAN "1;96"
 # define BOLD_WHITE "1;97"
-#define FD_IN 0
-#define FD_OUT 1
-#define NO_RED -2
-#define EOINTA -3
+# define FD_IN 0
+# define FD_OUT 1
+# define NO_RED -2
+# define EOINTA -3
+
 /*#############|| Structures and tokens ||################*/
 // typedef enum e_tokentype
 // {
@@ -161,7 +162,7 @@ t_list		*convert_envp(char **envp);
  * to be used with ft_lstclear()
  */
 void		free_key_value(void *key_value);
-void		free_t_commdand(t_command *info);
+void		free_t_command(t_command *info);
 
 int			lst_auto_add_back(t_list **lst, void *content);
 int			here_doc(char *del);
