@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 16:03:20 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/23 00:08:05 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/25 12:39:45 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 void	exec_cmd_array(t_command *info, t_cmd_parse **cmd);
 void	open_redirections(t_cmd_parse *cmd, int *fds);
-int		handle_ambiguous_redirect(t_cmd_parse *cmd, int *fds, int i);
+int		ambiguous_redirect(t_cmd_parse *cmd, int *fds, int i);
 int		handle_in_file(t_cmd_parse *cmd, int *fds, int i);
 int		handle_out_append(t_cmd_parse *cmd, int *fds, int i);
 int		handle_out_trunc(t_cmd_parse *cmd, int *fds, int i);

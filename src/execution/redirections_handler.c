@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_handler.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 16:33:55 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/24 15:43:53 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/25 12:39:57 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int	here_doc(char *del)
 void	open_redirections(t_cmd_parse *cmd, int *fds)
 {
 	int	i;
+	int	red_type;
 
 	fds[FD_IN] = NO_RED;
 	fds[FD_OUT] = NO_RED;
@@ -50,19 +51,18 @@ void	open_redirections(t_cmd_parse *cmd, int *fds)
 	i = 0;
 	while (cmd->redirections[i])
 	{
-		if (cmd->redirections[i]->redirect_type == R_AMBIGUOUS
-			&& handle_ambiguous_redirect(cmd, fds, i) != 0)
+		red_type = cmd->redirections[i]->redirect_type;
+		if (red_type == R_AMBIGUOUS && ambiguous_redirect(cmd, fds, i) != 0)
 			break ;
-		else if (cmd->redirections[i]->redirect_type == R_IN_FILE
-			&& handle_in_file(cmd, fds, i) != 0)
+		else if (red_type == R_IN_FILE && handle_in_file(cmd, fds, i) != 0)
 			break ;
-		else if (cmd->redirections[i]->redirect_type == R_OUT_APPEND
-			&& handle_out_append(cmd, fds, i) != 0)
+		else if (red_type == R_OUT_APPEND && handle_out_append(cmd, fds,
+				i) != 0)
 			break ;
-		else if (cmd->redirections[i]->redirect_type == R_OUT_TRUNC
-			&& handle_out_trunc(cmd, fds, i) != 0)
+		else if (red_type == R_OUT_TRUNC && handle_out_trunc(cmd, fds, i) != 0)
 			break ;
-		else if (handle_other_redirection(cmd, fds, i) != 0)
+		else if (red_type == R_HERE_DOC && handle_other_redirection(cmd, fds,
+				i) != 0)
 			break ;
 		i++;
 	}

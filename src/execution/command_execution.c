@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_execution.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:20:32 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/25 01:18:45 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/25 13:08:36 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,6 @@ void	create_child(t_command *info, t_cmd_parse **cmds, int pos)
 {
 	int	pid;
 
-	if (!cmds[pos]->args[0])
-	{
-		info->pids[pos] = NO_CHILD;
-		return ;
-	}
 	pid = fork();
 	if (pid == -1)
 		printf("fork failed\n");
@@ -57,6 +52,8 @@ void	create_child(t_command *info, t_cmd_parse **cmds, int pos)
 		else if (!(info->fds[pos * 2 + FD_IN] == -1 || info->fds[pos * 2
 					+ FD_OUT] == -1))
 			exec_external_command(info, cmds, pos);
+		else
+			info->exit_status = 1;
 		clear_and_free(info, pos);
 		exit(info->exit_status);
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 08:37:27 by ldufour           #+#    #+#             */
-/*   Updated: 2024/03/24 18:08:55 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/25 12:57:44 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,13 @@ void	run_shell_loop(void)
 		if (!cmd_str)
 			break ;
 		if (parse_input(cmd_str, &g_info.cmds, g_info.env) != -1)
-			exec_cmd_array(&g_info, g_info.cmds);
-		add_history(cmd_str);
+		{
+			if (!is_empty_cmd(g_info.cmds))
+			{
+				exec_cmd_array(&g_info, g_info.cmds);
+				add_history(cmd_str);
+			}
+		}
 		free_array((void **)g_info.cmds, &free_cmd_parse);
 		free(cmd_str);
 	}

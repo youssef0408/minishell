@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:18:40 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/25 01:02:30 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/25 12:52:40 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@
 # define FD_OUT 1
 # define NO_RED -2
 # define EOINTA -3
-# define NO_CHILD -3
+# define NO_CHILD -4
 
 /*#############|| Structures and tokens ||################*/
 // typedef enum e_tokentype
@@ -170,5 +170,7 @@ int			here_doc(char *del);
 void		close_irrelevant_fds(int *fds, int pos);
 void		close_non_std_fds(int *fds);
 int			get_cmd_path(t_command *info, char **args);
+
+bool		is_empty_cmd(t_cmd_parse **cmds);
 
 #endif

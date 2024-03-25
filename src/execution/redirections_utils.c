@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirections_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/19 15:17:22 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/24 15:43:58 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/25 12:39:45 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-int	handle_ambiguous_redirect(t_cmd_parse *cmd, int *fds, int i)
+int	ambiguous_redirect(t_cmd_parse *cmd, int *fds, int i)
 {
 	printf("%s: ambiguous redirect\n", cmd->redirections[i]->str);
 	fds[FD_IN] = -1;
