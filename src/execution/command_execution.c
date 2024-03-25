@@ -6,7 +6,7 @@
 /*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:20:32 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/25 13:08:36 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/25 16:05:01 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,23 @@ void	clear_and_free(t_command *info, int pos)
 	free_t_command(info);
 }
 
+void	execute(t_command *info, t_cmd_parse **cmds, int pos)
+{
+	if (is_builtin(cmds[pos]->args[0]))
+		exec_builtin(info, cmds[pos]);
+	else
+		exec_external_command(info, cmds, pos);
+}
+
 void	create_child(t_command *info, t_cmd_parse **cmds, int pos)
 {
 	int	pid;
 
+	if (!cmds[pos]->args[0])
+	{
+		info->pids[pos] = NO_CHILD;
+		return ;
+	}
 	pid = fork();
 	if (pid == -1)
 		printf("fork failed\n");
@@ -47,11 +60,9 @@ void	create_child(t_command *info, t_cmd_parse **cmds, int pos)
 		close_irrelevant_fds(info->fds, pos);
 		dup2(info->fds[pos * 2 + FD_IN], 0);
 		dup2(info->fds[pos * 2 + FD_OUT], 1);
-		if (is_builtin(cmds[pos]->args[0]))
-			exec_builtin(info, cmds[pos]);
-		else if (!(info->fds[pos * 2 + FD_IN] == -1 || info->fds[pos * 2
-					+ FD_OUT] == -1))
-			exec_external_command(info, cmds, pos);
+		if (!(info->fds[pos * 2 + FD_IN] == -1 || info->fds[pos * 2 + FD_OUT]
+				== -1))
+			execute(info, cmds, pos);
 		else
 			info->exit_status = 1;
 		clear_and_free(info, pos);
