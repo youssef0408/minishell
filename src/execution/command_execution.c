@@ -6,7 +6,7 @@
 /*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:20:32 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/25 16:05:01 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/25 16:24:58 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	exec_external_command(t_command *info, t_cmd_parse **cmds, int pos)
 	{
 		execve(cmds[pos]->args[0], cmds[pos]->args,
 			env_list_to_envp(info->env));
-		perror("minishell: ");
+		ft_printf_fd("%s: %s\n", 2, cmds[pos]->args[0], strerror(errno));
 	}
 	else
 	{

@@ -6,20 +6,20 @@
 /*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/25 12:51:49 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/25 12:55:59 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/25 16:18:19 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-bool	is_empty_cmd(t_cmd_parse **cmds)
+bool	is_empty_cmd(char *str)
 {
 	int	i;
 
 	i = 0;
-	while (cmds[i])
+	while (str[i])
 	{
-		if (cmds[i]->redirections || cmds[i]->args[0])
+		if (str[i] != ' ')
 			return (false);
 		i++;
 	}

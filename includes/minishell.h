@@ -6,7 +6,7 @@
 /*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:18:40 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/25 12:52:40 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/25 16:18:12 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,6 @@ void		close_irrelevant_fds(int *fds, int pos);
 void		close_non_std_fds(int *fds);
 int			get_cmd_path(t_command *info, char **args);
 
-bool		is_empty_cmd(t_cmd_parse **cmds);
+bool		is_empty_cmd(char *str);
 
 #endif
