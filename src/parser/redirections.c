@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:41:40 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/24 17:51:55 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/25 00:49:00 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,59 +30,43 @@ int	count_redirect(t_list *tokens)
 	return (count);
 }
 
-bool	handle_variable_end(bool *is_in_var, t_list **expansions,
-		t_expansions **exp)
+void	handle_space_in_var(t_sv_info *svi, char *data)
 {
-	*is_in_var = false;
-	*expansions = (*expansions)->next;
-	if (*expansions)
+	if (svi->i >= svi->exp->start && svi->i < svi->exp->start + svi->exp->len)
+		svi->is_in_var = true;
+	if (svi->has_char && svi->is_in_var && !svi->exp->is_quoted
+		&& data[svi->i] == ' ')
 	{
-		*exp = (t_expansions *)(*expansions)->content;
-		return (false);
+		svi->count++;
+		svi->has_char = false;
 	}
-	else
-		return (true);
+	else if (!svi->has_char && ((svi->is_in_var && !svi->exp->is_quoted
+				&& data[svi->i] != ' ') || svi->exp->is_quoted))
+		svi->has_char = true;
 }
-//TODO: need to modify this func. to conform to norms
+
+// TODO: need to modify this func. to conform to norms
 int	count_split_var(t_list *expansions, char *data)
 {
-	int				i;
-	bool			has_char;
-	t_expansions	*exp;
-	bool			is_in_var;
-	int				count;
+	t_sv_info	svi;
 
 	if (!expansions)
 		return (1);
-	i = 0;
-	count = 0;
-	has_char = false;
-	is_in_var = false;
-	exp = (t_expansions *)expansions->content;
-	while (data[i] && expansions)
+	init_sv_info(&svi, expansions);
+	svi.exp = (t_expansions *)expansions->content;
+	while (data[svi.i] && expansions)
 	{
-		if (is_in_var && !(i >= exp->start && i < exp->start + exp->len))
+		if (svi.is_in_var && !(svi.i >= svi.exp->start && svi.i < svi.exp->start
+				+ svi.exp->len))
 		{
-			if (handle_variable_end(&is_in_var, &expansions, &exp))
+			if (handle_variable_end(&svi.is_in_var, &expansions, &svi.exp))
 				break ;
 		}
-		if (i >= exp->start && i < exp->start + exp->len)
-			is_in_var = true;
-		if (has_char && is_in_var && !exp->is_quoted && data[i] == ' ')
-		{
-			count++;
-			has_char = false;
-		}
-		else if (!has_char && ((is_in_var && !exp->is_quoted && data[i] != ' ')
-				|| exp->is_quoted))
-			has_char = true;
-		i++;
+		handle_space_in_var(&svi, data);
+		svi.i++;
 	}
-	if (has_char)
-		count++;
-	else if (!has_char && ((data[i] && data[i + 1]) || exp->is_quoted))
-		count++;
-	return (count);
+	check_if_data_after_exp(&svi, data);
+	return (svi.count);
 }
 
 int	store_redirection_info(t_tkn *tk, t_cmd_parse *cmd_p, int type, int i)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/23 00:02:07 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/23 00:04:10 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/25 01:03:46 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,10 @@ int	wait_all(int *pids)
 	i = 0;
 	while (pids[i] != EOINTA)
 	{
-		waitpid(pids[i], &exit_st, 0);
+		if (pids[i] == NO_CHILD)
+			exit_st = 0;
+		else
+			waitpid(pids[i], &exit_st, 0);
 		i++;
 	}
 	return (exit_st / 256);

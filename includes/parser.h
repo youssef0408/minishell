@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:30:11 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/23 01:29:23 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/25 00:49:57 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,15 @@ typedef struct s_token
 	char			*original;
 }					t_tkn;
 
+typedef struct s_sv_info
+{
+	int				i;
+	bool			has_char;
+	t_expansions	*exp;
+	bool			is_in_var;
+	int				count;
+}					t_sv_info;
+
 void				expand_vars(t_list *tokens);
 void				tokenise(char *input, t_list **tokens);
 int					load_vars_per_token(t_list *tokens, t_list *env);
@@ -113,4 +122,8 @@ int					store_redirection_info(t_tkn *tk, t_cmd_parse *cmd_p,
 int					fill_redirection(t_list *tokens, t_cmd_parse *cmd_p);
 void				expand(t_tkn *tk);
 void				get_split_args(t_list *tokens, t_cmd_parse *cmd_p);
+void				check_if_data_after_exp(t_sv_info *svi, char *data);
+void				init_sv_info(t_sv_info *sv_info, t_list *expansions);
+bool				handle_variable_end(bool *is_in_var, t_list **expansions,
+						t_expansions **exp);
 #endif

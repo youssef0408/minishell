@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:18:40 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/24 15:44:12 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/25 01:02:30 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@
 # define FD_OUT 1
 # define NO_RED -2
 # define EOINTA -3
+# define NO_CHILD -3
 
 /*#############|| Structures and tokens ||################*/
 // typedef enum e_tokentype

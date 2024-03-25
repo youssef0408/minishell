@@ -6,19 +6,11 @@
 /*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 15:20:32 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/24 23:57:19 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/25 01:18:45 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
-
-void	close_fds_if_invalid(int *fds, int pos)
-{
-	if (fds[pos * 2 + FD_IN] > 2)
-		close(fds[pos * 2 + FD_IN]);
-	if (fds[pos * 2 + FD_OUT] > 2)
-		close(fds[pos * 2 + FD_OUT]);
-}
 
 void	exec_external_command(t_command *info, t_cmd_parse **cmds, int pos)
 {
@@ -35,11 +27,11 @@ void	exec_external_command(t_command *info, t_cmd_parse **cmds, int pos)
 	}
 }
 
-void	clear_and_free(t_command *info)
+void	clear_and_free(t_command *info, int pos)
 {
+	close(info->fds[pos * 2 + FD_IN]);
+	close(info->fds[pos * 2 + FD_OUT]);
 	rl_clear_history();
-	ft_lstclear(&info->env, &free_key_value);
-	free_array((void **)info->cmds, &free_cmd_parse);
 	free_t_command(info);
 }
 
@@ -47,6 +39,11 @@ void	create_child(t_command *info, t_cmd_parse **cmds, int pos)
 {
 	int	pid;
 
+	if (!cmds[pos]->args[0])
+	{
+		info->pids[pos] = NO_CHILD;
+		return ;
+	}
 	pid = fork();
 	if (pid == -1)
 		printf("fork failed\n");
@@ -57,16 +54,10 @@ void	create_child(t_command *info, t_cmd_parse **cmds, int pos)
 		dup2(info->fds[pos * 2 + FD_OUT], 1);
 		if (is_builtin(cmds[pos]->args[0]))
 			exec_builtin(info, cmds[pos]);
-		else if (!cmds[pos]->args[0])
-			info->exit_status = 0;
-		else if (info->fds[pos * 2 + FD_IN] == -1 || info->fds[pos * 2
-				+ FD_OUT] == -1)
-			close_fds_if_invalid(info->fds, pos);
-		else
+		else if (!(info->fds[pos * 2 + FD_IN] == -1 || info->fds[pos * 2
+					+ FD_OUT] == -1))
 			exec_external_command(info, cmds, pos);
-		close(info->fds[pos * 2 + FD_IN]);
-		close(info->fds[pos * 2 + FD_OUT]);
-		clear_and_free(info);
+		clear_and_free(info, pos);
 		exit(info->exit_status);
 	}
 	info->pids[pos] = pid;

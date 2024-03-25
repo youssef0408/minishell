@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/18 17:53:40 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/18 17:58:10 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/25 00:45:29 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	process_export_with_assignment(t_command *info, t_cmd_parse *cmd,
 	{
 		value = get_value_from_assignment(cmd->args[index], key);
 		add_to_env(&info->env, key, value);
-		free(value);
 	}
 	else
 		handle_export_error(info, cmd, index);
