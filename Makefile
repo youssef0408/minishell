@@ -6,7 +6,7 @@
 #    By: bplante <bplante@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/30 08:17:58 by ldufour           #+#    #+#              #
-#    Updated: 2024/03/25 12:52:23 by bplante          ###   ########.fr        #
+#    Updated: 2024/03/25 14:53:25 by bplante          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ LIBFT_DIR       = lib/libft
 READLINE_DIR    = lib/readline
 READLINE_LIB    = $(READLINE_DIR)/libreadline.a
 READLINE_INC    = -I$(READLINE_DIR)
-READLINE_URL    = ftp://ftp.gnu.org/gnu/readline/readline-8.1.tar.gz
+READLINE_URL    = ftp://ftp.gnu.org/gnu/readline/readline-8.2.tar.gz
 
 INC             = -Ilib $(READLINE_INC) -I.
 LIBS            = -L$(READLINE_DIR) -lreadline -lhistory -Llib/libft -lft -lncurses
@@ -46,7 +46,7 @@ OBJ = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 
 all: $(NAME)
 
-$(NAME): $(OBJ_DIR) $(OBJ) $(LIBFT) $(READLINE_LIB)
+$(NAME): $(READLINE_LIB) $(OBJ_DIR) $(OBJ) $(LIBFT)
 	@$(DISPLAY_LOGOS)
 	@$(CC) $(CFLAGS) -o $@ $(OBJ) $(LIBS)
 	@echo $(CUT) $(CUT) 
@@ -77,15 +77,12 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 
 $(OBJ_DIR):
 	mkdir -p obj/builtin obj/tokenizer obj/parser
-readline-8.1_EXISTS := $(wildcard lib/readline-8.1)
 
 install: $(READLINE_LIB)
 	
 norm:
 	@echo $(BOLD)$(PINK)" Mandatory part!"$(MINT)
-	@norminette $(SRC) $(INC_DIR)
-	@echo $(BOLD)$(PINK)" Bonus part!"$(MINT)
-	@norminette $(BONUS_SRC)
+	@norminette $(SRC) $(INC_DIR) $(LIBFT_DIR)
 
 clean:
 	@make -C $(LIBFT_DIR) clean
@@ -98,8 +95,5 @@ fclean: clean
 	@echo $(BOLD)$(L_PURPLE) ✨minishell✨ $(PINK)All cleaned up! ....🧹🗑️$(RESET)
 
 re: fclean all
-
-test:
-	@echo $(OBJ)
 
 .PHONY: all clean fclean re install

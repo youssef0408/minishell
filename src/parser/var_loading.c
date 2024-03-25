@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   var_loading.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:38:06 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/24 15:36:42 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/25 15:11:30 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	calculate_key_length(char *str)
 	int	i;
 
 	i = 0;
-	if (str[i] == '?')
+	if (str[i] == '?' || str[i] == '0')
 		i = 1;
 	else
 	{

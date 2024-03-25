@@ -6,7 +6,7 @@
 /*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 08:37:27 by ldufour           #+#    #+#             */
-/*   Updated: 2024/03/25 12:57:44 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/25 15:19:35 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	prog_init(char **envp)
 {
 	g_info.env = convert_envp(envp);
 	set_shlvl(&g_info.env);
+	add_to_env(&g_info.env, "?", ft_itoa(0));
+	add_to_env(&g_info.env, "0", ft_strdup("minishell"));
 	g_info.exit_status = 0;
 	g_info.is_running_cmds = false;
 	init_signal_handlers();
@@ -60,7 +62,7 @@ void	run_shell_loop(void)
 void	exit_cleanup(void)
 {
 	ft_lstclear(&g_info.env, &free_key_value);
-	printf("\rexit\n");
+	printf("\17exit\n");
 }
 
 int	main(int argc, char **argv, char **envp)

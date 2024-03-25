@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/21 13:51:44 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/20 13:28:20 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/25 15:13:16 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void	set_shlvl(t_list **env)
 		add_to_env(env, "SHLVL", ft_itoa(1));
 	else
 		add_to_env(env, "SHLVL", ft_itoa(ft_atoi(shlvl) + 1));
-	add_to_env(env, "?", ft_itoa(0));
 	return ;
 }
 

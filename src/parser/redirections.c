@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
+/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 17:41:40 by bplante           #+#    #+#             */
-/*   Updated: 2024/03/25 00:49:00 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/25 14:41:44 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	handle_space_in_var(t_sv_info *svi, char *data)
 		svi->has_char = true;
 }
 
-// TODO: need to modify this func. to conform to norms
 int	count_split_var(t_list *expansions, char *data)
 {
 	t_sv_info	svi;
