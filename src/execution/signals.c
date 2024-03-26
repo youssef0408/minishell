@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/15 18:27:43 by joe_jam           #+#    #+#             */
-/*   Updated: 2024/03/24 16:09:29 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/26 00:09:19 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ static void	handle_ctl_c(int sig)
 	write(1, "\n", 1);
 	if (g_info.is_running_cmds == false)
 	{
-		rl_replace_line("", 0);
 		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_forced_update_display();
 		rl_redisplay();
 	}
 }

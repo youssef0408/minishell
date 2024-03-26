@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:18:40 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/25 12:52:40 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/26 00:55:27 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,31 @@
 // # define DOUBLE_QUOTE 34 // "
 
 /*#############################|| Colors ||#####################*/
-# define RED "1;31"
-# define GREEN "1;32"
-# define YELLOW "1;33"
-# define BLUE "1;34"
-# define MAGENTA "1;35"
-# define CYAN "1;36"
-# define WHITE "1;37"
-# define BOLD_RED "1;91"
-# define BOLD_GREEN "1;92"
-# define BOLD_YELLOW "1;93"
-# define BOLD_BLUE "1;94"
-# define BOLD_MAGENTA "1;95"
-# define BOLD_CYAN "1;96"
-# define BOLD_WHITE "1;97"
+
+# define ESC_BLACK "\001\033[0;30m"
+# define ESC_BOLD_BLACK "\001\033[1;30m\002"
+# define ESC_RED "\001\033[0;31m\002"
+# define ESC_BOLD_RED "\001\033[1;31m\002"
+# define ESC_GREEN "\001\033[0;32m\002"
+# define ESC_BOLD_GREEN "\001\033[1;32m\002"
+# define ESC_YELLOW "\001\033[0;33m\002"
+# define ESC_BOLD_YELLOW "\001\033[1;33m\002"
+# define ESC_BLUE "\001\033[0;34m\002"
+# define ESC_BOLD_BLUE "\001\033[1;34m\002"
+# define ESC_PURPLE "\001\033[0;35m\002"
+# define ESC_BOLD_PURPLE "\001\033[1;35m\002"
+# define ESC_CYAN "\001\033[0;36m\002"
+# define ESC_BOLD_CYAN "\001\033[1;36m\002"
+# define ESC_WHITE "\001\033[0;37m\002"
+# define ESC_BOLD_WHITE "\001\033[1;37m\002"
+# define ESC_RESET_COLOR "\001\033[0m\002"
 # define FD_IN 0
 # define FD_OUT 1
 # define NO_RED -2
 # define EOINTA -3
 # define NO_CHILD -4
+# define PROMPT "\033[1;36mminishell\033[34m$ \033[0m"
+
 
 /*#############|| Structures and tokens ||################*/
 // typedef enum e_tokentype
