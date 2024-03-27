@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
+/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 08:37:27 by ldufour           #+#    #+#             */
-/*   Updated: 2024/03/25 15:19:35 by bplante          ###   ########.fr       */
+/*   Updated: 2024/03/26 22:58:14 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	run_shell_loop(void)
 
 	while (true)
 	{
-		cmd_str = display_prompt();
+		cmd_str = display_prompt(*g_info.env);
 		if (!cmd_str)
 			break ;
 		if (parse_input(cmd_str, &g_info.cmds, g_info.env) != -1)
