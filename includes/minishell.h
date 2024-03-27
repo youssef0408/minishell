@@ -6,7 +6,7 @@
 /*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:18:40 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/26 23:05:10 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/26 23:13:45 by yothmani         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,6 @@
 # include "parser.h"
 # include "builtin.h"
 # include "execution.h"
-
-/*#############################|| Characters ||#####################*/
-// # define PIPE 124        // |
-// # define REDIR_I 60      // <
-// # define REDIR_O 62      // >
-// # define SINGLE_QUOTE 39 // '
-// # define DOUBLE_QUOTE 34 // "
 
 /*#############################|| Colors ||#####################*/
 
@@ -118,7 +111,6 @@ t_list		*convert_envp(char **envp);
  */
 void		free_key_value(void *key_value);
 void		free_t_command(t_command *info);
-
 int			lst_auto_add_back(t_list **lst, void *content);
 int			here_doc(char *del);
 void		close_irrelevant_fds(int *fds, int pos);
