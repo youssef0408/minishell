@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 18:45:53 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/26 23:07:29 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/30 16:06:27 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,6 @@ char	*display_prompt(t_list env)
 	end = ft_strdup("$ ");
 	msg = concatenate_prompt(name, path, end);
 	read_cmd = readline(msg);
+	free(msg);
 	return (read_cmd);
 }
