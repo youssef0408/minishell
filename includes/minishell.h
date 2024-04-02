@@ -6,7 +6,7 @@
 /*   By: bplante <bplante@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:18:40 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/25 16:18:12 by bplante          ###   ########.fr       */
+/*   Updated: 2024/04/02 13:00:05 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,98 +34,45 @@
 # include "builtin.h"
 # include "execution.h"
 
-/*#############################|| Characters ||#####################*/
-// # define PIPE 124        // |
-// # define REDIR_I 60      // <
-// # define REDIR_O 62      // >
-// # define SINGLE_QUOTE 39 // '
-// # define DOUBLE_QUOTE 34 // "
-
 /*#############################|| Colors ||#####################*/
-# define RED "1;31"
-# define GREEN "1;32"
-# define YELLOW "1;33"
-# define BLUE "1;34"
-# define MAGENTA "1;35"
-# define CYAN "1;36"
-# define WHITE "1;37"
-# define BOLD_RED "1;91"
-# define BOLD_GREEN "1;92"
-# define BOLD_YELLOW "1;93"
-# define BOLD_BLUE "1;94"
-# define BOLD_MAGENTA "1;95"
-# define BOLD_CYAN "1;96"
-# define BOLD_WHITE "1;97"
+
+# define ESC_BLACK "\001\033[0;30m"
+# define ESC_BOLD_BLACK "\001\033[1;30m\002"
+# define ESC_RED "\001\033[0;31m\002"
+# define ESC_BOLD_RED "\001\033[1;31m\002"
+# define ESC_GREEN "\001\033[0;32m\002"
+# define ESC_BOLD_GREEN "\001\033[1;32m\002"
+# define ESC_YELLOW "\001\033[0;33m\002"
+# define ESC_BOLD_YELLOW "\001\033[1;33m\002"
+# define ESC_BLUE "\001\033[0;34m\002"
+# define ESC_BOLD_BLUE "\001\033[1;34m\002"
+# define ESC_PURPLE "\001\033[0;35m\002"
+# define ESC_BOLD_PURPLE "\001\033[1;35m\002"
+# define ESC_CYAN "\001\033[0;36m\002"
+# define ESC_BOLD_CYAN "\001\033[1;36m\002"
+# define ESC_WHITE "\001\033[0;37m\002"
+# define ESC_BOLD_WHITE "\001\033[1;37m\002"
+# define ESC_RESET_COLOR "\001\033[0m\002"
 # define FD_IN 0
 # define FD_OUT 1
 # define NO_RED -2
 # define EOINTA -3
 # define NO_CHILD -4
 
-/*#############|| Structures and tokens ||################*/
-// typedef enum e_tokentype
-// {
-// 	ALPHA_T = 97,
-// 	REDIR_IN_T = 60,
-// 	REDIR_OUT_T = 62,
-// 	REDIR_AP_T = 43,
-// 	PIPE_T = 124,
-// 	HERE_DOC_T = 45,
-// }				t_tokentype;
-
-// typedef struct s_token
-// {
-// 	t_tokentype	type;
-// 	char		*value;
-// 	char		*to_print;
-// 	char		*to_exec;
-// 	char		*end_;
-// 	char		*new_;
-// 	int			i;
-// 	int			init;
-// 	int			len;
-// 	int			pos;
-// 	bool		append;
-// }				t_token;
-
-/*#############################|| lexer.c ||##############################*/
-// t_list			*tokenizer(const char *str, t_list *token_list);
-// void			temp_error(int i, t_list *token_list, t_token *token);
-/*#############################|| quote_handler.c ||######################*/
-// int				quotes_parser(const char *str, int i, t_token *token,
-// int delimiter);
-
 /*#############################|| utils.c ||##############################*/
-char		*trim_str(char *str);
 void		*safe_calloc(size_t nmemb, size_t size);
 void		print_in_color(const char *color, const char *msg);
 bool		is_white_space(char c);
 int			ft_strcmp(const char *s1, const char *s2);
-void		close_pipes(int lst_size, int **pipes);
-/*#############################|| debug.c ||##############################*/
-void		log_printf(const char *format, ...);
-void		print_cmd(void *content);
-void		print_token(void *content);
-
 /*#############################|| Prompt.c ||############################*/
-char		*display_prompt(void);
-char		*print_colored_message(const char *user, const char *path);
+char		*display_prompt(t_list env);
 /*#############################|| free_and_exit.c ||#####################*/
 
 void		exit_prg_at_error(char *str);
 void		free_token(void *token_ptr);
-void		free_cmd(void *info);
-void		clean_table(char **table);
 void		free_array(void **content, void (del)(void *));
-
-int			**pipes_creation(int lst_size);
-void		main_exec(t_list *cmd_list, char **envp);
-void		clean_process(t_list *token_list, t_list *cmd_list, char *cmd_str);
-
 /*#############################|| signals.c ||#####################*/
-
 void		init_signal_handlers(void);
-
 /*#############################|| env ||###############################*/
 char		*join_key_value(t_list *node);
 /**
@@ -164,7 +111,6 @@ t_list		*convert_envp(char **envp);
  */
 void		free_key_value(void *key_value);
 void		free_t_command(t_command *info);
-
 int			lst_auto_add_back(t_list **lst, void *content);
 int			here_doc(char *del);
 void		close_irrelevant_fds(int *fds, int pos);

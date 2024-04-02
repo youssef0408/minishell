@@ -3,50 +3,68 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bplante <benplante99@gmail.com>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/06 18:45:53 by yothmani          #+#    #+#             */
-/*   Updated: 2024/03/24 17:46:25 by yothmani         ###   ########.fr       */
+/*   Updated: 2024/03/30 16:06:27 by bplante          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/minishell.h"
 
-// char	*create_prompt(const char *user, const char *path)
-// {
-// 	char	*tmp;
-// 	char	*message;
-
-// 	tmp = ft_strjoin("\033[1;33m[\033[1;33m", user);
-// 	message = ft_strjoin(tmp, "\033[1;33m] \033[1;32m");
-// 	free(tmp);
-// 	tmp = ft_strjoin(message, path);
-// 	free(message);
-// 	message = ft_strjoin(tmp, "\033[1;34m $ \033[0m");
-// 	free(tmp);
-// 	return (message);
-// }
-
-// char	*display_prompt(void)
-// {
-// 	char	*path;
-// 	char	*read_cmd;
-// 	char	*msg;
-
-// 	path = get_pwd();
-// 	msg = create_prompt(getenv("USER"), path);
-// 	read_cmd = readline(msg);
-// 	free(path);
-// 	free(msg);
-// 	return (read_cmd);
-// }
-
-char	*display_prompt(void)
+static char	*variadic_strjoin(unsigned int arg_quantity, ...)
 {
+	va_list			arg_list;
+	unsigned int	i;
+	char			*arg_buffer;
+	char			*temp;
+	char			*result;
+
+	va_start(arg_list, arg_quantity);
+	i = 0;
+	result = NULL;
+	while (i < arg_quantity)
+	{
+		arg_buffer = va_arg(arg_list, char *);
+		if (result == NULL)
+			result = ft_strdup(arg_buffer);
+		else
+		{
+			temp = ft_strjoin(result, arg_buffer);
+			free(result);
+			result = temp;
+		}
+		i++;
+	}
+	va_end(arg_list);
+	return (result);
+}
+
+static char	*concatenate_prompt(char *name, char *pwd, char *end)
+{
+	char	*prompt;
+
+	prompt = variadic_strjoin(9, ESC_BOLD_PURPLE, "[", name, "]-",
+			ESC_BOLD_CYAN, pwd, ESC_BOLD_PURPLE, end, ESC_RESET_COLOR);
+	free(name);
+	free(pwd);
+	free(end);
+	return (prompt);
+}
+
+char	*display_prompt(t_list env)
+{
+	char	*name;
+	char	*path;
 	char	*read_cmd;
 	char	*msg;
+	char	*end;
 
-	msg = "minishell$ ";
+	name = ft_strdup(get_value_with_key(&env, "USER"));
+	path = get_pwd();
+	end = ft_strdup("$ ");
+	msg = concatenate_prompt(name, path, end);
 	read_cmd = readline(msg);
+	free(msg);
 	return (read_cmd);
 }

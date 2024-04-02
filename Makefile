@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bplante <bplante@student.42.fr>            +#+  +:+       +#+         #
+#    By: yothmani <yothmani@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/30 08:17:58 by ldufour           #+#    #+#              #
-#    Updated: 2024/03/25 14:53:25 by bplante          ###   ########.fr        #
+#    Updated: 2024/03/26 23:22:48 by yothmani         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,6 @@ OBJ = $(addprefix $(OBJ_DIR)/, $(SRC_FILES:.c=.o))
 all: $(NAME)
 
 $(NAME): $(READLINE_LIB) $(OBJ_DIR) $(OBJ) $(LIBFT)
-	@$(DISPLAY_LOGOS)
 	@$(CC) $(CFLAGS) -o $@ $(OBJ) $(LIBS)
 	@echo $(CUT) $(CUT) 
 	@echo $(BOLD)$(L_PURPLE) Notre minishell est plus mignon qu’un vrai shell  💪💥 $(RESET)	
@@ -67,12 +66,12 @@ $(READLINE_DIR):
 	@echo $(BOLD)$(GREEN) ✨ Readline 8.1 ✨ downloaded and extracted successfully. 💪💥 $(RESET)
 
 $(LIBFT):
-	make -C $(LIBFT_DIR)
+	@make -C $(LIBFT_DIR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(@D)
 	@$(CC) $(CFLAGS) -o $@ -c $< $(INC)
-	@echo "Compiled $<"
+	@echo $(BOLD)$(MINT) "Compiled $<"
 
 
 $(OBJ_DIR):
@@ -81,9 +80,14 @@ $(OBJ_DIR):
 install: $(READLINE_LIB)
 	
 norm:
-	@echo $(BOLD)$(PINK)" Mandatory part!"$(MINT)
-	@norminette $(SRC) $(INC_DIR) $(LIBFT_DIR)
-
+	@echo $(BOLD)$(GREEN)" Mandatory part!"$(MINT)
+	@echo $(BOLD)$(PINK)" Library: "
+	@norminette $(LIBFT_DIR)
+	@echo $(BOLD)$(MINT)" Includes: "
+	@norminette $(INC_DIR)
+	@echo $(BOLD)$(MAUVE)" Sources: "
+	@norminette $(SRC)
+	
 clean:
 	@make -C $(LIBFT_DIR) clean
 	@$(RM) $(OBJ_DIR)
@@ -97,3 +101,20 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re install
+
+# ######################### Colors #########################
+
+GREEN="\033[32m"
+MINT="\033[38;5;51m"
+L_PURPLE="\033[38;5;55m"
+MAUVE="\033[38;5;147m"
+PINK="\033[38;5;175m"
+RESET="\033[0m"
+BOLD="\033[1m"
+UP = "\033[A"
+DOWN = "\033[B"
+RIGHT = "\033[C"
+LEFT = "\033[D"
+CUT = "\033[K"
+SAVE = "\033[s"
+RESTORE = "\033[u"
